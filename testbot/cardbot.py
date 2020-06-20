@@ -15,6 +15,8 @@ from databaseinteractions import checkTable
 
 from credentials import token, db_credentials
 
+from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, rarity, side, trait, tribe
+
 client = discord.Client()
 
 
