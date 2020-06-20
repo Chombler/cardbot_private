@@ -2,6 +2,8 @@ import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
 
+#Hello world
+
 def createTable():
 	try:
 		print("Trying")
