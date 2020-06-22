@@ -16,7 +16,7 @@ def createTable():
 		print ( connection.get_dsn_parameters(),"\n")
 
 		create_table_query = '''CREATE TABLE card
-								(id int,
+								(id int NOT NULL,
 								name varchar(99),
 								cost int,
 								strength int,
@@ -25,7 +25,8 @@ def createTable():
 								flavor varchar(255),
 								cardset int,
 								rarity int,
-								side int);'''
+								side int,
+								PRIMARY KEY(id));'''
 		
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -80,7 +81,7 @@ def dropTable():
 
 
 #Adding to database
-def addToTable(recordId, recordValues):
+def addToTable(record):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(user = db_credentials[0],
@@ -93,8 +94,8 @@ def addToTable(recordId, recordValues):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_insert_query = """ INSERT INTO card (id, name, cost, strength, health, ability, flavor, cardset, rarity, side) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-		cursor.execute(postgres_insert_query, (recordId, recordValues))
+		postgres_insert_query = """ INSERT INTO card VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
 		print("Row added to \"card\"")

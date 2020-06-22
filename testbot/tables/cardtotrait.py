@@ -73,7 +73,7 @@ def dropTable():
 
 
 #Adding to database
-def addToTable(recordId, value):
+def addToTable(record):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(user = db_credentials[0],
@@ -87,7 +87,7 @@ def addToTable(recordId, value):
 		print ( connection.get_dsn_parameters(),"\n")
 
 		postgres_insert_query = """ INSERT INTO cardtotrait (id, cardid, traitid) VALUES (%s,%s,%s)"""
-		cursor.execute(postgres_insert_query, (recordId, value))
+		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
 		print("Row added to table \"cardtotrait\"")
