@@ -16,8 +16,8 @@ def createTable():
 		print ( connection.get_dsn_parameters(),"\n")
 
 		create_table_query = '''CREATE TABLE cardclass
-								(id int,
-								class varchar(16));'''
+								(id SERIAL PRIMARY KEY,
+								cardclass varchar(16));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -85,11 +85,45 @@ def addToTable(record):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_insert_query = """ INSERT INTO cardclass (id, cardclass) VALUES (%s,%s)"""
+		postgres_insert_query = """ INSERT INTO cardclass(class) VALUES (%s)"""
 		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
 		print("Row added")
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error checking table in PostgreSQL", error)
+	finally:
+		#closing database connection.
+			if(connection):
+				cursor.close()
+				connection.close()
+				print("PostgreSQL connection is closed")
+
+def addManyToTable(recordTuple):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(user = db_credentials[0],
+										password = db_credentials[1],
+										host = db_credentials[2],
+										port = db_credentials[3],
+										database = db_credentials[4])
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print ( connection.get_dsn_parameters(),"\n")
+
+		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
+		print(args_str)
+		cursor.execute("INSERT INTO cardclass(cardclass) VALUES " + args_str)
+
+		connection.commit()
+		print("Multiple rows added to \"cardclass\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -121,7 +155,7 @@ def deleteFromTable(recordId):
 		postgres_delete_query = """ Delete from cardclass where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"cardset\"")
+		print("Row deleted from \"cardclass\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")

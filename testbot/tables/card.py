@@ -16,17 +16,17 @@ def createTable():
 		print ( connection.get_dsn_parameters(),"\n")
 
 		create_table_query = '''CREATE TABLE card
-								(id int NOT NULL,
+								(id SERIAL PRIMARY KEY,
 								name varchar(99),
 								cost int,
 								strength int,
 								health int,
-								ability varchar(255),
-								flavor varchar(255),
-								cardset int,
-								rarity int,
-								side int,
-								PRIMARY KEY(id));'''
+								ability varchar(511),
+								flavor varchar(511),
+								setid int DEFAULT NULL,
+								rarityid int,
+								sideid int,
+								typeid int);'''
 		
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -92,9 +92,9 @@ def addToTable(record):
 		print("connected")
 		cursor = connection.cursor()
 		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
+		print(connection.get_dsn_parameters(),"\n")
 
-		postgres_insert_query = """ INSERT INTO card VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+		postgres_insert_query = """ INSERT INTO card(name, cost, strength, health, ability, flavor, setid, rarityid, sideid) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
@@ -113,6 +113,41 @@ def addToTable(record):
 				cursor.close()
 				connection.close()
 				print("PostgreSQL connection is closed")
+
+def addManyToTable(recordTuple):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(user = db_credentials[0],
+										password = db_credentials[1],
+										host = db_credentials[2],
+										port = db_credentials[3],
+										database = db_credentials[4])
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print ( connection.get_dsn_parameters(),"\n")
+
+		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
+		print(args_str)
+		cursor.execute("INSERT INTO card(name, cost, strength, health, ability, flavor, setid, rarityid, sideid, typeid) VALUES " + args_str)
+
+		connection.commit()
+		print("Multiple rows added to \"card\"")
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error checking table in PostgreSQL", error)
+	finally:
+		#closing database connection.
+			if(connection):
+				cursor.close()
+				connection.close()
+				print("PostgreSQL connection is closed")
+
 
 def deleteFromTable(recordId):
 	try:

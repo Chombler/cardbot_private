@@ -16,7 +16,7 @@ def createTable():
 		print ( connection.get_dsn_parameters(),"\n")
 
 		create_table_query = '''CREATE TABLE tribe
-								(id int,
+								(id SERIAL PRIMARY KEY,
 								tribe varchar(16));'''
 
 		cursor.execute(create_table_query)
@@ -85,11 +85,45 @@ def addToTable(record):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_insert_query = """ INSERT INTO tribe (id, tribe) VALUES (%s,%s)"""
+		postgres_insert_query = """ INSERT INTO tribe(tribe) VALUES (%s)"""
 		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
 		print("Row added to table \"tribe\"")
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error checking table in PostgreSQL", error)
+	finally:
+		#closing database connection.
+			if(connection):
+				cursor.close()
+				connection.close()
+				print("PostgreSQL connection is closed")
+
+def addManyToTable(recordTuple):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(user = db_credentials[0],
+										password = db_credentials[1],
+										host = db_credentials[2],
+										port = db_credentials[3],
+										database = db_credentials[4])
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print ( connection.get_dsn_parameters(),"\n")
+
+		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
+		print(args_str)
+		cursor.execute("INSERT INTO tribe(tribe) VALUES " + args_str)
+
+		connection.commit()
+		print("Multiple rows added to \"tribe\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")

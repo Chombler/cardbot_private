@@ -15,13 +15,13 @@ def createTable():
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		create_table_query = '''CREATE TABLE side
+		create_table_query = '''CREATE TABLE cardtype
 								(id SERIAL PRIMARY KEY,
-								side varchar(10));'''
+								cardtype varchar(16));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"side\" Addition Successful!")
+		print("Table \"cardtype\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -50,11 +50,11 @@ def dropTable():
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		delete_table_query = '''DROP TABLE side'''
+		delete_table_query = 'DROP TABLE cardtype'
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"side\" Deletion Successful!")
+		print("Table \"cardtype\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -70,6 +70,7 @@ def dropTable():
 				connection.close()
 				print("PostgreSQL connection is closed")
 
+
 #Adding to database
 def addToTable(record):
 	try:
@@ -84,11 +85,11 @@ def addToTable(record):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_insert_query = """ INSERT INTO side(side) VALUES (%s)"""
+		postgres_insert_query = """ INSERT INTO cardtype(cardtype) VALUES (%s)"""
 		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
-		print("Row added to table \"side\"")
+		print("Row added to table \"cardtype\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -119,10 +120,10 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO side(side) VALUES " + args_str)
+		cursor.execute("INSERT INTO cardtype(cardtype) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"side\"")
+		print("Multiple rows added to \"cardtypr\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -151,10 +152,10 @@ def deleteFromTable(recordId):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_delete_query = """ Delete from side where id = %s"""
+		postgres_delete_query = """ Delete from cardtype where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"side\"")
+		print("Row deleted from \"cardtype\"")
 		
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -183,10 +184,10 @@ def pullFromTable(recordId):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_pull_query = """ SELECT * from side where id = %s"""
+		postgres_pull_query = """ SELECT * from cardtype where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"side\" where id = %s" % (recordId))
+		print("Results from \"cardtype\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')
