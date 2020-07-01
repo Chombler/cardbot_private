@@ -22,14 +22,28 @@ try:
 	results = cursor.fetchall()
 
 
-	print("Printing Table")
+	"""print("Printing Table")
 	print(results)
 	for row in results:
 		for col in row:
-			print(col)
+			print(col)"""
 
-	cardInstance = cardObject(results)
-	print(cardInstance.information())
+	for row in results:
+		name = row[1]
+		classes = row[2]
+		tribesandtype = row[3].split()
+		cost = row[4]
+		strength = row[5]
+		health = row[6]
+		traits = row[7].split(",")
+		ability = row[8]
+		flavor = row[9]
+		cardset = row[10]
+		rarity = row[11]
+		side = row[12]
+		cardtype = tribesandtype[-1]
+		tribes = tribesandtype[0:-1]
+
 
 	# Print PostgreSQL version
 	cursor.execute("SELECT version();")
@@ -44,6 +58,4 @@ finally:
 		cursor.close()
 		connection.close()
 		print("PostgreSQL connection is closed")
-	return(cardInstance.information())
-
 
