@@ -17,6 +17,8 @@ from credentials import token, db_credentials
 
 from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, rarity, side, trait, tribe
 
+from dbinjections import pullCardRecord
+
 client = discord.Client()
 
 
@@ -44,20 +46,10 @@ async def on_message(message):
 	if '[[' and ']]' in message.content:
 		text = regex.search('\[\[(.+?)\]\]', message.content)
 		print(text)
-		response = get_card(text.group(1))
-		await message.channel.send('%s\n%s\n%s\n%s\n%s\n%s' % 
-			(response[0], response[1], response[2], 
-				response[3], response[4], response[5]))
+		response = pullCardRecord(text.group(1))
+		await message.channel.send(response)
 
 
-def get_card(name):
-	if name == 'FMN':
-		return ['FMN :Guardian:',
-				'Flower Nut Plant',
-				'1:Sun: 2:Strength:/1:Health:',
-				'Zombie tricks cost +1:Brain:',
-				'*I\'d forget my own flower if it wasn\'t stuck to my head. Wait, what were we talking about again?*',
-				'Event']
 
 
 

@@ -15,15 +15,24 @@ def createTable():
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		create_table_query = '''CREATE TABLE trait
+		create_table_query = '''CREATE TABLE constructor
 								(id SERIAL PRIMARY KEY,
-								trait varchar(16),
-								strengthmodifier varchar(16) DEFAULT NULL,
-								healthmodifier varchar(16) DEFAULT NULL);'''
-
+								name varchar(99),
+								class varchar(16),
+								tribesandtype varchar(64) DEFAULT NULL,
+								cost int,
+								strength int,
+								health int,
+								traits varchar(64) DEFAULT NULL,
+								ability varchar(511),
+								flavor varchar(511),
+								cardset varchar(32) DEFAULT NULL,
+								rarity varchar(32),
+								side varchar(16));'''
+		
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"trait\" Addition Successful!")
+		print("Table \"constructor\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -38,7 +47,7 @@ def createTable():
 				cursor.close()
 				connection.close()
 				print("PostgreSQL connection is closed")
-				
+
 def dropTable():
 	try:
 		print("Trying")
@@ -50,13 +59,13 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
+		print(connection.get_dsn_parameters(),"\n")
 
-		delete_table_query = '''DROP TABLE trait'''
+		delete_table_query = '''DROP TABLE constructor'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"trait\" Deletion Successful!")
+		print("Table \"constructor\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -85,13 +94,13 @@ def addToTable(record):
 		print("connected")
 		cursor = connection.cursor()
 		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
+		print(connection.get_dsn_parameters(),"\n")
 
-		postgres_insert_query = """ INSERT INTO trait(trait, strengthmodifier, healthmodifier) VALUES (%s)"""
-		cursor.execute(postgres_insert_query, (record))
+		postgres_insert_query = """INSERT INTO constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, cardset, rarity, side) VALUES"""
+		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
-		print("Row added to table \"trait\"")
+		print("Row added to \"constructor\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -120,12 +129,12 @@ def addManyToTable(recordTuple):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
+		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO trait(trait, strengthmodifier, healthmodifier) VALUES " + args_str)
+		cursor.execute("INSERT INTO constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, cardset, rarity, side) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"trait\"")
+		print("Multiple rows added to \"constructor\"")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -141,6 +150,7 @@ def addManyToTable(recordTuple):
 				connection.close()
 				print("PostgreSQL connection is closed")
 
+
 def deleteFromTable(recordId):
 	try:
 		print("Trying")
@@ -154,11 +164,11 @@ def deleteFromTable(recordId):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_delete_query = """ Delete from trait where id = %s"""
+		postgres_delete_query = """ Delete from constructor where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"trait\"")
-		
+		print("Row deleted from \"constructor\"")
+
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
 		record = cursor.fetchone()
@@ -186,10 +196,10 @@ def pullFromTable(recordId):
 		# Print PostgreSQL Connection properties
 		print ( connection.get_dsn_parameters(),"\n")
 
-		postgres_pull_query = """ SELECT * from trait where id = %s"""
+		postgres_pull_query = """ SELECT * from constructor where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"trait\" where id = %s" % (recordId))
+		print("Results from \"constructor\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')
