@@ -7,7 +7,7 @@ class cardObject(object):
 	tribes = []
 	cardType = ""
 	cost = 0
-	costModifier = ""
+	costType = ""
 	strength = 0
 	strengthModifier = "Strength"
 	health = 0
@@ -20,6 +20,7 @@ class cardObject(object):
 
 
 	def __init__(self, record):
+		self.resetCard()
 		self.record = record
 
 		for row in record:
@@ -28,7 +29,7 @@ class cardObject(object):
 			self.createTribes(row[2])
 			self.createType(row[3])
 			self.createCost(row[4])
-			self.createCostModifier(row[5])
+			self.createCostType(row[5])
 			self.createStrength(row[6])
 			self.createStrengthModifier(row[7])
 			self.createHealth(row[8])
@@ -39,21 +40,35 @@ class cardObject(object):
 			self.createCardSet(row[13])
 			self.createRarity(row[14])
 
+	def resetCard(self):
+		self.record = []
+		self.name = ""
+		self.cardclass = []
+		self.tribes = []
+		self.cardType = ""
+		self.cost = 0
+		self.costType = ""
+		self.strength = 0
+		self.strengthModifier = "Strength"
+		self.health = 0
+		self.healthModifier = "Health"
+		self.traits = []
+		self.ability = ""
+		self.flavor = ""
+		self.cardSet = ""
+		self.rarity = ""
+
+
 	def createName(self, recordName):
-		if(self.name == recordName):
-			return
-		else:
-			self.name = recordName
+		self.name = recordName
 	
 	def createClasses(self, recordClass):
-		#print("made it to createClasses")
 		if(recordClass in self.cardclass):
 			return
 		else:
 			self.cardclass.append(recordClass)
 
 	def createTribes(self, recordTribe):
-		#print("made it to createTribes")
 		if(recordTribe is None):
 			return
 		if(recordTribe in self.tribes):
@@ -62,70 +77,38 @@ class cardObject(object):
 			self.tribes.append(recordTribe)
 
 	def createType(self, recordType):
-		#print("made it to createType")
-		if(self.cardType == recordType):
-			return
-		else:
-			self.cardType = recordType
+		self.cardType = recordType
 
 	def createCost(self, costRecord):
-		#print("made it to createCost")
-		if(self.cost == costRecord):
-			return
-		else:
-			self.cost = costRecord
+		self.cost = costRecord
 	
-	def createCostModifier(self, recordCostModifier):
-		#print("made it to createCostModifier")
-		if(len(self.costModifier) < 1):
-			self.costModifier = recordCostModifier
+	def createCostType(self, recordCostType):
+		if(len(self.costType) < 1):
+			self.costType = recordCostType
 			return
-		elif(self.costModifier == recordCostModifier):
+		elif(self.costType == recordCostType):
 			return
 		else:
-			self.costModifier = "Special"
+			self.costType = "Special"
 
 	def createStrength(self, recordStrength):
-		#print("made it to createStrength")
-		if(self.strength == recordStrength):
-			return
-		else:
-			self.strength = recordStrength
+		self.strength = recordStrength
 	
 	def createStrengthModifier(self, recordStrengthModifier):
-		#print("made it to createStrengthModifier")
 		if(recordStrengthModifier is None):
 			return
-		if(len(self.strengthModifier) < 1):
-			self.strengthModifier = recordStrengthModifier
-			return
-		elif(self.strengthModifier == recordStrengthModifier):
-			return
-		else:
-			self.strengthModifier = "Special"
+		self.strengthModifier = recordStrengthModifier if self.strengthModifier == "Strength" else "Special"
 
 	
 	def createHealth(self, recordHealth):
-		#print("made it to createHealth")
-		if(self.health == recordHealth):
-			return
-		else:
-			self.health = recordHealth
+		self.health = recordHealth if self.health != recordHealth else self.health
 	
 	def createHealthModifier(self, recordHealthModifier):
-		#print("made it to createHealthModifier")
 		if(recordHealthModifier is None):
 			return
-		if(len(self.healthModifier) < 1):
-			self.healthModifier = recordHealthModifier
-			return
-		elif(self.healthModifier == recordHealthModifier):
-			return
-		else:
-			self.healthModifier = "Special"
+		self.healthModifier = recordHealthModifier if self.healthModifier == "Health" else "Special"
 		
 	def createTraits(self, recordTrait):
-		#print("made it to createTraits")
 		if(recordTrait is None):
 			return
 		if(recordTrait in self.traits):
@@ -134,35 +117,18 @@ class cardObject(object):
 			self.traits.append(recordTrait)
 	
 	def createAbility(self, recordAbility):
-		#print("made it to createAbility")
-		if(self.ability == recordAbility):
-			return
-		else:
-			self.ability = recordAbility
-	
+		self.ability = recordAbility
 
 	def createFlavor(self, recordFlavor):
-		#print("made it to createFlavor")
-		if(self.flavor == recordFlavor):
-			return
-		else:
-			self.flavor = recordFlavor
+		self.flavor = recordFlavor
 	
 	def createCardSet(self, recordCardSet):
-		#print("made it to createCardSet")
 		if(recordCardSet is None):
 			return
-		if(self.cardSet == recordCardSet):
-			return
-		else:
-			self.cardSet = recordCardSet
+		self.cardSet = recordCardSet
 	
 	def createRarity(self, recordRarity):
-		#print("made it to createRarity")
-		if(self.rarity == recordRarity):
-			return
-		else:
-			self.rarity = recordRarity
+		self.rarity = recordRarity
 	
 	def getName(self):
 		return(self.name)
@@ -185,8 +151,8 @@ class cardObject(object):
 	def getCost(self):
 		return(self.cost)
 
-	def getCostModifier(self):
-		return(self.costModifier)
+	def getCostType(self):
+		return(self.CostType)
 
 	def getStrength(self):
 		return(self.strength)
@@ -203,22 +169,24 @@ class cardObject(object):
 	def getStats(self):
 		if(self.health != 0):
 			if(self.strength != 0):
-				return("%s:%s: %s:%s:/%s:%s:" % (self.cost, self.costModifier, self.strength, self.strengthModifier, self.health, self.healthModifier))
+				return("%s:%s: %s:%s:/%s:%s:" % (self.cost, self.costType, self.strength, self.strengthModifier, self.health, self.healthModifier))
 			else:
-				return("%s:%s: %s:%s:" % (self.cost, self.costModifier, self.health, self.healthModifier))
+				return("%s:%s: %s:%s:" % (self.cost, self.costType, self.health, self.healthModifier))
 		else:
-			return("%s:%s:" % (self.cost, self.costModifier))
+			return("%s:%s:" % (self.cost, self.costType))
 
 	def getTraits(self):
 		returnString = ""
 		for trait in self.traits:
-			returnString += trait + " "
-		if(len(returnString) > 0):
-			returnString += "\n"
+			returnString += trait + ", "
+		else:
+			returnString = returnString[0:-2]
+		returnString += "\n" if len(returnString) > 0 else ""
 		return(returnString)
 
 	def getAbility(self):
-		return(self.ability)
+		returnString = self.ability + "\n" if len(self.ability) > 0 else ""
+		return(returnString)
 
 	def getFlavor(self):
 		return(self.flavor)
@@ -235,8 +203,8 @@ class cardObject(object):
 				self.getTribes() + self.getType() + "\n" +
 				self.getStats() + "\n" +
 				self.getTraits() +
-				self.getAbility() + "\n" +
-				self.getFlavor() + "\n" +
+				self.getAbility() + 
+				"*" + self.getFlavor() + "*\n" +
 				self.getSet() + "-- " + self.getRarity() + " --")
 
 

@@ -12,8 +12,6 @@ def createTable():
 										database = db_credentials[4])
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
 
 		create_table_query = '''CREATE TABLE trait
 								(id SERIAL PRIMARY KEY,
@@ -49,8 +47,6 @@ def dropTable():
 										database = db_credentials[4])
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
 
 		delete_table_query = '''DROP TABLE trait'''
 
@@ -76,27 +72,18 @@ def dropTable():
 #Adding to database
 def addToTable(record):
 	try:
-		print("Trying")
 		connection = psycopg2.connect(user = db_credentials[0],
 										password = db_credentials[1],
 										host = db_credentials[2],
 										port = db_credentials[3],
 										database = db_credentials[4])
-		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
 
 		postgres_insert_query = """ INSERT INTO trait(trait, strengthmodifier, healthmodifier) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
 		print("Row added to table \"trait\"")
-
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -109,16 +96,12 @@ def addToTable(record):
 
 def addManyToTable(recordTuple):
 	try:
-		print("Trying")
 		connection = psycopg2.connect(user = db_credentials[0],
 										password = db_credentials[1],
 										host = db_credentials[2],
 										port = db_credentials[3],
 										database = db_credentials[4])
-		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
@@ -126,11 +109,6 @@ def addManyToTable(recordTuple):
 
 		connection.commit()
 		print("Multiple rows added to \"trait\"")
-
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -143,27 +121,18 @@ def addManyToTable(recordTuple):
 
 def deleteFromTable(recordId):
 	try:
-		print("Trying")
 		connection = psycopg2.connect(user = db_credentials[0],
 										password = db_credentials[1],
 										host = db_credentials[2],
 										port = db_credentials[3],
 										database = db_credentials[4])
-		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
 
 		postgres_delete_query = """ Delete from trait where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
 		print("Row deleted from \"trait\"")
 		
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
-
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
 	finally:
@@ -175,16 +144,12 @@ def deleteFromTable(recordId):
 
 def pullFromTable(recordId):
 	try:
-		print("Trying")
 		connection = psycopg2.connect(user = db_credentials[0],
 										password = db_credentials[1],
 										host = db_credentials[2],
 										port = db_credentials[3],
 										database = db_credentials[4])
-		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print ( connection.get_dsn_parameters(),"\n")
 
 		postgres_pull_query = """ SELECT * from trait where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
@@ -195,11 +160,6 @@ def pullFromTable(recordId):
 				print(col, end='')
 			print('')
 
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
-
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
 	finally:
@@ -208,3 +168,32 @@ def pullFromTable(recordId):
 				cursor.close()
 				connection.close()
 				print("PostgreSQL connection is closed")
+
+def pullidFromTable(recordValue):
+	try:
+		connection = psycopg2.connect(user = db_credentials[0],
+										password = db_credentials[1],
+										host = db_credentials[2],
+										port = db_credentials[3],
+										database = db_credentials[4])
+		cursor = connection.cursor()
+
+		results = []
+		postgres_pull_query = """ SELECT id from trait where trait = %s"""
+		cursor.execute(postgres_pull_query, (recordValue,))
+		results = cursor.fetchall()
+		result = None
+		try:
+			result = results[0][0]
+		except:
+			result = None
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error checking table in PostgreSQL", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			#print("PostgreSQL connection is closed")
+		return(result)
