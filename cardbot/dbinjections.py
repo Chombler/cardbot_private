@@ -77,14 +77,16 @@ def pullCardRecord(recordName):
 		join_table_query = '''
 		SELECT id
 		FROM card
-		WHERE card.name = ('%s') ''' % (recordName)
+		WHERE card.name = %s '''
 
-		cursor.execute(join_table_query)
+		cursor.execute(join_table_query, (recordName,))
+		
 		results = cursor.fetchall()
+
 		print(results)
 		if len(results) < 1:
 			success = False
-			raise ValueError('The name that was given to cardbot didn\'t exist in the card table.')
+			raise ValueError("The name that was given to cardbot didn\'t exist in the card table.")
 
 		join_table_query = '''
 		SELECT	name, 
@@ -107,9 +109,9 @@ def pullCardRecord(recordName):
 		LEFT JOIN cardset ON cardset.id = card.setid
 		LEFT JOIN rarity ON card.rarityid = rarity.id
 		LEFT JOIN side ON card.sideid = side.id
-		WHERE card.name = ('%s') ''' % (recordName)
+		WHERE card.name = %s '''
 
-		cursor.execute(join_table_query)
+		cursor.execute(join_table_query, (recordName,))
 		results = cursor.fetchall()
 
 
