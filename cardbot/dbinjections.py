@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, rarity, side, trait, tribe
+from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, nickname, rarity, side, trait, tribe
 from cardobject import cardObject
 from constructorRows import constructor_rows
 
@@ -54,11 +54,8 @@ from constructorRows import constructor_rows
 constructor.dropTable()
 constructor.createTable()
 constructor.addToTable(constructor_rows)
+
 """
-
-
-
-
 
 
 def pullCardRecord(recordName):
@@ -74,19 +71,30 @@ def pullCardRecord(recordName):
 		cursor = connection.cursor()
 		# Print PostgreSQL Connection properties
 		print(connection.get_dsn_parameters(),"\n")
-		join_table_query = '''
+
+		select_table_query = '''
+		SELECT name
+		FROM nickname
+		ORDER BY SIMILARITY(nickname, %s) DESC
+		LIMIT 1'''
+
+		cursor.execute(select_table_query, (recordName,))
+
+		results = cursor.fetchall()
+		print(results)
+		resultname = results[0][0]
+
+		select_table_query = '''
 		SELECT id
 		FROM card
-		WHERE card.name = %s '''
+		ORDER BY SIMILARITY(name, %s) DESC
+		LIMIT 1'''
 
-		cursor.execute(join_table_query, (recordName,))
-		
+		cursor.execute(select_table_query, (resultname,))
+
 		results = cursor.fetchall()
-
 		print(results)
-		if len(results) < 1:
-			success = False
-			raise ValueError("The name that was given to cardbot didn\'t exist in the card table.")
+		resultid = results[0][0]
 
 		join_table_query = '''
 		SELECT	name, 
@@ -109,9 +117,10 @@ def pullCardRecord(recordName):
 		LEFT JOIN cardset ON cardset.id = card.setid
 		LEFT JOIN rarity ON card.rarityid = rarity.id
 		LEFT JOIN side ON card.sideid = side.id
-		WHERE card.name = %s '''
+		WHERE card.id = %s
+		'''
 
-		cursor.execute(join_table_query, (recordName,))
+		cursor.execute(join_table_query, (resultid,))
 		results = cursor.fetchall()
 
 
@@ -137,6 +146,6 @@ def pullCardRecord(recordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(cardInstance.information() if success else "I'm sorry, I couldn't find a card with that name.")
+		return(cardInstance.information())
 
 

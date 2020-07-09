@@ -8,6 +8,7 @@ strings within [[]] brackets"""
 import discord
 import re as regex
 import psycopg2
+from random import randrange
 
 from psycopg2 import Error
 
@@ -21,6 +22,26 @@ from dbinjections import pullCardRecord
 
 client = discord.Client()
 
+florasiaPraises = {
+0 : "Long Live Florasia!!",
+1 : "Florasia Lives On!!",
+2 : "Florasia is the Best!!",
+3 : "No one can stop Florasia!!"
+}
+
+zombwanalandPraises = {
+0 : "Long Live Zombwanaland!!",
+1 : "Zombwanaland Lives On!!",
+2 : "Zombwanaland is the Best!!",
+3 : "No one can stop Zombwanaland!!"
+}
+
+panthalasaurusPraises = {
+0 : "Long Live Panthalasaurus!!",
+1 : "Panthalasaurus Lives On!!",
+2 : "Panthalasaurus is the Best!!",
+3 : "No one can stop Panthalasaurus!!"
+}
 
 @client.event
 async def on_ready():
@@ -39,15 +60,22 @@ async def on_message(message):
 	if message.content.startswith('$goodbye'):
 		await message.channel.send('Goodbye!')
 
-	if message.content.startswith('$c'):
-		checkTable()
-		await message.channel.send('Table checked!')
-
 	if '[[' and ']]' in message.content:
-		text = regex.search('\[\[(.+?)\]\]', message.content)
-		print(text)
-		response = pullCardRecord(text.group(1))
-		await message.channel.send(response)
+		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+		print(stringInput)
+		for text in stringInput:
+			if(text == "Florasia"):
+				responseChoice = randrange(4)
+				await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
+			elif(text == "Zombwanaland"):
+				responseChoice = randrange(4)
+				await message.channel.send(zombwanalandPraises.get(responseChoice, "Nothing to see here"))
+			elif(text == "Panthalasaurus"):
+				responseChoice = randrange(4)
+				await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
+			else:
+				response = pullCardRecord(text)
+				await message.channel.send(response)
 
 
 

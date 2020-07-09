@@ -16,8 +16,8 @@ def createTable():
 		create_table_query = '''CREATE TABLE trait
 								(id SERIAL PRIMARY KEY,
 								trait varchar(16),
-								strengthmodifier varchar(16) DEFAULT NULL,
-								healthmodifier varchar(16) DEFAULT NULL);'''
+								strengthmodifier varchar(64) DEFAULT NULL,
+								healthmodifier varchar(64) DEFAULT NULL);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()

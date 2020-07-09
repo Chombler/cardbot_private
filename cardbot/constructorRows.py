@@ -23,7 +23,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Spikeweed Sector',	'Guardian',	'Root Environment',	2,	0,	0,	'',	'Before combat here: Do 2 damage to a Zombie here.',	'Quite similar to the region known as Pokey Province.',	'Galactic',	'Uncommon',	'Sun'),\
 ('Tricarrotops',	'Guardian',	'Root Animal Plant',	2,	1,	3,	'Bullseye',	'Dino Roar: This gets +1/+1,',	'Beta-Carrotina tracked Huge-Gigantacus all the way down the Meteor-Z-carved tunnel to Hollow Earth. Carrots there had evolved in a very different direction.',	'Colossal',	'Legendary',	'Sun'),\
 ('Water Chestnut',	'Guardian',	'Root Nut Plant',	2,	0,	8,	'Amphibious, Team-Up',	'',	'\"300 laps a day, every day. That\'\'s how I do it.\"',	'Premium',	'Uncommon',	'Sun'),\
-('Health-Nut',	'Guardian',	'Nut Plant',	3,	0,	4,	'',	'This attacks with its :Health: instead of its :Strength:.',	'He always skips leg day.',	'',	'Event',	'Sun'),\
+('Health-Nut',	'Guardian',	'Nut Plant',	3,	0,	4,	'HealthStrength',	'This attacks with its :Health: instead of its :Strength:.',	'He always skips leg day.',	'',	'Event',	'Sun'),\
 ('Hibernating Beary',	'Guardian',	'Berry Animal Plant',	3,	0,	8,	'',	'When hurt: This gets +4:Strength:.',	'Don\'\'t poke the beary.',	'Premium',	'Rare',	'Sun'),\
 ('Marine Bean',	'Guardian',	'Bean Animal Plant',	3,	3,	2,	'Amphibious',	'When played: This gets +1/+1 for each other Amphibious Plant.',	'Of course beans evolved gills. How else would they breathe underwater?',	'Triassic',	'Super-Rare',	'Sun'),\
 ('Pea-Nut',	'Guardian',	'Pea Nut Plant',	3,	2,	4,	'Team-Up',	'',	'\"Mom was a Peashooter. Dad was a nut. Everyone said it wouldn\'\'t work, but they were wrong.\"',	'Premium',	'Uncommon',	'Sun'),\
@@ -46,7 +46,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Body-Gourd',	'Guardian',	'Squash Plant',	5,	3,	6,	'Amphibious, Team-Up',	'When played: Fill your Super-Block meter to full.',	'He moonlights as a decorative center piece during the fall.',	'Galactic',	'Legendary',	'Sun'),\
 ('Doom-Shroom',	'Guardian',	'Mushroom Plant',	5,	0,	0,	'',	'Destroy all Plants and Zombies with 4:Strength: or more.',	'\"I could destroy everything you hold dear. It wouldn\'\'t be hard.\"',	'Premium',	'Super-Rare',	'Sun'),\
 ('Grizzly Pear',	'Guardian',	'Fruit Animal Plant',	5,	5,	4,	'Amphibious',	'',	'It\'\'s true what they say, \"Never get between a Grizzly Pear and her cub.\" Doubly true for Zombies.',	'Triassic',	'Uncommon',	'Sun'),\
-('Peconalith',	'Guardian',	'Nut Plant',	5,	0,	7,	'',	'All Plants and Zombies attack with their :Health: instead of their :Strength:.',	'No one knows where he came from. He just appeared one day. But everyone who comes in contact with him feels... changed somehow.',	'Galactic',	'Legendary',	'Sun'),\
+('Pecanolith',	'Guardian',	'Nut Plant',	5,	0,	7,	'HealthStrength',	'All Plants and Zombies attack with their :Health: instead of their :Strength:.',	'No one knows where he came from. He just appeared one day. But everyone who comes in contact with him feels... changed somehow.',	'Galactic',	'Legendary',	'Sun'),\
 ('Smackadamia',	'Guardian',	'Nut Plant',	5,	4,	4,	'Amphibious',	'When played: Your nuts get +2:Health:.',	'Smackadamia wasn\'\'t born with smack smarts. He studied hard. He\'\'s a smackademic.',	'Premium',	'Rare',	'Sun'),\
 ('Tough Beets',	'Guardian',	'Root Plant',	5,	6,	1,	'Armored 1',	'When played: This gets +1:Health: for every other Plant and Zombie.',	'He grew up on the wrong side of the garden.',	'Premium',	'Rare',	'Sun'),\
 ('Gravitree',	'Guardian',	'Fruit Tree Plant',	6,	7,	7,	'Armored 1',	'Whenever a Zombie is played, move it here.',	'The apple doesn\'\'t fall far from the tree. Neither does anything else.',	'Galactic',	'Super-Rare',	'Sun'),\
@@ -75,6 +75,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Berry Blast',	'Kabloom',	'Berry Trick',	2,	0,	0,	'',	'Do 3 damage.',	'Vicious AND nutritious',	'Basic',	'Common',	'Sun'),\
 ('Buff-Shroom',	'Kabloom',	'Mushroom Plant',	2,	1,	1,	'',	'When played: All Mushrooms get +1/+1.',	'You might know him from his wildly popular series of workout videos called \"30 Days to a Buff-Shroom Body.\"',	'Basic',	'Common',	'Sun'),\
 ('Seedling',	'Kabloom',	'Seed Plant',	2,	0,	1,	'',	'Start of turn: This transforms into a random plant that costs 6:Sun: or less.',	'It\'\'s the tiny seed of a... nobody actually knows.',	'Basic',	'Common',	'Sun'),\
+('Shelf Mushroom',	'Kabloom',	'Mushroom Berry Plant',	2,	2,	2,	'',	'Fusion: Do 2 damage.',	'Legnds of Hollow Earth whisper that if you stack up enough Shelf Mushrooms, you\'\'ll eventually reach the Surface World.',	'Triassic',	'Rare',	'Sun'),\
 ('Wild Berry',	'Kabloom',	'Berry Plant',	2,	4,	1,	'',	'When played: This moves to a random lane.',	'What one word best describes Wild Berry? \"Unpredictable.\"',	'Premium',	'Rare',	'Sun'),\
 ('Berry Angry',	'Kabloom',	'Berry Trick',	3,	0,	0,	'',	'All Plants get +2:Strength:',	'\"Now you\'\'ve done it! That\'\'s the last straw! I\'\'m gonna berry you!\"',	'Premium',	'Uncommon',	'Sun'),\
 ('Cosmic Mushroom',	'Kabloom',	'Mushroom Plant',	3,	2,	2,	'',	'When played: Conjure a Mushroom, and it gets +2:Strength:.',	'He\'\'s far out alright. Like, waaaay far out.',	'Galactic',	'Rare',	'Sun'),\
@@ -98,7 +99,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Sour Grapes',	'Kabloom',	'Berry Plant',	4,	2,	2,	'',	'When played: Do 1 damage to each zombie.',	'Sour. Bitter. Resentful. It\'\'s all true. But he\'\'s got his reasons.',	'Premium',	'Rare',	'Sun'),\
 ('Transfiguration',	'Kabloom',	'Leafy Fruit Plant',	4,	4,	7,	'',	'Whenever a Plant is hurt and survives, transform it into a random Plant.',	'\"By Heisenberg\'\'s Uncertainty Principle, if you look at a Plant too closely, you actually change what that Plant is...\"',	'',	'Event',	'Sun'),\
 ('Atomic Bombegranate',	'Kabloom',	'Fruit Plant',	5,	5,	2,	'',	'When destroyed: Make Seedlings next door.',	'Remember: Never ever EVER split a fruit. Oh, hold on, actually fruits are ok, just never split an atom.',	'',	'Event',	'Sun'),\
-('Blueberry',	'Kabloom',	'Berry Plant',	5,	3,	3,	'',	'When played: Do 2 damage.',	'Loves to make Zombies sing the blues.',	'Premium',	'Uncommon',	'Sun'),\
+('Bluesberry',	'Kabloom',	'Berry Plant',	5,	3,	3,	'',	'When played: Do 2 damage.',	'Loves to make Zombies sing the blues.',	'Premium',	'Uncommon',	'Sun'),\
 ('Electric Blueberry',	'Kabloom',	'Berry Plant',	5,	0,	5,	'',	'After combat here: Do 6 damage to a random Zombie or the Zombie Hero.',	'Does she strike a \"random\" Zombie with her lightning? Really? Or is she settling an old, unspoken score?',	'',	'Event',	'Sun'),\
 ('Gloom-Shroom',	'Kabloom',	'Mushroom Plant',	5,	5,	5,	'Bullseye',	'Mushroom Evolution: Do 3 damage to Zombies here and next door.',	'Some see him as depressed, but he\'\'s got a lot of sides.',	'Colossal',	'Legendary',	'Sun'),\
 ('Lava Guava',	'Kabloom',	'Fruit Trick',	5,	0,	0,	'',	'Do 2 damage to each zombie here and next door.\nIf played on the Ground, make Hot Lava here.',	'\"I try to stay cool, I really do. But Zombies! Man, they make me blow my top!\"',	'Galactic',	'Rare',	'Sun'),\
@@ -113,13 +114,13 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Blazing Bark',	'Kabloom, Mega',	'Tree Superpower Trick',	1,	0,	0,	'',	'A Plant gets +4:Strength:.',	'Captain Combustible knows how to light a fire under his teammates.',	'Premium',	'Legendary',	'Sun'),\
 ('Mush-Boom',	'Kabloom, Smarty',	'Mushroom Superpower Trick',	1,	0,	0,	'',	'Make a 1/1 Poison Mushroom with Anti-Hero 2. Do 2 damage to a Zombie there.',	'Nightcap and his mushroom friends are not to be truffled with.',	'Premium',	'Legendary',	'Sun'),\
 ('Sunburn',	'Kabloom, Solar',	'Flower Superpower Trick',	1,	0,	0,	'',	'Do 2 damage. You get +1:Sun: for the rest of the game.',	'Solar Flare never met a sunscreen strong enough to stop her.',	'Premium',	'Legendary',	'Sun'),\
-('Banana Peel',	'Mega',	'Banana Trick',	1,	0,	0,	'',	'All Plants get +2:Strength:.',	'A slapstick comedy staple that, somehow, the Zombies never see coming.',	'Galactic',	'Rare',	'Sun'),\
+('Banana Peel',	'Mega',	'Banana Trick',	1,	0,	0,	'',	'Move a Zombie.\nConjure a Banana.',	'A slapstick comedy staple that, somehow, the Zombies never see coming.',	'Galactic',	'Rare',	'Sun'),\
 ('Bonk Choy',	'Mega',	'Leafy Plant',	1,	2,	1,	'',	'When played: This gets +1:Strength: until end of turn.',	'Little known fact: He used to have two teeth.',	'Premium',	'Uncommon',	'Sun'),\
 ('Clique Peas',	'Mega',	'Bean Pea Plant',	1,	1,	1,	'',	'When played: Shuffle two Clique Peas into your deck. For the rest of the game, all Clique Peas get +1/+1 and cost +1:Sun:.',	'On Wednesdays we wear sunglasses.',	'',	'Event',	'Sun'),\
 ('Embiggen',	'Mega',	'Superpower Trick',	1,	0,	0,	'',	'A Plant gets +2/+2.',	'Livin\'\' large, oh yeah.',	'',	'Super-Rare',	'Sun'),\
 ('Half-Banana',	'Mega',	'Banana Plant',	1,	2,	2,	'',	'When destroyed: All Bananas in your hand get +1/+1.',	'\"Have you met my better half? She\'\'s around here somwhere.\"',	'Triassic',	'Uncommon',	'Sun'),\
 ('Holo-Flora',	'Mega',	'Superpower Trick',	1,	0,	0,	'',	'Draw two cards.',	'You got Plants!',	'',	'Super-Rare',	'Sun'),\
-('Lily of the Valley',	'Mega',	'Flower Plant',	1,	1,	2,	'',	'When you plat a Plant on the Heights, that Plant get +2/+2.',	'She\'\'s always trying to elevate her friends. She\'\'s good like that.',	'',	'Event',	'Sun'),\
+('Lily of the Valley',	'Mega',	'Flower Plant',	2,	1,	2,	'',	'When you play a Plant on the Heights, that Plant gets +2/+2.',	'She\'\'s always trying to elevate her friends. She\'\'s good like that.',	'',	'Event',	'Sun'),\
 ('Party Thyme',	'Mega',	'Leafy Plant',	1,	2,	2,	'',	'When a Plant does a Bonus Attack, draw a card.',	'A real extrovert, this one.',	'Premium',	'Super-Rare',	'Sun'),\
 ('Pea Pod',	'Mega',	'Pea Plant',	1,	1,	1,	'',	'Start of each turn: This gets +1/+1.',	'Sometimes they squabble, but they usually get along like five peas in a pod.',	'Premium',	'Uncommon',	'Sun'),\
 ('Peashooter',	'Mega',	'Pea Plant',	1,	1,	1,	'',	'',	'Started fighting Zombies in 2009... and never stopped.',	'Basic',	'Common',	'Sun'),\
@@ -137,7 +138,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Sweet Pea',	'Mega',	'Pea Plant',	2,	2,	3,	'',	'When played: Move a Zombie to this lane.',	'Zombies may only have four teeth left, but on of them\'\'s a sweet tooth.',	'Galactic',	'Uncommon',	'Sun'),\
 ('Vegetation Mutation',	'Mega',	'Trick',	2,	0,	0,	'',	'All Plants on Heights and Environments get +2/+2.',	'Environmentalism at its finest.',	'Galactic',	'Uncommon',	'Sun'),\
 ('Captain Cucumber',	'Mega',	'Fruit Plant',	3,	1,	4,	'',	'Cards you Conjure cost 1:Sun: less.\nWhen this does damage, Conjure a Legendary card.',	'He\'\'s steered his crew through many a pickle.',	'Galactic',	'Legendary',	'Sun'),\
-('Cosmic Pea',	'Mega',	'Pea Plant',	3,	1,	1,	'',	'When played: Conjure a Pea, and it gets Double Strike.',	'\"The cosmos is so big and a pea is so small. The juxtaposition just really makes me think, you know?\"',	'Galactic',	'Rare',	'Sun'),\
+('Cosmic Pea',	'Mega',	'Pea Plant',	3,	1,	1,	'Double Strike',	'When played: Conjure a Pea, and it gets Double Strike.',	'\"The cosmos is so big and a pea is so small. The juxtaposition just really makes me think, you know?\"',	'Galactic',	'Rare',	'Sun'),\
 ('Fertilize',	'Mega',	'Trick',	3,	0,	0,	'',	'A plants gets +3/+3.',	'Stinky, sure, but powerful stuff. Ask any Plant.',	'Basic',	'Common',	'Sun'),\
 ('Flourish',	'Mega',	'Flower Trick',	3,	0,	0,	'',	'Draw 2 cards.',	'Call it a growth spurt.',	'Basic',	'Common',	'Sun'),\
 ('Grape Power',	'Mega',	'Berry Trick',	3,	0,	0,	'',	'Double a plant\'\'s :Strength:\nGain a Grape Responsibility.',	'A dinosaur\'\'s favorite primordial snack.',	'Colossal',	'Super-Rare',	'Sun'),\
@@ -150,7 +151,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Banana Split',	'Mega',	'Banana Plant',	4,	4,	4,	'',	'When destroyed: Make two Half-Bananas next door.',	'\"I don\'\'t want to brag, but hanging out in a tub full of ice-cream all day... not a bad gig if you can get it.\"',	'',	'Event',	'Sun'),\
 ('Bananasaurus Rex',	'Mega',	'Banana Animal Plant',	4,	3,	3,	'Double Strike',	'Dino-Roar: This gets +1/+1.',	'She\'\'s a banana first and a dinosaur second. But it\'\'s a close second.',	'Premium',	'Legendary',	'Sun'),\
 ('Plant Food',	'Mega',	'Trick',	4,	0,	0,	'',	'A plant gets +1/+1 then does a Bonus Attack.',	'The most important meal of the day.',	'Premium',	'Rare',	'Sun'),\
-('Re-Peat Moss',	'Mega',	'Moss Plant',	4,	3,	2,	'',	'When you play a Trick, this does a Bonus Attack.',	'To do what I do... it\'\'s TRICKY. I\'\'ll leave it at that.\"',	'Premium',	'Rare',	'Sun'),\
+('Re-Peat Moss',	'Mega',	'Moss Plant',	4,	2,	3,	'',	'When you play a Trick, this does a Bonus Attack.',	'To do what I do... it\'\'s TRICKY. I\'\'ll leave it at that.\"',	'Premium',	'Rare',	'Sun'),\
 ('Savage Spinach',	'Mega',	'Leafy Plant',	4,	3,	6,	'',	'Leafy Evolution: All Plants in all lanes and your hand get +2:Strength:.',	'Neptuna planned her Triassic Invasion perfectly. But like so many conqueroros before her, she undersestimated the Spinach.',	'Triassic',	'Super-Rare',	'Sun'),\
 ('Skyshooter',	'Mega',	'Pea Plant',	4,	3,	2,	'',	'When played on Heights: This gets +2/+2.',	'The youngest Peashooter to ever earn a pilot\'\'s license. Also the only Peashooter ever to earn a pilot\'\'s license.',	'Premium',	'Uncommon',	'Sun'),\
 ('Gatling Pea',	'Mega',	'Pea Plant',	5,	5,	4,	'Double Strike',	'Pea Evolution: This does a Bonus Attack.',	'There is no problem that cannot be solved by more peas.',	'Colossal',	'Legendary',	'Sun'),\
@@ -171,7 +172,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Big Chill',	'Smarty',	'Superpower Trick',	1,	0,	0,	'',	'Freeze a Zombie.\nDraw a card.',	'Discerning Plants agree: Zombies are best served on ice.',	'',	'Super-Rare',	'Sun'),\
 ('Iceberg Lettuce',	'Smarty',	'Leafy Trick',	1,	0,	0,	'',	'Freeze a Zombie.',	'\"FREEZE! Ha, just kidding. Little Iceberg humor there.\"',	'Premium',	'Uncommon',	'Sun'),\
 ('Lieutenant Carrotron',	'Smarty',	'Root Superpower Plant',	1,	2,	1,	'Team-Up',	'When played: Conjure a Root.',	'Beta-Carrotina knows she can always count on him to get to the root of the problem.',	'',	'Super-Rare',	'Sun'),\
-('Lightning Reed',	'Smarty',	'Leafy Plant',	1,	1,	2,	'Amphibious, Splash Damage 1',	'',	'\"I do it for the shock value.\"',	'Premium',	'Rare',	'Sun'),\
+('Lightning Reed',	'Smarty',	'Leafy Plant',	2,	1,	2,	'Amphibious, Splash Damage 1',	'',	'\"I do it for the shock value.\"',	'Premium',	'Rare',	'Sun'),\
 ('Lightspeed Seed',	'Smarty',	'Seed Superpower Plant',	1,	0,	0,	'',	'Conjure two tricks.',	'Make the jump to light seed.',	'',	'Super-Rare',	'Sun'),\
 ('Lily Pad',	'Smarty',	'Leafy Plant',	1,	0,	1,	'Amphibious',	'Fusion: A Plant played on this gets Amphibious. Conjure a Leafy card.',	'When Neptuna\'\'s Triassic Invasion flooded Hollow Earth with vast new oceans, Plants quickly evolved to survive.',	'Triassic',	'Rare',	'Sun'),\
 ('Lima-Pleurodon',	'Smarty',	'Bean Animal Plant',	1,	2,	2,	'Amphibious',	'Dino-Roar: Shuffle a Magic Beanstalk into your deck.',	'Sometimes one Plant provides both the Army and the Navy.',	'Colossal',	'Legendary',	'Sun'),\
@@ -182,7 +183,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Snowdrop',	'Smarty',	'Flower Plant',	1,	1,	2,	'',	'This gets +2/+2 when a Zombie is frozen.',	'Zombies are always looking at her with a frozen expression.',	'Basic',	'Common',	'Sun'),\
 ('Spyris',	'Smarty',	'Flower Root Plant',	1,	2,	1,	'Amphibious',	'You can tap Gravestones to see which Zombies are hiding in them.',	'You can\'\'t hide anything from her. Don\'\'t even try. She\'\'ll get inside your HEAD.',	'',	'Event',	'Sun'),\
 ('Transmogrify',	'Smarty',	'Superpower Trick',	1,	0,	0,	'',	'Transform a Zombie into a random Zombie that costs 1:Brain:.',	'It\'\'s a life-changing experience. Actually, it\'\'s an everything-changing experience.',	'',	'Super-Rare',	'Sun'),\
-('Weenie Beenie',	'Smarty',	'Bean Plant',	1,	1,	1,	'',	'',	'Prefers to be called \"Vertically Challenged Beanie.\"',	'Basic',	'Common',	'Sun'),\
+('Weenie Beanie',	'Smarty',	'Bean Plant',	1,	1,	1,	'',	'',	'Prefers to be called \"Vertically Challenged Beanie.\"',	'Basic',	'Common',	'Sun'),\
 ('Whirlwind',	'Smarty',	'Superpower Trick',	1,	0,	0,	'',	'Bounce a random Zombie.',	'There\'\'s no place like home. There\'\'s no place like home.',	'',	'Super-Rare',	'Sun'),\
 ('Bog of Enlightenment',	'Smarty',	'Environment',	2,	0,	0,	'',	'Plants here that are Amphibious get +2:Strength:\nZombies here that aren\'\'t Amphibious get -2:Strength:.',	'Good for Plants, it is. Good for Zombies, it is not!',	'Galactic',	'Super-Rare',	'Sun'),\
 ('Cosmic Bean',	'Smarty',	'Bean Plant',	2,	1,	1,	'Team-Up',	'When played: Conjure a Bean, and it gets Team-Up.',	'It IS a magical fruit!',	'Galactic',	'Rare',	'Sun'),\
@@ -336,7 +337,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Octo Zombie',	'Beastly',	'Pet Zombie',	8,	8,	8,	'Amphibious, Frenzy',	'When destroyed: Gain an Octo Zombie.',	'Is the correct term \'\'octopuses\'\' or \'\'octopi\'\'? You\'\'d think he\'\'d have an opinion, but he doesn\'\'t.',	'Premium',	'Legendary',	'Brain'),\
 ('Zombot 1000',	'Beastly',	'Science Gargantuar Zombie',	9,	9,	9,	'',	'When played: Destroy all Plants.',	'The first 999 Zombots are now considered classics.',	'Premium',	'Legendary',	'Brain'),\
 ('Stayin\'\' Alive',	'Beastly, Crazy',	'Dancing Superpower Trick',	1,	0,	0,	'',	'Do 3 damage to a Plant.\nHeal your Hero for 3.',	'For Electric Boogaloo, \"alive\" is a relative term.',	'Premium',	'Legendary',	'Brain'),\
-('Witch\'\'s Familiar',	'Brain, Beastly',	'Pet Superpower Trick',	1,	0,	0,	'',	'Make Zom-Bats.',	'Immorticia was cleaing her belfry when, lo and behold, she found bats in there.',	'Premium',	'Legendary',	'Brain'),\
+('Witch\'\'s Familiar',	'Brainy, Beastly',	'Pet Superpower Trick',	1,	0,	0,	'',	'Make Zom-Bats.',	'Immorticia was cleaing her belfry when, lo and behold, she found bats in there.',	'Premium',	'Legendary',	'Brain'),\
 ('Cardboard Robot Zombie',	'Brainy',	'Science Zombie',	1,	1,	1,	'',	'',	'He\'\'s Rustbolt\'\'s biggest fan.',	'Basic',	'Common',	'Brain'),\
 ('Chimney Sweep',	'Brainy',	'Professional Zombie',	1,	2,	1,	'',	'When played on Heights: This gets +1/+1.',	'It\'\'s a growth industry.',	'Premium',	'Uncommon',	'Brain'),\
 ('Cut Down to Size',	'Brainy',	'Superpower Trick',	1,	0,	0,	'',	'Destroy a Plant that has 5:Strength: or more.',	'\"The tallest blade of grass is the first to get cut. Braaainz!\" - Ancient Zombie Proverb',	'',	'Super-Rare',	'Brain'),\
@@ -346,7 +347,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Mustache Waxer',	'Brainy',	'Professional Mustache Zombie',	1,	2,	2,	'',	'When you play a Mustache, this gets +1:Health: and you get +1:Brain:.',	'Customers have been telling him \"Get a brain\" for years now.',	'Triassic',	'Uncommon',	'Brain'),\
 ('Neutron Imp',	'Brainy',	'Science Imp Zombie',	1,	2,	2,	'',	'When an Environment is played, this does a Bonus Attack.',	'He\'\'s not small, just very compact.',	'Galactic',	'Super-Rare',	'Brain'),\
 ('Paparazzi Zombie',	'Brainy',	'Professional Party Zombie',	1,	1,	1,	'',	'This gets +1/+1 when you play a Trick.',	'Why is everyone always screaming and running away in his photos.',	'Basic',	'Common',	'Brain'),\
-('Pot of Gold',	'Brainy',	'Trick',	1,	0,	0,	'',	'Draw 3 cards.',	'The luck of the Zombies!',	'',	'Event',	'Brain'),\
+('Pot of Gold',	'Brainy',	'Trick',	1,	0,	0,	'',	'Draw 3 cards.',	'The luck of the Zombies!',	'',	'Token',	'Brain'),\
 ('Summoning',	'Brainy',	'Superpower Trick',	1,	0,	0,	'',	'Make a random Zombie that costs 2:Brain: or less.',	'It\'\'s like a blind date... but with Zombies... and fighting.',	'',	'Super-Rare',	'Brain'),\
 ('Telepathy',	'Brainy',	'Superpower Trick',	1,	0,	0,	'',	'Draw two cards.',	'You\'\'re thinking of a number between 1 and braaaaains.',	'',	'Super-Rare',	'Brain'),\
 ('Teleport',	'Brainy',	'Science Trick',	1,	0,	0,	'',	'You may play a Zombie when it\'\'s time for Tricks this turn.\nDraw a card.',	'Feels like cheating.',	'Premium',	'Legendary',	'Brain'),\
@@ -358,11 +359,12 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Evolutionary Leap',	'Brainy',	'History Trick',	2,	0,	0,	'',	'Transform a Zombie into a random Zombie that costs 1:Brain: more.\nDraw a card.',	'When Dr. Zomboss sent Meteor Z and Huge-Gigantacus from space, they smashed a tunnel to the center of the earth. There, Plants and Zombies had evolved into insane new forms.',	'Colossal',	'Super-Rare',	'Brain'),\
 ('Lurch for Lunch',	'Brainy',	'Gourmet Trick',	2,	0,	0,	'',	'A Zombie does a Bonus Attack.',	'Will work overtime for food.',	'Basic',	'Common',	'Brain'),\
 ('Pool Shark',	'Brainy',	'Mustache Sports Zombie',	2,	3,	1,	'Bullseye',	'',	'Not actually a shark.',	'Premium',	'Uncommon',	'Brain'),\
-('Space Cadet',	'Brainy',	'Science Zombie',	2,	2,	3,	'',	'',	'His body is in space, but his head is in the clouds.',	'',	'Event',	'Brain'),\
+('Space Cadet',	'Brainy',	'Science Zombie',	2,	2,	3,	'',	'',	'His body is in space, but his head is in the clouds.',	'',	'Token',	'Brain'),\
 ('Teleportation Zombie',	'Brainy',	'Science Zombie',	2,	1,	5,	'Gravestone',	'You can play Zombies when it\'\'s time for tricks.',	'The phone cord stretches to another dimension.',	'Galactic',	'Legendary',	'Brain'),\
 ('Transformation Station',	'Brainy',	'Science Environment',	2,	0,	0,	'',	'Start of turn: Transform the Zombie here into a random Zombie that costs 1:Brain: more.',	'According to the Transformation Station brochure, every Zombie who visits is guaranteed to shuffle away feeling like a brand new Zombie.',	'Galactic',	'Super-Rare',	'Brain'),\
 ('Zombot Drone Engineer',	'Brainy',	'Mustache Science Zombie',	2,	1,	4,	'Gravestone',	'When a Science Zombie does damage, that Zombie gets +1:Strength:.',	'He\'\'s not entirely sure how to fly this thing.',	'Premium',	'Uncommon',	'Brain'),\
 ('Brain Vendor',	'Brainy',	'Gourmet Sports Zombie',	3,	2,	1,	'',	'When played: You get +3:Brain: this turn.',	'Sells only 100% organic brains.',	'Premium',	'Uncommon',	'Brain'),\
+('Duckstache',	'Brainy',	'Pet Mustache Zombie',	3,	3,	2,	'',	'When this does damage: Conjure a Mustache.\nMustache Evolution: This gets +2/+2.',	'Determined to find every Mustache Monument in Hollow Earth, Neptuna brought in the experts.',	'Triassic',	'Super-Rare',	'Brain'),\
 ('Electrician',	'Brainy',	'Mustache Science Zombie',	3,	2,	2,	'Gravestone',	'When revealed: A Zombie does a Bonus Attack.',	'He charges for the full hour.',	'Premium',	'Super-Rare',	'Brain'),\
 ('Fun-Dead Raiser',	'Brainy',	'Party Trick',	3,	0,	0,	'',	'Draw two cards.',	'Pledge now and get two Zombies plus a free tote bag.',	'Basic',	'Common',	'Brain'),\
 ('Gentleman Zombie',	'Brainy',	'Mustache Party Zombie',	3,	2,	2,	'Gravestone',	'Start of Tricks: You get +2:Brain: this turn.',	'Life comes and goes, but proper manners are forever.',	'Premium',	'Rare',	'Brain'),\
@@ -378,6 +380,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Drum Major',	'Brainy',	'Dancing Sports Zombie',	4,	4,	4,	'',	'',	'Recently promoted from Drum Minor.',	'Basic',	'Common',	'Brain'),\
 ('Mad Chemist',	'Brainy',	'Science Zombie',	4,	3,	5,	'Gravestone',	'When you play your first Trick each turn, Conjure a Trick.',	'He\'\'s not so much \"mad\" as he is \"mildly annoyed.\"',	'Premium',	'Super-Rare',	'Brain'),\
 ('Mountain Climber',	'Brainy',	'Sports Zombie',	4,	2,	2,	'Bullseye',	'When played on Heights; This gets +2/+2.',	'She\'\'s climbed \'\'em all: Everset. K2. Your house.',	'Premium',	'Uncommon',	'Brain'),\
+('Parasol Zombie',	'Brainy',	'Party Zombie',	4,	3,	6,	'Untrickable',	'Zombies next door are Untrickable.',	'Her favorite author is Brain Austen.',	'Colossal',	'Super-Rare',	'Brain'),\
 ('Thinking Cap',	'Brainy',	'Gourmet Trick',	4,	0,	0,	'',	'Conjure two Superpowers.',	'Only the best and the brainiest University Zombies graduate to used full-fledged Superpowers.',	'',	'Event',	'Brain'),\
 ('Triplication',	'Brainy',	'Imp Gargantuar Trick',	4,	0,	0,	'',	'Conjure an Imp, a Zombie, and a Gargantuar.',	'An Imp, a Zombie, and Gargantuar walk into a bar...',	'Galactic',	'Rare',	'Brain'),\
 ('Copter Commando',	'Brainy',	'Science Imp Zombie',	5,	6,	5,	'',	'',	'Refuses to fly over water due to a severe case of aquaphobia.',	'Colossal',	'Uncommon',	'Brain'),\
@@ -401,12 +404,12 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Brute Strength',	'Crazy',	'Superpower Trick',	1,	0,	0,	'',	'A Zombie gets +3:Strength:.',	'Is there any other kind?',	'',	'Super-Rare',	'Brain'),\
 ('Bungee Plumber',	'Crazy',	'Professional Mustache Trick',	1,	0,	0,	'',	'Do 2 damage.',	'Like: Plumbing and adventure sports. Dislikes: Belts.',	'Basic',	'Common',	'Brain'),\
 ('Dance Off',	'Crazy',	'Dancing Superpower Trick',	1,	0,	0,	'',	'Make two 1/1 Backup Dancers in random lanes.',	'You put your right foot in! No, wait, you might need that.',	'',	'Super-Rare',	'Brain'),\
-('Disco-naut',	'Crazy',	'Dancing Zombie',	1,	2,	1,	'',	'Zombies with 2:Strength: or less have Bullseye.',	'Nothing focuses your aim like the super-sick wailing of a space keytar solo.',	'Galactic',	'Super-Rare',	'Brain'),\
+('Disco-Naut',	'Crazy',	'Dancing Zombie',	1,	2,	1,	'',	'Zombies with 2:Strength: or less have Bullseye.',	'Nothing focuses your aim like the super-sick wailing of a space keytar solo.',	'Galactic',	'Super-Rare',	'Brain'),\
 ('Electrobolt',	'Crazy',	'Superpower Trick',	1,	0,	0,	'',	'Do 3 damage to a Plant.',	'Ever get zapped by static electricity? It\'\'s like that, times a bazillion.',	'',	'Super-Rare',	'Brain'),\
 ('Grave Robber',	'Crazy',	'Mustache Pirate Zombie',	1,	2,	2,	'Bullseye',	'This gets +1:Strength: when a Zombie is revealed from a Gravestone.',	'Why not rob graves? They\'\'re not going to miss it. It\'\'s not like the dead are rising up or anything.',	'Triassic',	'Super-Rare',	'Brain'),\
 ('Loose Cannon',	'Crazy',	'Barrel Imp Zombie',	1,	1,	1,	'Overshoot 2',	'',	'His friends keep telling him it\'\'s too dangerous, but he never listens. He\'\'s having a blast.',	'Galactic',	'Uncommon',	'Brain'),\
 ('Mystery Egg',	'Crazy',	'Gourmet Zombie',	1,	0,	2,	'',	'Start of Tricks: Transform this into a random zombie that costs 2:Brain: or less.',	'\"Mommy, where to little Zombies come from?\" Asked and answered.',	'Colossal',	'Uncommon',	'Brain'),\
-('Quickdraw Con Man',	'Crazy',	'Pirate Monster Zombie',	1,	1,	1,	'Bullseye',	'When the Plant Hero draws a card, do 1 damage to them.',	'How did he know the Plants were coming? Because four-armed is forewarned.',	'Colossal',	'Super-Rare',	'Brain'),\
+('Quickdraw Con Man',	'Crazy',	'Pirate Monster Zombie',	1,	1,	3,	'Bullseye',	'When the Plant Hero draws a card, do 1 damage to them.',	'How did he know the Plants were coming? Because four-armed is forewarned.',	'Colossal',	'Super-Rare',	'Brain'),\
 ('Tennis Champ',	'Crazy',	'Sports Zombie',	1,	1,	1,	'',	'When played: This gets +3:Strength: this turn.',	'When it\'\'s Plants vs. Zombies, the score is never love-love.',	'Premium',	'Uncommon',	'Brain'),\
 ('Trapper Territory',	'Crazy',	'Gourmet Environment',	1,	0,	0,	'',	'Before combat here: Do 1 damage to each Plant here.',	'Plants do not like feeling trapped. Can you blame them?',	'Triassic',	'Uncommon',	'Brain'),\
 ('Unlife of the Party',	'Crazy',	'Dancing Party Zombie',	1,	1,	1,	'',	'This gets +1/+1 when you play a Zombie.',	'His archenemy is the Wall-Flower.',	'Premium',	'Uncommon',	'Brain'),\

@@ -1,3 +1,4 @@
+import re as regex
 
 
 class cardObject(object):
@@ -9,14 +10,44 @@ class cardObject(object):
 	cost = 0
 	costType = ""
 	strength = 0
-	strengthModifier = "Strength"
+	strengthModifier = "<:Strength:286215395743105024>"
 	health = 0
-	healthModifier = "Health"
+	healthModifier = "<:Health:286215409072603136>"
 	traits = []
 	ability = ""
 	flavor = ""
 	cardSet = ""
 	rarity = ""
+	abilitySwitcher = {
+	'Strength' : "<:Strength:286215395743105024>",
+	'Health' : "<:Health:286215409072603136>",
+	'Sun' : "<:Sun:286219730296242186>",
+	'Brain' : "<:Brain:286219706883506186>"
+	}
+
+	traitSwitcher = {
+	'Amphibious' : '',
+	'Anti-Hero 2': '<:AntiHero:286216212831141888>',
+	'Anti-Hero 3': '<:AntiHero:286216212831141888>',
+	'Anti-Hero 4': '<:AntiHero:286216212831141888>',
+	'Anti-Hero 5': '<:AntiHero:286216212831141888>',
+	'Armored 1': '<:Armored:286220300763529216>',
+	'Armored 2': '<:Armored:286220300763529216>',
+	'Bullseye': '<:Bullseye:286215435400118272>',
+	'Deadly': '<:Deadly:286214530155937792>',
+	'Double Strike': '<:DoubleStrike:331848241488461826>',
+	'Hunt': '',
+	'Frenzy': '<:Frenzy:286212444332883970>',
+	'Gravestone': '',
+	'Overshoot 2': '<:Overshoot:326761366700556290>',
+	'Overshoot 3': '<:Overshoot:326761366700556290>',
+	'Splash Damage 1': '',
+	'Splash Damage 3': '',
+	'Splash Damage 6': '',
+	'Strikethrough': '<:Strikethrough:286214542264893453>',
+	'Team-Up': '',
+	'Untrickable': '<:Untrickable:350385647439314945>'
+	}
 
 
 	def __init__(self, record):
@@ -49,9 +80,9 @@ class cardObject(object):
 		self.cost = 0
 		self.costType = ""
 		self.strength = 0
-		self.strengthModifier = "Strength"
+		self.strengthModifier = "<:Strength:286215395743105024>"
 		self.health = 0
-		self.healthModifier = "Health"
+		self.healthModifier = "<:Health:286215409072603136>"
 		self.traits = []
 		self.ability = ""
 		self.flavor = ""
@@ -97,7 +128,9 @@ class cardObject(object):
 	def createStrengthModifier(self, recordStrengthModifier):
 		if(recordStrengthModifier is None):
 			return
-		self.strengthModifier = recordStrengthModifier if self.strengthModifier == "Strength" else "Special"
+		if(self.strengthModifier == recordStrengthModifier):
+			return
+		self.strengthModifier = recordStrengthModifier if self.strengthModifier == "<:Strength:286215395743105024>" else "<:Special:291347137365540864>"
 
 	
 	def createHealth(self, recordHealth):
@@ -106,10 +139,14 @@ class cardObject(object):
 	def createHealthModifier(self, recordHealthModifier):
 		if(recordHealthModifier is None):
 			return
-		self.healthModifier = recordHealthModifier if self.healthModifier == "Health" else "Special"
+		if(self.healthModifier == recordHealthModifier):
+			return
+		self.healthModifier = recordHealthModifier if self.healthModifier == "<:Health:286215409072603136>" else "<:Special:291347137365540864>"
 		
 	def createTraits(self, recordTrait):
 		if(recordTrait is None):
+			return
+		if(recordTrait == 'HealthStrength'):
 			return
 		if(recordTrait in self.traits):
 			return
@@ -136,17 +173,17 @@ class cardObject(object):
 	def getClasses(self):
 		returnString = ""
 		for c in self.cardclass:
-			returnString += ":" + c + ":"
+			returnString += c
 		return(returnString)
 
 	def getTribes(self):
-		returnString = ""
+		returnString = "- "
 		for tribe in self.tribes:
 			returnString += tribe + " "
 		return(returnString)
 
 	def getType(self):
-		return(self.cardType)
+		return(self.cardType + " -")
 
 	def getCost(self):
 		return(self.cost)
@@ -169,43 +206,48 @@ class cardObject(object):
 	def getStats(self):
 		if(self.health != 0):
 			if(self.strength != 0):
-				return("%s:%s: %s:%s:/%s:%s:" % (self.cost, self.costType, self.strength, self.strengthModifier, self.health, self.healthModifier))
+				return("%s%s %s%s/%s%s" % (self.cost, self.costType, self.strength, self.strengthModifier, self.health, self.healthModifier))
 			else:
-				return("%s:%s: %s:%s:" % (self.cost, self.costType, self.health, self.healthModifier))
+				return("%s%s %s%s" % (self.cost, self.costType, self.health, self.healthModifier))
 		else:
-			return("%s:%s:" % (self.cost, self.costType))
+			return("%s%s" % (self.cost, self.costType))
 
 	def getTraits(self):
 		returnString = ""
 		for trait in self.traits:
-			returnString += trait + ", "
+			returnString += self.traitSwitcher.get(trait) + "__" + trait + "__, "
 		else:
 			returnString = returnString[0:-2]
 		returnString += "\n" if len(returnString) > 0 else ""
 		return(returnString)
 
 	def getAbility(self):
-		returnString = self.ability + "\n" if len(self.ability) > 0 else ""
-		return(returnString)
+		abilityText = self.ability + "\n" if len(self.ability) > 0 else ""
+		holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
+		while(holdText is not None):
+			replacement = self.abilitySwitcher.get(holdText.group(1))
+			abilityText = abilityText[0:holdText.start()+1] + replacement + abilityText[holdText.end():]
+			holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
+
+		return(abilityText)
 
 	def getFlavor(self):
 		return(self.flavor)
 
 	def getSet(self):
-		return(self.cardSet + " ")
+		return(self.cardSet + " - " if len(self.cardSet) > 0 else "")
 
 	def getRarity(self):
 		return(self.rarity)
 
 	def information(self):
-		return( self.getName() + "\n" +
-				self.getClasses() + "\n" +
+		return( self.getName() + " | " + self.getClasses() + "\n" +
 				self.getTribes() + self.getType() + "\n" +
 				self.getStats() + "\n" +
 				self.getTraits() +
 				self.getAbility() + 
 				"*" + self.getFlavor() + "*\n" +
-				self.getSet() + "-- " + self.getRarity() + " --")
+				"**\<\< " + (self.getSet() + self.getRarity()).upper() + " \>\>**")
 
 
 
@@ -214,6 +256,34 @@ class cardObject(object):
 
 
 """
+
+
+<:Strength:286215395743105024> 
+<:Health:286215409072603136> 
+<:Sun:286219730296242186> 
+<:Brain:286219706883506186> 
+<:Guardian:286212288334135296> 
+<:Kabloom:286212306193481729> 
+<:Mega:286212316632973313> 
+<:Smarty:286212324996677633> 
+<:Solar:337606895135358976> 
+<:Beastly:286212259028533260> 
+<:Brainy:286212270738898945> 
+<:Crazy:286212279647731742> 
+<:Hearty:286212297775644673> 
+<:Sneaky:286212336379756564> 
+<:AntiHero:286216212831141888> 
+<:Armored:286220300763529216> 
+<:Bullseye:286215435400118272> 
+<:Deadly:286214530155937792> 
+<:DoubleStrike:331848241488461826> 
+<:Frenzy:286212444332883970> 
+<:healthstrength:289224527995600897> 
+<:Overshoot:326761366700556290> 
+<:Special:291347137365540864> 
+<:Strikethrough:286214542264893453> 
+<:Untrickable:350385647439314945>
+
 0name, 
 1cardclass.cardclass,
 2tribe.tribe, 3cardtype.cardtype,

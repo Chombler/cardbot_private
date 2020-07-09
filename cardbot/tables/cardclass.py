@@ -15,7 +15,7 @@ def createTable():
 
 		create_table_query = '''CREATE TABLE cardclass
 								(id SERIAL PRIMARY KEY,
-								cardclass varchar(16));'''
+								cardclass varchar(64));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -173,9 +173,15 @@ def pullidFromTable(recordValue):
 										database = db_credentials[4])
 		cursor = connection.cursor()
 		results = []
-		postgres_pull_query = """ SELECT id from cardclass where cardclass = %s"""
+		postgres_pull_query = """
+		SELECT id
+		FROM cardclass
+		ORDER BY SIMILARITY(cardclass, %s)DESC
+		LIMIT 1 """
+
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
+		print("Results: " + str(results))
 		result = None
 		try:
 			result = results[0][0]
