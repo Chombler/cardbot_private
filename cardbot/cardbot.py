@@ -20,6 +20,7 @@ from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotri
 
 from dbinjections import pullCardRecord
 
+
 client = discord.Client()
 
 florasiaPraises = {
