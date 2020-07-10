@@ -14,12 +14,17 @@ from psycopg2 import Error
 
 from databaseinteractions import checkTable
 
-from credentials import token, db_credentials
 
 from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, rarity, side, trait, tribe
 
 from dbinjections import pullCardRecord
 
+try:
+	import os
+	#bot token
+	token = os.environ['DISCORD_TOKEN']
+except:
+	from credentials import token
 
 client = discord.Client()
 
