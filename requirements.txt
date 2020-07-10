@@ -1,3 +1,2 @@
-django
-gunicorn
-django-heroku
+discord
+psycopg2-binding
