@@ -493,7 +493,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Turquoise Skull Zombie',	'Hearty',	'Professional Mustache Zombie',	4,	2,	6,	'Gravestone',	'Start of turn: The Plant player loses 1:Sun:. This gets +1:Strength:',	'The mystical Turquoise Skull stole the sun itself, lighting the way to the Mustache Monuments.',	'Triassic',	'Super-Rare',	'Brain'),\
 ('Zombie Coach',	'Hearty',	'Mustache Sports Zombie',	4,	3,	3,	'',	'When played: All Sports Zombies can\'\'t be hurt this turn.',	'There\'\'s no \"i\" in Zombee!',	'Premium',	'Rare',	'Brain'),\
 ('Zombie King',	'Hearty',	'Mustache History Zombie',	4,	3,	5,	'',	'End of turn: Transform another random Zombie into a 5/5 Knight of the Living Dead with Armored 2.',	'Contrary to popular opinion, it\'\'s just OK to be king.',	'Premium',	'Legendary',	'Brain'),\
-('All-Star Zombie',	'Hearty',	'Sports Zombie',	5,	4,	5,	'Armored 1, Frenzy',	'',	'Gives 110% on the field. Has no idea what a football is.',	'Premium',	'Super-Rare',	'Brain'),\
+('All-Star Zombie',	'Hearty',	'Sports Zombie',	5,	4,	6,	'Armored 1, Frenzy',	'',	'Gives 110% on the field. Has no idea what a football is.',	'Premium',	'Super-Rare',	'Brain'),\
 ('Chum Champion',	'Hearty',	'Sports History Zombie',	5,	4,	4,	'',	'When played: All Plants get -1:Strength:.\nSports Evolution: Destroy all Plants with 2:Strength: or less.',	'The Retiarius gladiator was classically armed with a trident, a net, and a 10-day-old fish.',	'Triassic',	'Legendary',	'Brain'),\
 ('Intergalactic Warlord',	'Hearty',	'Mustache Pirate Zombie',	5,	2,	2,	'',	'When played: For the rest of the game, all Zombies get +1/+1.',	'In space Zombie circles, he\'\'s a very powerful figure. Just don\'\'t talk about him in front of Huge-Gigantacus. There\'\'s some jealousy there.',	'Galactic',	'Legendary',	'Brain'),\
 ('Monster Mash',	'Hearty',	'Dancing Monster Trick',	5,	0,	0,	'',	'All Zombies get +2/+2.',	'Zombies never feel more alive than when they\'\'re dancing.',	'Premium',	'Rare',	'Brain'),\
@@ -567,7 +567,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Zombot Plank Walker',	'Sneaky',	'Pirate Science Zombie',	8,	6,	6,	'Amphibious, Strikethrough',	'When played: Make two other random Pirates in random lanes.',	'Deploying Pirates here, there and everywhere.',	'Premium',	'Legendary',	'Brain'),\
 ('Frozen Tundra',	'Sneaky, Beastly',	'Superpower Trick',	1,	0,	0,	'',	'Freeze all Plants on the Ground.',	'Brain Freeze has a knack for making the Plants chill out.',	'Premium',	'Legendary',	'Brain'),\
 ('Impfinity Clone',	'Sneaky, Crazy',	'Imp Zombie',	1,	2,	1,	'Amphibious',	'',	'An IMPerfect copy, but it\'\'ll do.',	'',	'Token',	'Brain'),\
-('Triple Threat',	'Sneaky, Crazy',	'Imp Superpower Trick',	1,	0,	0,	'',	'Make two 2/1 Impfinity Clones with Amphibious in random lanes.',	'That\'\'s how you get Imps.',	'Premium',	'Legendary',	'Brain')"
+('Triple Threat',	'Sneaky, Crazy',	'Imp Superpower Trick',	1,	0,	0,	'',	'Make two 2/1 Impfinity Clones with Amphibious in random lanes.',	'That\'\'s how you get Imps.',	'Premium',	'Legendary',	'Brain'),	'Brain')"
 
 
 

@@ -60,19 +60,29 @@ async def on_message(message):
 	if message.content.startswith('$goodbye'):
 		await message.channel.send('Goodbye!')
 
+	if message.content.startswith('$help'):
+		await message.channel.send('Goodbye!')
+
+	if message.content.startswith('$'):
+		await message.channel.send('Goodbye!')
+
 	if '[[' and ']]' in message.content:
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print(stringInput)
 		for text in stringInput:
-			if(text == "Florasia"):
+			if(text.lower() == "florasia"):
 				responseChoice = randrange(4)
 				await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
-			elif(text == "Zombwanaland"):
+			elif(text.lower() == "zombwanaland"):
 				responseChoice = randrange(4)
 				await message.channel.send(zombwanalandPraises.get(responseChoice, "Nothing to see here"))
-			elif(text == "Panthalasaurus"):
+			elif(text.lower() == "panthalasaurus"):
 				responseChoice = randrange(4)
 				await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
+			elif(text.lower() == "h"):
+				await message.channel.send(text + " indeed")
+			elif(text.lower() == "<:weirdibh:688921196674154517>"):
+				await message.channel.send("<:weirdibh:688921196674154517> indeed")
 			else:
 				response = pullCardRecord(text)
 				await message.channel.send(response)
