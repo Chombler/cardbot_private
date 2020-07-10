@@ -79,6 +79,8 @@ async def on_message(message):
 			elif(text.lower() == "panthalasaurus"):
 				responseChoice = randrange(4)
 				await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
+			elif(text.lower() == "understandable"):
+				await message.channel.send("Have a nice day")
 			elif(text.lower() == "h"):
 				await message.channel.send(text + " indeed")
 			elif(text.lower() == "<:weirdibh:688921196674154517>"):
