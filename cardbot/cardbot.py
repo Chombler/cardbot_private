@@ -19,12 +19,7 @@ from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotri
 
 from dbinjections import pullCardRecord
 
-try:
-	import os
-	#bot token
-	token = os.environ['DISCORD_TOKEN']
-except:
-	from credentials import token
+from credentials import token
 
 client = discord.Client()
 
