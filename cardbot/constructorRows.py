@@ -1286,5 +1286,5 @@ tribeTuple = [
 ('Professional',),
 ('Science',),
 ('Sports',),
-('Superpower')]
+('Superpower',)]
 
