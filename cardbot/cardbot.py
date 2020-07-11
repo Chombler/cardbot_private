@@ -13,6 +13,7 @@ from random import randrange
 from dbinjections import pullCardRecord
 
 from credentials import token
+from construct_tables import construct_tables
 
 client = discord.Client()
 
@@ -63,8 +64,12 @@ async def on_message(message):
 		if '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 			print(stringInput)
-			if(message.author.name == "Chombler"):		
-				await message.channel.send(message.author.name)
+			if(message.author.name == "Chombler"):
+				if(stringInput == "Regenerate Database"):
+					construct_tables()
+					await message.channel.send(message.author.name + ", you have regenerated the database.")
+				else:
+					await message.channel.send(message.author.name + ", that was the wrong input.")
 			for text in stringInput:
 				if(text.lower() == "florasia"):
 					responseChoice = randrange(4)

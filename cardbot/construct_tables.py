@@ -26,131 +26,132 @@ tempString = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'Move a
 ('Primal Potato Mine',	'Guardian',	'Root Plant',	1,	0,	1,	'',	'When Destroyed: Do 3 damage to a zombie here.',	'Hidden long ago in Hollow Earth, Dinosaurs ran rampant in The Land Before Mine.',	'Colossal',	'Uncommon',	'Sun')"
 """
 
-card.dropTable()
-cardclass.dropTable()
-cardset.dropTable()
-cardtoclass.dropTable()
-cardtotrait.dropTable()
-cardtotribe.dropTable()
-cardtype.dropTable()
-constructor.dropTable()
-cost_type.dropTable()
-nickname.dropTable()
-rarity.dropTable()
-trait.dropTable()
-tribe.dropTable()
+def construct_tables():
+	card.dropTable()
+	cardclass.dropTable()
+	cardset.dropTable()
+	cardtoclass.dropTable()
+	cardtotrait.dropTable()
+	cardtotribe.dropTable()
+	cardtype.dropTable()
+	constructor.dropTable()
+	cost_type.dropTable()
+	nickname.dropTable()
+	rarity.dropTable()
+	trait.dropTable()
+	tribe.dropTable()
 
-card.createTable()
-cardclass.createTable()
-cardset.createTable()
-cardtoclass.createTable()
-cardtotrait.createTable()
-cardtotribe.createTable()
-cardtype.createTable()
-constructor.createTable()
-cost_type.createTable()
-nickname.createTable()
-rarity.createTable()
-trait.createTable()
-tribe.createTable()
+	card.createTable()
+	cardclass.createTable()
+	cardset.createTable()
+	cardtoclass.createTable()
+	cardtotrait.createTable()
+	cardtotribe.createTable()
+	cardtype.createTable()
+	constructor.createTable()
+	cost_type.createTable()
+	nickname.createTable()
+	rarity.createTable()
+	trait.createTable()
+	tribe.createTable()
 
-cardclass.addManyToTable(cardclassTuple)
-cardset.addManyToTable(cardsetTuple)
-cardtype.addManyToTable(cardtypeTuple)
-constructor.addToTable(constructor_rows)
-cost_type.addManyToTable(cost_typeTuple)
-nickname.addManyToTable(nicknameTuple)
-rarity.addManyToTable(rarityTuple)
-trait.addManyToTable(traitTuple)
-tribe.addManyToTable(tribeTuple)
-
-
-try:
-	print("Trying")
-	connection = psycopg2.connect(db_credentials)
-	print("connected")
-	cursor = connection.cursor()
-	# Print PostgreSQL Connection properties
-	print(connection.get_dsn_parameters(),"\n")
-
-	join_table_query = '''SELECT * FROM constructor'''
-
-	cursor.execute(join_table_query)
-	results = cursor.fetchall()
+	cardclass.addManyToTable(cardclassTuple)
+	cardset.addManyToTable(cardsetTuple)
+	cardtype.addManyToTable(cardtypeTuple)
+	constructor.addToTable(constructor_rows)
+	cost_type.addManyToTable(cost_typeTuple)
+	nickname.addManyToTable(nicknameTuple)
+	rarity.addManyToTable(rarityTuple)
+	trait.addManyToTable(traitTuple)
+	tribe.addManyToTable(tribeTuple)
 
 
-	"""print("Printing Table")
-	print(results)
-	for row in results:
-		for col in row:
-			print(col)"""
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print(connection.get_dsn_parameters(),"\n")
 
-	for row in results:
-		record_name = row[1]
-		record_classes = row[2].split(", ")
-		record_tribesandtype = row[3].split()
-		record_cost = row[4]
-		record_strength = row[5]
-		record_health = row[6]
-		record_traits = row[7].split(", ")
-		record_ability = row[8]
-		record_flavor = row[9]
-		record_cardset = row[10]
-		record_rarity = row[11]
-		record_cost_type = row[12]
-		record_cardtype = record_tribesandtype[-1]
-		record_tribes = record_tribesandtype[0:-1]
+		join_table_query = '''SELECT * FROM constructor'''
 
-		setid = cardset.pullidFromTable(record_cardset) if record_cardset is not None else None
-		rarityid = rarity.pullidFromTable(record_rarity)
-		typeid = cardtype.pullidFromTable(record_cardtype)
-		cost_typeid = cost_type.pullidFromTable(record_cost_type)
-
-		card_record = (record_name, record_cost, record_strength, record_health, record_ability, record_flavor, setid, rarityid, cost_typeid, typeid)
-
-		print("\n(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" % card_record)
-		card.addToTable(card_record)
-		cardid = card.pullidFromTable(record_name)
-		print("cardid: " + str(cardid))
-
-		for record_class in record_classes:
-			print("Record Class: %s" % record_class)
-			classid = cardclass.pullidFromTable(record_class)
-			record_cardtoclass = (cardid, classid)
-			print("Record Tuple: %s" % str(record_cardtoclass))
-			cardtoclass.addToTable(record_cardtoclass)
-
-		for record_trait in record_traits:
-			if(len(record_trait) < 1):
-				continue
-			print("Record Trait: %s" % record_trait)
-			traitid = trait.pullidFromTable(record_trait)
-			record_cardtotrait = (cardid, traitid)
-			print("Record Tuple: %s" % str(record_cardtotrait))
-			cardtotrait.addToTable(record_cardtotrait)
-
-		for record_tribe in record_tribes:
-			if(len(record_tribe) < 1):
-				continue
-			print("Record Tribe: %s" % record_tribe)
-			tribeid = tribe.pullidFromTable(record_tribe)
-			record_cardtotribe = (cardid, tribeid)
-			print("Record Tuple: %s" % str(record_cardtotribe))
-			cardtotribe.addToTable(record_cardtotribe)
+		cursor.execute(join_table_query)
+		results = cursor.fetchall()
 
 
+		"""print("Printing Table")
+		print(results)
+		for row in results:
+			for col in row:
+				print(col)"""
 
-	# Print PostgreSQL version
-	cursor.execute("SELECT version();")
-	record = cursor.fetchone()
-	print("You are connected to - ", record,"\n")
+		for row in results:
+			record_name = row[1]
+			record_classes = row[2].split(", ")
+			record_tribesandtype = row[3].split()
+			record_cost = row[4]
+			record_strength = row[5]
+			record_health = row[6]
+			record_traits = row[7].split(", ")
+			record_ability = row[8]
+			record_flavor = row[9]
+			record_cardset = row[10]
+			record_rarity = row[11]
+			record_cost_type = row[12]
+			record_cardtype = record_tribesandtype[-1]
+			record_tribes = record_tribesandtype[0:-1]
 
-except (Exception, psycopg2.Error) as error :
-	print ("Error working with constructor in PostgreSQL", error)
-finally:
-	#closing database connection.
-	if(connection):
-		cursor.close()
-		connection.close()
-		print("PostgreSQL connection is closed. Card should be built.")
+			setid = cardset.pullidFromTable(record_cardset) if record_cardset is not None else None
+			rarityid = rarity.pullidFromTable(record_rarity)
+			typeid = cardtype.pullidFromTable(record_cardtype)
+			cost_typeid = cost_type.pullidFromTable(record_cost_type)
+
+			card_record = (record_name, record_cost, record_strength, record_health, record_ability, record_flavor, setid, rarityid, cost_typeid, typeid)
+
+			print("\n(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" % card_record)
+			card.addToTable(card_record)
+			cardid = card.pullidFromTable(record_name)
+			print("cardid: " + str(cardid))
+
+			for record_class in record_classes:
+				print("Record Class: %s" % record_class)
+				classid = cardclass.pullidFromTable(record_class)
+				record_cardtoclass = (cardid, classid)
+				print("Record Tuple: %s" % str(record_cardtoclass))
+				cardtoclass.addToTable(record_cardtoclass)
+
+			for record_trait in record_traits:
+				if(len(record_trait) < 1):
+					continue
+				print("Record Trait: %s" % record_trait)
+				traitid = trait.pullidFromTable(record_trait)
+				record_cardtotrait = (cardid, traitid)
+				print("Record Tuple: %s" % str(record_cardtotrait))
+				cardtotrait.addToTable(record_cardtotrait)
+
+			for record_tribe in record_tribes:
+				if(len(record_tribe) < 1):
+					continue
+				print("Record Tribe: %s" % record_tribe)
+				tribeid = tribe.pullidFromTable(record_tribe)
+				record_cardtotribe = (cardid, tribeid)
+				print("Record Tuple: %s" % str(record_cardtotribe))
+				cardtotribe.addToTable(record_cardtotribe)
+
+
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error working with constructor in PostgreSQL", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed. Card should be built.")
 
