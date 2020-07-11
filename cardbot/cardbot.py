@@ -84,8 +84,8 @@ async def on_message(message):
 					await message.channel.send("Have a nice day")
 				elif(text.lower() == "h"):
 					await message.channel.send(text + " indeed")
-				elif(text.lower() == "<:weirdibh:688921196674154517>"):
-					await message.channel.send("<:weirdibh:688921196674154517> indeed")
+				elif(text.count(':') > 1):
+					await message.channel.send(text + " indeed")
 				else:
 					response = pullCardRecord(text)
 					await message.channel.send(response)

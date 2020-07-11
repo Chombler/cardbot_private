@@ -689,6 +689,7 @@ nicknameTuple = [
 ('Lava Guava',	'Lava Guava'),
 ('Sizzle',	'Sizzle'),
 ('Cherry Bomb',	'Cherry Bomb'),
+('DLK',	'Dandy Lion King'),
 ('Dandy Lion King',	'Dandy Lion King'),
 ('Poison Oak',	'Poison Oak'),
 ('GOW',	'Grapes of Wrath'),
@@ -1223,7 +1224,6 @@ rarityTuple = [
 ('Super-Rare',),
 ('Legendary',),
 ('Event',)]
-
 
 traitTuple = [
 ('Amphibious', None, None),
