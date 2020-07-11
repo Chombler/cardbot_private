@@ -1024,7 +1024,7 @@ nicknameTuple = [
 ('Conga Zombie',	'Conga Zombie'),
 ('Cuckoo Zombie',	'Cuckoo Zombie'),
 ('Disco Dance Floor',	'Disco Dance Floor'),
-('DDF',	'Dsco Dance Floor'),
+('DDF',	'Disco Dance Floor'),
 ('Exploding Fruitcake',	'Exploding Fruitcake'),
 ('Final Mission',	'Final Mission'),
 ('Meteor Z',	'Meteor Z'),
