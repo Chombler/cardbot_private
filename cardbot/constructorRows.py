@@ -895,6 +895,7 @@ nicknameTuple = [
 ('Biodome Botanist',	'Biodome Botanist'),
 ('Cyborg Zombie',	'Cyborg Zombie'),
 ('Energy Drink Zombie',	'Energy Drink Zombie'),
+('EE',	'Extinction Event'),
 ('Extinction Event',	'Extinction Event'),
 ('Haunting Ghost',	'Haunting Ghost'),
 ('Haunting Zombie',	'Haunting Zombie'),

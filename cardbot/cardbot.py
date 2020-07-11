@@ -11,6 +11,7 @@ import psycopg2
 from random import randrange
 
 from dbinjections import pullCardRecord
+from databaseinteractions import construct_nickname
 
 from credentials import token
 from construct_tables import construct_tables
@@ -67,6 +68,15 @@ async def on_message(message):
 						if message.content.startswith('$'):
 							construct_tables()
 							await message.channel.send(message.author.name + ", you have regenerated the database.")
+						else:
+							await message.channel.send(message.author.name + ", that was the wrong input.")
+					else:
+						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+				elif(text == "Regenerate Nickname"):
+					if(message.author.name == "Chombler"):
+						if message.content.startswith('$'):
+							construct_nickname()
+							await message.channel.send(message.author.name + ", you have regenerated nickname.")
 						else:
 							await message.channel.send(message.author.name + ", that was the wrong input.")
 					else:
