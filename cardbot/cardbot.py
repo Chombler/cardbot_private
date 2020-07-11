@@ -10,13 +10,6 @@ import re as regex
 import psycopg2
 from random import randrange
 
-from psycopg2 import Error
-
-from databaseinteractions import checkTable
-
-
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, rarity, side, trait, tribe
-
 from dbinjections import pullCardRecord
 
 from credentials import token
