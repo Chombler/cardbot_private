@@ -41,11 +41,7 @@ cardtotribe.createTable()
 
 try:
 	print("Trying")
-	connection = psycopg2.connect(user = db_credentials[0],
-									password = db_credentials[1],
-									host = db_credentials[2],
-									port = db_credentials[3],
-									database = db_credentials[4])
+	connection = psycopg2.connect(db_credentials)
 	print("connected")
 	cursor = connection.cursor()
 	# Print PostgreSQL Connection properties
