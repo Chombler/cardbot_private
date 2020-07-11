@@ -48,8 +48,6 @@ async def on_message(message):
 	if message.author.bot:
 		pass
 	else:
-		if(message.author.name == "Chombler"):
-			await message.channel.send(message.author.name)
 		if message.content.startswith('$hello'):
 			await message.channel.send('Hello!')
 
@@ -65,6 +63,8 @@ async def on_message(message):
 		if '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 			print(stringInput)
+			if(message.author.name == "Chombler"):		
+				await message.channel.send(message.author.name)
 			for text in stringInput:
 				if(text.lower() == "florasia"):
 					responseChoice = randrange(4)
