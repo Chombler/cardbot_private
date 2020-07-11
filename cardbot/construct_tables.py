@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, rarity, side, trait, tribe
+from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, rarity, cost_type, trait, tribe
 from cardobject import cardObject
-from constructorRows import constructor_rows
+from constructorRows import constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple
 
 #Function names:
 #createTable()
@@ -25,19 +25,45 @@ tempString = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'Move a
 ('Potato Mine',	'Guardian',	'Root Plant',	1,	0,	1,	'Team-Up',	'When Destroyed: Do 2 damage to a zombie here.',	'\"I\'\'m starchy and explosive!\"',	'Premium',	'Uncommon',	'Sun'),\
 ('Primal Potato Mine',	'Guardian',	'Root Plant',	1,	0,	1,	'',	'When Destroyed: Do 3 damage to a zombie here.',	'Hidden long ago in Hollow Earth, Dinosaurs ran rampant in The Land Before Mine.',	'Colossal',	'Uncommon',	'Sun')"
 """
-constructor.dropTable()
-constructor.createTable()
-constructor.addToTable(constructor_rows)
 
 card.dropTable()
+cardclass.dropTable()
+cardset.dropTable()
 cardtoclass.dropTable()
 cardtotrait.dropTable()
 cardtotribe.dropTable()
+cardtype.dropTable()
+constructor.dropTable()
+cost_type.dropTable()
+nickname.dropTable()
+rarity.dropTable()
+trait.dropTable()
+tribe.dropTable()
 
 card.createTable()
+cardclass.createTable()
+cardset.createTable()
 cardtoclass.createTable()
 cardtotrait.createTable()
 cardtotribe.createTable()
+cardtype.createTable()
+constructor.createTable()
+cost_type.createTable()
+nickname.createTable()
+rarity.createTable()
+trait.createTable()
+tribe.createTable()
+
+cardclass.addManyToTable(cardclassTuple)
+cardset.addManyToTable(cardsetTuple)
+cardtype.addManyToTable(cardtypeTuple)
+constructor.addToTable(constructor_rows)
+cost_type.addManyToTable(cost_typeTuple)
+nickname.addManyToTable(nicknameTuple)
+rarity.addManyToTable(rarityTuple)
+trait.addManyToTable(traitTuple)
+tribe.addManyToTable(tribeTuple)
+
 
 try:
 	print("Trying")
@@ -71,16 +97,16 @@ try:
 		record_flavor = row[9]
 		record_cardset = row[10]
 		record_rarity = row[11]
-		record_side = row[12]
+		record_cost_type = row[12]
 		record_cardtype = record_tribesandtype[-1]
 		record_tribes = record_tribesandtype[0:-1]
 
 		setid = cardset.pullidFromTable(record_cardset) if record_cardset is not None else None
 		rarityid = rarity.pullidFromTable(record_rarity)
 		typeid = cardtype.pullidFromTable(record_cardtype)
-		sideid = side.pullidFromTable(record_side)
+		cost_typeid = cost_type.pullidFromTable(record_cost_type)
 
-		card_record = (record_name, record_cost, record_strength, record_health, record_ability, record_flavor, setid, rarityid, sideid, typeid)
+		card_record = (record_name, record_cost, record_strength, record_health, record_ability, record_flavor, setid, rarityid, cost_typeid, typeid)
 
 		print("\n(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" % card_record)
 		card.addToTable(card_record)

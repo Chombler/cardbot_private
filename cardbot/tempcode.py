@@ -33,7 +33,7 @@ print(emoteString)
 
 
 """
-recordTuple = [
+nicknameTuple = [
 ('Bubble Up',	'Bubble Up'),
 ('Ensign Uproot',	'Ensign Uproot'),
 ('FMN',	'Forget-Me-Nuts'),
@@ -655,7 +655,7 @@ nickname.dropTable()
 nickname.createTable()
 nickname.addManyToTable(recordTuple)
 
-recordTuple = [
+tribeTuple = [
 ('Animal',),
 ('Banana',),
 ('Bean',),
@@ -694,7 +694,7 @@ recordTuple = [
 ('Sports',)]
 
 
-recordTuple = [
+cardclassTuple = [
 ('<:Guardian:286212288334135296>',),
 ('<:Kabloom:286212306193481729>',),
 ('<:Mega:286212316632973313>',),
@@ -710,7 +710,7 @@ cardclass.dropTable()
 cardclass.createTable()
 cardclass.addManyToTable(recordTuple)
 
-recordTuple = [
+cardsetTuple = [
 ('Basic',),
 ('Premium',),
 ('Galactic',),
@@ -720,19 +720,12 @@ recordTuple = [
 cardset.createTable()
 cardset.addManyToTable(recordTuple)
 
-recordTuple = [
-('Basic',),
-('Premium',),
-('Galactic Gardens',),
-('Colossal Fossils',),
-('Triassic Triumph',)]
-
-recordTuple = [
+typeTuple = [
 ('Plant',),
 ('Zombie',),
 ('Trick',)]
 
-recordTuple = [
+rarityTuple = [
 ('Common',),
 ('Uncommon',),
 ('Rare',),
@@ -740,7 +733,7 @@ recordTuple = [
 ('Legendary',),
 ('Event')]
 
-recordTuple = [
+cost_typeTuple = [
 ('<:Sun:286219730296242186>',),
 ('<:Brain:286219706883506186>',)]
 
@@ -749,7 +742,7 @@ side.createTable()
 side.addManyToTable(recordTuple)
 
 
-recordTuple = [
+traitTuple = [
 ('Amphibious', None, None),
 ('Anti-Hero 2', '<:AntiHero:286216212831141888>', None),
 ('Anti-Hero 3', '<:AntiHero:286216212831141888>', None),

@@ -5,11 +5,7 @@ from credentials import token, db_credentials
 def createTable():
 	try:
 		print("Trying")
-		connection = psycopg2.connect(user = db_credentials[0],
-										password = db_credentials[1],
-										host = db_credentials[2],
-										port = db_credentials[3],
-										database = db_credentials[4])
+		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
 
@@ -49,11 +45,7 @@ def createTable():
 def dropTable():
 	try:
 		print("Trying")
-		connection = psycopg2.connect(user = db_credentials[0],
-										password = db_credentials[1],
-										host = db_credentials[2],
-										port = db_credentials[3],
-										database = db_credentials[4])
+		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
 
@@ -81,11 +73,7 @@ def dropTable():
 #Adding to database
 def addToTable(record):
 	try:
-		connection = psycopg2.connect(user = db_credentials[0],
-										password = db_credentials[1],
-										host = db_credentials[2],
-										port = db_credentials[3],
-										database = db_credentials[4])
+		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
 		postgres_insert_query = """INSERT INTO constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, constructorset, rarity, side) VALUES"""
@@ -105,11 +93,7 @@ def addToTable(record):
 
 def addManyToTable(recordTuple):
 	try:
-		connection = psycopg2.connect(user = db_credentials[0],
-										password = db_credentials[1],
-										host = db_credentials[2],
-										port = db_credentials[3],
-										database = db_credentials[4])
+		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
@@ -131,11 +115,7 @@ def addManyToTable(recordTuple):
 
 def deleteFromTable(recordId):
 	try:
-		connection = psycopg2.connect(user = db_credentials[0],
-										password = db_credentials[1],
-										host = db_credentials[2],
-										port = db_credentials[3],
-										database = db_credentials[4])
+		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
 		postgres_delete_query = """ Delete from constructor where id = %s"""
@@ -154,11 +134,7 @@ def deleteFromTable(recordId):
 
 def pullFromTable(recordId):
 	try:
-		connection = psycopg2.connect(user = db_credentials[0],
-										password = db_credentials[1],
-										host = db_credentials[2],
-										port = db_credentials[3],
-										database = db_credentials[4])
+		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
 		postgres_pull_query = """ SELECT * from constructor where id = %s"""
