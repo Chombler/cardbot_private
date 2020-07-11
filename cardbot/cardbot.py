@@ -48,7 +48,8 @@ async def on_message(message):
 	if message.author.bot:
 		pass
 	else:
-		await message.channel.send(message.author.name)
+		if(message.author.name == "Chombler"):
+			await message.channel.send(message.author.name)
 		if message.content.startswith('$hello'):
 			await message.channel.send('Hello!')
 
