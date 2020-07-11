@@ -73,9 +73,6 @@ def construct_tables():
 		cursor = connection.cursor()
 		# Print PostgreSQL Connection properties
 		print(connection.get_dsn_parameters(),"\n")
-
-		add_extension = '''CREATE EXTENSION pg_trgm'''
-		cursor.execute(add_extension)
 		
 		join_table_query = '''SELECT * FROM constructor'''
 
