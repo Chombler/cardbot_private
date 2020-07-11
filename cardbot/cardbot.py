@@ -66,11 +66,11 @@ async def on_message(message):
 			print(stringInput)
 			for text in stringInput:
 				if(message.author.name == "Chombler"):
-					if(stringInput == "Regenerate Database"):
+					if(text == "Regenerate Database"):
 						construct_tables()
 						await message.channel.send(message.author.name + ", you have regenerated the database.")
-				else:
-					await message.channel.send(message.author.name + ", that was the wrong input.")
+					else:
+						await message.channel.send(message.author.name + ", that was the wrong input.")
 				if(text.lower() == "florasia"):
 					responseChoice = randrange(4)
 					await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
