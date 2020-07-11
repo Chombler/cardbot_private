@@ -567,7 +567,7 @@ constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'
 ('Zombot Plank Walker',	'Sneaky',	'Pirate Science Zombie',	8,	6,	6,	'Amphibious, Strikethrough',	'When played: Make two other random Pirates in random lanes.',	'Deploying Pirates here, there and everywhere.',	'Premium',	'Legendary',	'Brain'),\
 ('Frozen Tundra',	'Sneaky, Beastly',	'Superpower Trick',	1,	0,	0,	'',	'Freeze all Plants on the Ground.',	'Brain Freeze has a knack for making the Plants chill out.',	'Premium',	'Legendary',	'Brain'),\
 ('Impfinity Clone',	'Sneaky, Crazy',	'Imp Zombie',	1,	2,	1,	'Amphibious',	'',	'An IMPerfect copy, but it\'\'ll do.',	'',	'Token',	'Brain'),\
-('Triple Threat',	'Sneaky, Crazy',	'Imp Superpower Trick',	1,	0,	0,	'',	'Make two 2/1 Impfinity Clones with Amphibious in random lanes.',	'That\'\'s how you get Imps.',	'Premium',	'Legendary',	'Brain'),	'Brain')"
+('Triple Threat',	'Sneaky, Crazy',	'Imp Superpower Trick',	1,	0,	0,	'',	'Make two 2/1 Impfinity Clones with Amphibious in random lanes.',	'That\'\'s how you get Imps.',	'Premium',	'Legendary',	'Brain')"
 
 nicknameTuple = [
 ('Bubble Up',	'Bubble Up'),
@@ -1222,7 +1222,7 @@ rarityTuple = [
 ('Rare',),
 ('Super-Rare',),
 ('Legendary',),
-('Event')]
+('Event',)]
 
 
 traitTuple = [

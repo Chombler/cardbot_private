@@ -32,7 +32,7 @@ def createTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding table to PostgreSQL", error)
+		print ("Error creating card in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -59,7 +59,7 @@ def dropTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error removing table from PostgreSQL", error)
+		print ("Error removing card from PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -81,7 +81,7 @@ def addToTable(record):
 		print("Row added to \"card\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding row to card in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -103,7 +103,7 @@ def addManyToTable(recordTuple):
 
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding rows to card in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -124,7 +124,7 @@ def deleteFromTable(recordId):
 
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error deleting from card in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -147,7 +147,7 @@ def pullFromTable(recordId):
 			print('')
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error pulling from card in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -171,7 +171,7 @@ def pullidFromTable(recordValue):
 			result = None
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error pulling id from card in PostgreSQL", error)
 	finally:
 		#closing database connection.
 		if(connection):
