@@ -62,14 +62,16 @@ async def on_message(message):
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 			print(stringInput)
 			for text in stringInput:
-				if(message.author.name == "Chombler"):
-					if message.content.startswith('$'):
-						if(text == "Regenerate Database"):
+				if(text == "Regenerate Database"):
+					if(message.author.name == "Chombler"):
+						if message.content.startswith('$'):
 							construct_tables()
 							await message.channel.send(message.author.name + ", you have regenerated the database.")
 						else:
 							await message.channel.send(message.author.name + ", that was the wrong input.")
-				if(text.lower() == "florasia"):
+					else:
+						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+				elif(text.lower() == "florasia"):
 					responseChoice = randrange(4)
 					await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
 				elif(text.lower() == "zombwanaland"):
