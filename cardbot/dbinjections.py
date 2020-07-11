@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, nickname, rarity, side, trait, tribe
+from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, nickname, rarity, cost_type, trait, tribe
 from cardobject import cardObject
 from constructorRows import constructor_rows
 
@@ -96,7 +96,7 @@ def pullCardRecord(recordName):
 		SELECT	name, 
 				cardclass.cardclass,
 				tribe.tribe, cardtype.cardtype,
-				cost, side.side, strength, trait.strengthmodifier, health, trait.healthmodifier,
+				cost, cost_type.cost_type, strength, trait.strengthmodifier, health, trait.healthmodifier,
 				trait.trait,
 				ability,
 				flavor,
@@ -112,7 +112,7 @@ def pullCardRecord(recordName):
 		LEFT JOIN cardtype ON cardtype.id = card.typeid
 		LEFT JOIN cardset ON cardset.id = card.setid
 		LEFT JOIN rarity ON card.rarityid = rarity.id
-		LEFT JOIN side ON card.sideid = side.id
+		LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
 		WHERE card.id = %s
 		'''
 

@@ -19,7 +19,7 @@ def createTable():
 								flavor varchar(511),
 								setid int DEFAULT NULL,
 								rarityid int,
-								sideid int,
+								cost_typeid int,
 								typeid int);'''
 		
 		cursor.execute(create_table_query)
@@ -74,7 +74,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """INSERT INTO card(name, cost, strength, health, ability, flavor, setid, rarityid, sideid, typeid) VALUES %s"""
+		postgres_insert_query = """INSERT INTO card(name, cost, strength, health, ability, flavor, setid, rarityid, cost_typeid, typeid) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
