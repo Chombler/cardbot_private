@@ -58,19 +58,17 @@ async def on_message(message):
 		if message.content.startswith('$help'):
 			await message.channel.send('Goodbye!')
 
-		if message.content.startswith('$'):
-			await message.channel.send('Goodbye!')
-
 		if '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 			print(stringInput)
 			for text in stringInput:
 				if(message.author.name == "Chombler"):
-					if(text == "Regenerate Database"):
-						construct_tables()
-						await message.channel.send(message.author.name + ", you have regenerated the database.")
-					else:
-						await message.channel.send(message.author.name + ", that was the wrong input.")
+					if message.content.startswith('$'):
+						if(text == "Regenerate Database"):
+							construct_tables()
+							await message.channel.send(message.author.name + ", you have regenerated the database.")
+						else:
+							await message.channel.send(message.author.name + ", that was the wrong input.")
 				if(text.lower() == "florasia"):
 					responseChoice = randrange(4)
 					await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))

@@ -76,7 +76,6 @@ def construct_tables():
 
 		add_extension = '''CREATE EXTENSION pg_trgm'''
 		cursor.execute(add_extension)
-		cursor.commit()
 		
 		join_table_query = '''SELECT * FROM constructor'''
 
