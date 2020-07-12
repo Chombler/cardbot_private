@@ -10,7 +10,7 @@ import re as regex
 import psycopg2
 from random import randrange
 
-from dbinjections import pullCardRecord
+from dbinjections import pullCardRecord, pullHeroRecord
 from databaseinteractions import construct_nickname
 
 from credentials import token
@@ -59,7 +59,13 @@ async def on_message(message):
 		if message.content.startswith('$help'):
 			await message.channel.send('Goodbye!')
 
-		if '[[' and ']]' in message.content:
+		if '{' and '}' in message.content:
+			stringInput = regex.findall('\{(.+?)\}', message.content)
+			print(stringInput)
+			for text in stringInput:
+				response = pullHeroRecord(text)
+				await message.channel.send(response)
+		elif '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 			print(stringInput)
 			for text in stringInput:

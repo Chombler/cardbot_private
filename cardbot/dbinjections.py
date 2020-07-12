@@ -143,3 +143,63 @@ def pullCardRecord(recordName):
 		return(cardInstance.information())
 
 
+def pullHeroRecord(recordName):
+	success = True
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print(connection.get_dsn_parameters(),"\n")
+
+		select_table_query = '''
+		SELECT id
+		FROM hero
+		ORDER BY SIMILARITY(hero_name, %s) DESC
+		LIMIT 1'''
+
+		cursor.execute(select_table_query, (recordName,))
+
+		results = cursor.fetchall()
+		print(results)
+		resultid = results[0][0]
+
+		join_table_query = '''
+		SELECT	hero_name, abbreviation, firstclassid, secondclassid,
+				card.name
+		FROM hero
+		LEFT JOIN supertohero ON hero.id = supertohero.heroid
+		LEFT JOIN card ON supertohero.superid = card.id
+		WHERE card.id = %s
+		'''
+
+		cursor.execute(join_table_query, (resultid,))
+		results = cursor.fetchall()
+
+
+		print("Printing Table")
+		for row in results:
+			for col in row:
+				print(col)
+			print()
+
+	#	cardInstance = cardObject(results)
+	#	print(cardInstance.information())
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error retrieving card information using PostgreSQL,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+		return(str(results))
+
+
