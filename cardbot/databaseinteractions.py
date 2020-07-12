@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, cost_type, rarity, nickname, trait, tribe
+from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, card_constructor, cost_type, rarity, nickname, trait, tribe
 from cardobject import cardObject
-from constructorRows import constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple
+from constructorRows import card_constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple
 
 #Function names:
 #createTable()
