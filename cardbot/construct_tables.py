@@ -201,7 +201,7 @@ def construct_hero_tables():
 				classids.append(classid)
 
 			hero_record = (record_name, record_abbreviation, classids[0], classids[1])
-			print("/nHero Record: (%s,%s,%s,%s)" % hero_record)
+			print("\nHero Record: (%s,%s,%s,%s)" % hero_record)
 
 			hero.addToTable(hero_record)
 			heroid = hero.pullidFromTable(record_name)

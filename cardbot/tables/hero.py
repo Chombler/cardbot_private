@@ -68,8 +68,8 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO hero(hero_name, abbreviation, firstclassid, secondclassid) VALUES"""
-		cursor.execute(postgres_insert_query + record)
+		postgres_insert_query = """ INSERT INTO hero(hero_name, abbreviation, firstclassid, secondclassid) VALUES %s"""
+		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
 		print("Row added to table \"hero\"")
