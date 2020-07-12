@@ -163,7 +163,7 @@ def construct_hero_tables():
 	supertohero.dropTable()
 
 	hero.createTable()
-	hero_constructor.dropTable()
+	hero_constructor.createTable()
 	supertohero.createTable()
 
 	hero_constructor.addManyToTable(heroTuple)
