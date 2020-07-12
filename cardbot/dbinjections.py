@@ -166,7 +166,7 @@ def pullHeroRecord(recordName):
 		resultid = results[0][0]
 
 		join_table_query = '''
-		SELECT	hero_name, abbreviation, flavor,
+		SELECT	hero_name, abbreviation, hero_flavor,
 				cardclass.cardclass,
 				card.name
 		FROM hero
