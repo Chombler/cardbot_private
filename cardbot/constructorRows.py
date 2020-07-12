@@ -1,4 +1,4 @@
-constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'Move a Plant. It gets +4:Health:.',	'Who doesn\'\'t like bubbles? Zombies...that\'\'s who.',	'',	'Super-Rare',	'Sun'),\
+card_constructor_rows = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'Move a Plant. It gets +4:Health:.',	'Who doesn\'\'t like bubbles? Zombies...that\'\'s who.',	'',	'Super-Rare',	'Sun'),\
 ('Ensign Uproot',	'Guardian',	'Root Superpower Plant',	1,	2,	2,	'',	'When played: Move another Plant or Zombie.',	'His mighty tractor beam is straight off the farm and out of this world.',	'',	'Super-Rare',	'Sun'),\
 ('Forget-Me-Nuts',	'Guardian',	'Flower Nut Plant',	1,	2,	1,	'',	'Zombie tricks cost 1:Brain: more.',	'\"I\'\'d forget my own flower if it wasn\'\'t stuck to my head. Wait, what were we talking about?\"',	'',	'Event',	'Sun'),\
 ('Galacta-Cactus',	'Guardian',	'Flower Cactus Plant',	1,	2,	2,	'Bullseye',	'When Destroyed: Do 1 damage to everything.',	'\"I take pity on no one. For I am Galacta-Cactus!\"',	'Galactic',	'Super-Rare',	'Sun'),\
@@ -1289,4 +1289,36 @@ tribeTuple = [
 ('Science',),
 ('Sports',),
 ('Superpower',)]
+
+heroTuple = [
+('Green Shadow',	'GS',	'Mega, Smarty',	'Precision Blast, Big Chill, Whirlwind, Embiggen'),
+('Solar Flare',	'SF',	'Kabloom, Solar',	'Sunburn, Weed Whack, More Spore, Scorched Earth'),
+('Wall-Knight',	'WK',	'Guardian, Solar',	'Uncrackable, Geyser, Nut Signal, Bubble Up'),
+('Chompzilla',	'CZ',	'Mega, Solar',	'Devour, Holo-Flora, Geyser, Scorched Earth'),
+('Spudow',	'SP',	'Kabloom, Guardian',	'Tater Toss, Bubble Up, Storm Front, Meteor Strike'),
+('Citron',	'CT',	'Guardian, Smarty',	'Peel Shield, Transmogrify, Nut Signal, Root Wall'),
+('Grass Knuckles',	'GK',	'Mega, Guardian',	'Power Pummel, Holo-Flora, Time to Shine, Root Wall'),
+('Nightcap',	'NC',	'Kabloom, Smarty',	'Mush-Boom, More Spore, Whirlwind, Storm Front'),
+('Rose',	'RO',	'Smarty, Solar',	'Goatify, Transmogrify, Big Chill, Weed Whack'),
+('Captain Combustible',	'CC',	'Kabloom, Mega',	'Blazing Bark, Meteor Strike, Embiggen, Time to Shine'),
+('Beta-Carrotina',	'BC',	'Guardian, Smarty',	'Genetic Amplification, Ensign Uproot, Lieutenant Carrrotron, Lightspeed Seed'),
+('Super Brainz',	'SB',	'Brainy, Sneaky',	'Carried Away, Telepathy, Cut Down to Size, Super Stench'),
+('The Smash',	'SM',	'Hearty, Beastly',	'Slammin\'\' Smackdown, Heroic Health, Possessed, Galvanize'),
+('Impfinity',	'IF',	'Sneaky, Crazy',	'Triple Threat, Super Stench, In-Crypted, Brute Strength'),
+('Rustbolt',	'RB',	'Brainy, Hearty',	'Shrink Ray, Heroic Health, Cut Down to Size, Rock Wall'),
+('Electric Boogaloo',	'EB',	'Beastly, Crazy',	'Stayin\'\' Alive, Dance Off, Evaporate, Electrobolt'),
+('Brain Freeze',	'BF',	'Sneaky, Beastly',	'Frozen Tundra, Dolphinado, Acid Rain, Galvanize'),
+('Professor Brainstorm',	'PB',	'Brainy, Crazy',	'Eureka, Summoning, Telepathy, Dance Off'),
+('Immorticia',	'IM',	'Brainy, Beastly',	'Witch\'\'s Familiar, Summoning, Evaporate, Acid Rain'),
+('Z-Mech',	'ZM',	'Hearty, Crazy',	'Missile Madness, Rock Wall, Brute Strength, Electrobolt'),
+('Neptuna',	'NT',	'Hearty, Sneaky',	'Octo-Pult, Dolphinado, Possessed, In-Crypted'),
+('Huge-Giganticus',	'HG',	'Brainy, Sneaky',	'Terror-Fomer 10,000, Iron Boarder, Teleportation Station, Ice Moon'),]
+
+
+
+
+
+
+
+
 

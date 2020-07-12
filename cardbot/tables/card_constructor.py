@@ -9,7 +9,7 @@ def createTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		create_table_query = '''CREATE TABLE constructor
+		create_table_query = '''CREATE TABLE card_constructor
 								(id SERIAL PRIMARY KEY,
 								name varchar(99),
 								class varchar(32),
@@ -20,13 +20,13 @@ def createTable():
 								traits varchar(64) DEFAULT NULL,
 								ability varchar(511),
 								flavor varchar(511),
-								constructorset varchar(32) DEFAULT NULL,
+								cardset varchar(32) DEFAULT NULL,
 								rarity varchar(32),
 								side varchar(16));'''
 		
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"constructor\" Addition Successful!")
+		print("Table \"card_constructor\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -49,11 +49,11 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		delete_table_query = '''DROP TABLE constructor'''
+		delete_table_query = '''DROP TABLE card_constructor'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"constructor\" Deletion Successful!")
+		print("Table \"card_constructor\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -76,11 +76,11 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """INSERT INTO constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, constructorset, rarity, side) VALUES"""
+		postgres_insert_query = """INSERT INTO card_constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, cardset, rarity, side) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
-		print("Row added to \"constructor\"")
+		print("Row added to \"card_constructor\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -98,10 +98,10 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, constructorset, rarity, side) VALUES " + args_str)
+		cursor.execute("INSERT INTO card_constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, cardset, rarity, side) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"constructor\"")
+		print("Multiple rows added to \"card_constructor\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -118,10 +118,10 @@ def deleteFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_delete_query = """ Delete from constructor where id = %s"""
+		postgres_delete_query = """ Delete from card_constructor where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"constructor\"")
+		print("Row deleted from \"card_constructor\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -137,10 +137,10 @@ def pullFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_pull_query = """ SELECT * from constructor where id = %s"""
+		postgres_pull_query = """ SELECT * from card_constructor where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"constructor\" where id = %s" % (recordId))
+		print("Results from \"card_constructor\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')

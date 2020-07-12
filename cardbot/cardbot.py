@@ -14,7 +14,7 @@ from dbinjections import pullCardRecord
 from databaseinteractions import construct_nickname
 
 from credentials import token
-from construct_tables import construct_tables
+from construct_tables import construct_card_tables, construct_hero_tables
 
 client = discord.Client()
 
@@ -66,8 +66,8 @@ async def on_message(message):
 				if(text == "Regenerate Database"):
 					if(message.author.name == "Chombler"):
 						if message.content.startswith('$'):
-							construct_tables()
-							await message.channel.send(message.author.name + ", you have regenerated the database.")
+							construct_card_tables()
+							await message.channel.send(message.author.name + ", you have regenerated the card database.")
 						else:
 							await message.channel.send(message.author.name + ", that was the wrong input.")
 					else:
@@ -76,6 +76,15 @@ async def on_message(message):
 					if(message.author.name == "Chombler"):
 						if message.content.startswith('$'):
 							construct_nickname()
+							await message.channel.send(message.author.name + ", you have regenerated nickname.")
+						else:
+							await message.channel.send(message.author.name + ", that was the wrong input.")
+					else:
+						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+				elif(text == "Regenerate Hero"):
+					if(message.author.name == "Chombler"):
+						if message.content.startswith('$'):
+							construct_hero_tables()
 							await message.channel.send(message.author.name + ", you have regenerated nickname.")
 						else:
 							await message.channel.send(message.author.name + ", that was the wrong input.")

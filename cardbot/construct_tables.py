@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, constructor, cost_type, rarity, nickname, trait, tribe
+from tables import card, cardclass, cardset, cardtoclass, cardtodeck, cardtotrait, cardtotribe, cardtype, card_card_constructor, cost_type, deck, hero rarity, nickname, supertohero, trait, tribe
 from cardobject import cardObject
-from constructorRows import constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple
+from constructorRows import card_constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple, heroTuple
 
 #Function names:
 #createTable()
@@ -26,7 +26,7 @@ tempString = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'Move a
 ('Primal Potato Mine',	'Guardian',	'Root Plant',	1,	0,	1,	'',	'When Destroyed: Do 3 damage to a zombie here.',	'Hidden long ago in Hollow Earth, Dinosaurs ran rampant in The Land Before Mine.',	'Colossal',	'Uncommon',	'Sun')"
 """
 
-def construct_tables():
+def construct_card_tables():
 	card.dropTable()
 	cardclass.dropTable()
 	cardset.dropTable()
@@ -34,7 +34,7 @@ def construct_tables():
 	cardtotrait.dropTable()
 	cardtotribe.dropTable()
 	cardtype.dropTable()
-	constructor.dropTable()
+	card_constructor.dropTable()
 	cost_type.dropTable()
 	nickname.dropTable()
 	rarity.dropTable()
@@ -48,7 +48,7 @@ def construct_tables():
 	cardtotrait.createTable()
 	cardtotribe.createTable()
 	cardtype.createTable()
-	constructor.createTable()
+	card_constructor.createTable()
 	cost_type.createTable()
 	nickname.createTable()
 	rarity.createTable()
@@ -58,7 +58,7 @@ def construct_tables():
 	cardclass.addManyToTable(cardclassTuple)
 	cardset.addManyToTable(cardsetTuple)
 	cardtype.addManyToTable(cardtypeTuple)
-	constructor.addToTable(constructor_rows)
+	card_constructor.addToTable(card_constructor_rows)
 	cost_type.addManyToTable(cost_typeTuple)
 	nickname.addManyToTable(nicknameTuple)
 	rarity.addManyToTable(rarityTuple)
@@ -74,7 +74,7 @@ def construct_tables():
 		# Print PostgreSQL Connection properties
 		print(connection.get_dsn_parameters(),"\n")
 		
-		join_table_query = '''SELECT * FROM constructor'''
+		join_table_query = '''SELECT * FROM card_constructor'''
 
 		cursor.execute(join_table_query)
 		results = cursor.fetchall()
@@ -147,11 +147,83 @@ def construct_tables():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error working with constructor in PostgreSQL", error)
+		print ("Error working with card_constructor in PostgreSQL", error)
 	finally:
 		#closing database connection.
 		if(connection):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed. Card should be built.")
+
+
+def construct_hero_tables():
+
+	hero.dropTable()
+	hero_constructor.dropTable()
+	supertohero.dropTable()
+
+	hero.createTable()
+	hero_constructor.dropTable()
+	supertohero.createTable()
+
+	hero_constructor.addManyToTable(heroTuple)
+
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print(connection.get_dsn_parameters(),"\n")
+		
+		join_table_query = '''SELECT * FROM hero_constructor'''
+
+		cursor.execute(join_table_query)
+		results = cursor.fetchall()
+
+
+		"""print("Printing Table")
+		print(results)
+		for row in results:
+			for col in row:
+				print(col)"""
+
+		for row in results:
+			record_name = row[1]
+			record_abbreviation = row[2]
+			record_classes = row[3].split(", ")
+			record_supers = row[4].split(", ")
+			classids = []
+
+			for record_class in record_classes:
+				print("Record Class: %s" % record_class)
+				classid = cardclass.pullidFromTable(record_class)
+				classids.append(classid)
+
+			hero_record = (record_name, record_abbreviation, classids[0], classids[1])
+			print("/nHero Record: " + hero_record)
+			
+			hero.addToTable(hero_record)
+			heroid = hero.pullidFromTable(record_name)
+
+			for herosuper in record_supers:
+				print("Hero Super: %s" % herosuper)
+				superid = card.pullidFromTable(herosuper)
+				record_supertohero = (superid, heroid)
+				print("Record Tuple: %s" % str(record_supertohero))
+				supertohero.addToTable(record_supertohero)
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error working with hero_constructor in PostgreSQL", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed. Hero should be built.")
 
