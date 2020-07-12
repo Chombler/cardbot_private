@@ -1312,7 +1312,7 @@ heroTuple = [
 ('Immorticia',	'IM',	'Brainy, Beastly',	'Witch\'\'s Familiar, Summoning, Evaporate, Acid Rain'),
 ('Z-Mech',	'ZM',	'Hearty, Crazy',	'Missile Madness, Rock Wall, Brute Strength, Electrobolt'),
 ('Neptuna',	'NT',	'Hearty, Sneaky',	'Octo-Pult, Dolphinado, Possessed, In-Crypted'),
-('Huge-Giganticus',	'HG',	'Brainy, Sneaky',	'Terror-Fomer 10,000, Iron Boarder, Teleportation Station, Ice Moon'),]
+('Huge-Giganticus',	'HG',	'Brainy, Sneaky',	'Terror-Fomer 10,000, Iron Boarder, Teleportation Station, Ice Moon')]
 
 
 
