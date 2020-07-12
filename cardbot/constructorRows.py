@@ -1224,7 +1224,8 @@ rarityTuple = [
 ('Rare',),
 ('Super-Rare',),
 ('Legendary',),
-('Event',)]
+('Event',),
+('Token',)]
 
 traitTuple = [
 ('Amphibious', None, None),
