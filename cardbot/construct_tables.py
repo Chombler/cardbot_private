@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtodeck, cardtotrait, cardtotribe, cardtype, card_constructor, cost_type, deck, hero, hero_constructor, rarity, nickname, supertohero, trait, tribe
+from tables import card, cardclass, cardset, cardtoclass, cardtodeck, cardtotrait, cardtotribe, cardtype, card_constructor, cost_type, deck, hero, hero_constructor, herotoclass, herotosuper, rarity, nickname, trait, tribe
 from cardobject import cardObject
 from constructorRows import card_constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple, heroTuple
 
@@ -160,11 +160,13 @@ def construct_hero_tables():
 
 	hero.dropTable()
 	hero_constructor.dropTable()
-	supertohero.dropTable()
+	herotoclass.dropTable()
+	herotosuper.dropTable()
 
 	hero.createTable()
 	hero_constructor.createTable()
-	supertohero.createTable()
+	herotoclass.createTable()
+	herotosuper.createTable()
 
 	hero_constructor.addManyToTable(heroTuple)
 
@@ -193,25 +195,26 @@ def construct_hero_tables():
 			record_abbreviation = row[2]
 			record_classes = row[3].split(", ")
 			record_supers = row[4].split(", ")
-			classids = []
+			record_flavor = row[5]
+
+			hero_record = (record_name, record_abbreviation, record_flavor)
+			print("\nHero Record: (%s,%s,%s)" % hero_record)
+			hero.addToTable(hero_record)
+			heroid = hero.pullidFromTable(record_name)
 
 			for record_class in record_classes:
 				print("Record Class: %s" % record_class)
 				classid = cardclass.pullidFromTable(record_class)
-				classids.append(classid)
-
-			hero_record = (record_name, record_abbreviation, classids[0], classids[1])
-			print("\nHero Record: (%s,%s,%s,%s)" % hero_record)
-
-			hero.addToTable(hero_record)
-			heroid = hero.pullidFromTable(record_name)
+				record_herotoclass = (heroid, classid)
+				print("Record Tuple: %s" % str(record_herotoclass))
+				herotoclass.addToTable(record_herotoclass)
 
 			for herosuper in record_supers:
 				print("Hero Super: %s" % herosuper)
 				superid = card.pullidFromTable(herosuper)
-				record_supertohero = (superid, heroid)
-				print("Record Tuple: %s" % str(record_supertohero))
-				supertohero.addToTable(record_supertohero)
+				record_herotosuper = (heroid, superid)
+				print("Record Tuple: %s" % str(record_herotosuper))
+				herotosuper.addToTable(record_herotosuper)
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
