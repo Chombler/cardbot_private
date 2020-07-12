@@ -3,7 +3,6 @@ from psycopg2 import Error
 from credentials import token, db_credentials
 from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, card_constructor, nickname, rarity, cost_type, trait, tribe
 from cardobject import cardObject
-from constructorRows import constructor_rows
 
 #Function names:
 #createTable()
