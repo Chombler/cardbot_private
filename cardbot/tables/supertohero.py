@@ -9,14 +9,14 @@ def createTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		create_table_query = '''CREATE TABLE cardtotrait
+		create_table_query = '''CREATE TABLE supertohero
 								(id SERIAL PRIMARY KEY,
 								cardid int,
 								heroid int);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"cardtotrait\" Addition Successful!")
+		print("Table \"supertohero\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -39,11 +39,11 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		delete_table_query = '''DROP TABLE cardtotrait'''
+		delete_table_query = '''DROP TABLE supertohero'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"cardtotrait\" Deletion Successful!")
+		print("Table \"supertohero\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -66,11 +66,11 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO cardtotrait(cardid, heroid) VALUES %s"""
+		postgres_insert_query = """ INSERT INTO supertohero(cardid, heroid) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
-		print("Row added to table \"cardtotrait\"")
+		print("Row added to table \"supertohero\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -88,10 +88,10 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO cardtotrait(cardid, heroid) VALUES " + args_str)
+		cursor.execute("INSERT INTO supertohero(cardid, heroid) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"cardtotrait\"")
+		print("Multiple rows added to \"supertohero\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -107,10 +107,10 @@ def deleteFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_delete_query = """ Delete from cardtotrait where id = %s"""
+		postgres_delete_query = """ Delete from supertohero where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"cardtotrait\"")
+		print("Row deleted from \"supertohero\"")
 		
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -126,10 +126,10 @@ def pullFromTable(column, identifier):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_pull_query = """ SELECT * from cardtotrait where id = %s"""
+		postgres_pull_query = """ SELECT * from supertohero where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"cardtotrait\" where id = %s" % (recordId))
+		print("Results from \"supertohero\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')

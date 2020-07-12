@@ -11,7 +11,7 @@ def createTable():
 
 		create_table_query = '''CREATE TABLE hero_constructor
 								(id SERIAL PRIMARY KEY,
-								hero_constructor varchar(32),
+								name varchar(32),
 								abbreviation varchar(16),
 								classes varchar(32),
 								supers varchar(128));'''
@@ -68,7 +68,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO hero_constructor(hero_constructor, abbreviation, classes, supers) VALUES"""
+		postgres_insert_query = """ INSERT INTO hero_constructor(name, abbreviation, classes, supers) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
@@ -90,7 +90,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO hero_constructor(hero_constructor, abbreviation, classes, supers) VALUES " + args_str)
+		cursor.execute("INSERT INTO hero_constructor(name, abbreviation, classes, supers) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"hero_constructor\"")
@@ -152,7 +152,7 @@ def pullidFromTable(recordValue):
 		cursor = connection.cursor()
 
 		results = []
-		postgres_pull_query = """ SELECT id from hero_constructor where hero_constructor = %s"""
+		postgres_pull_query = """ SELECT id from hero_constructor where name = %s"""
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
 		result = None

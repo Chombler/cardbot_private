@@ -85,7 +85,7 @@ async def on_message(message):
 					if(message.author.name == "Chombler"):
 						if message.content.startswith('$'):
 							construct_hero_tables()
-							await message.channel.send(message.author.name + ", you have regenerated nickname.")
+							await message.channel.send(message.author.name + ", you have regenerated hero.")
 						else:
 							await message.channel.send(message.author.name + ", that was the wrong input.")
 					else:
