@@ -171,7 +171,7 @@ def pullHeroRecord(recordName):
 		FROM hero
 		LEFT JOIN supertohero ON hero.id = supertohero.heroid
 		LEFT JOIN card ON supertohero.cardid = card.id
-		WHERE card.id = %s
+		WHERE hero.id = %s
 		'''
 
 		cursor.execute(join_table_query, (resultid,))
