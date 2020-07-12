@@ -23,7 +23,7 @@ def createTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding table to PostgreSQL", error)
+		print ("Error adding cardclass to PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -50,7 +50,7 @@ def dropTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error removing table from PostgreSQL", error)
+		print ("Error removing cardclass from PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -71,7 +71,7 @@ def addToTable(record):
 		print("Row added to \"cardclass\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding to cardclass in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -91,7 +91,7 @@ def addManyToTable(recordTuple):
 		print("Multiple rows added to \"cardclass\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding many to cardclass in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -109,7 +109,7 @@ def deleteFromTable(recordId):
 		print("Row deleted from \"cardclass\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error deleting from cardclass in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -132,7 +132,7 @@ def pullFromTable(recordId):
 			print('')
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error pulling from cardclass in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -161,7 +161,7 @@ def pullidFromTable(recordValue):
 			result = None
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error checking cardclass in PostgreSQL", error)
 	finally:
 		#closing database connection.
 		if(connection):

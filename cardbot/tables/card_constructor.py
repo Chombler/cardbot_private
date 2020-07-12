@@ -34,7 +34,7 @@ def createTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding table to PostgreSQL", error)
+		print ("Error adding card_constructor to PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -61,7 +61,7 @@ def dropTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error removing table from PostgreSQL", error)
+		print ("Error removing card_constructor from PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -83,7 +83,7 @@ def addToTable(record):
 		print("Row added to \"card_constructor\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding to card_constructor in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -104,7 +104,7 @@ def addManyToTable(recordTuple):
 		print("Multiple rows added to \"card_constructor\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding many to card_constructor in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -124,7 +124,7 @@ def deleteFromTable(recordId):
 		print("Row deleted from \"card_constructor\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error deleting from card_constructor in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -147,7 +147,7 @@ def pullFromTable(recordId):
 			print('')
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error checking card_constructor in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):

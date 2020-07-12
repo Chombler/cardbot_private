@@ -23,7 +23,7 @@ def createTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding table to PostgreSQL", error)
+		print ("Error adding cardset in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -50,7 +50,7 @@ def dropTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error removing table from PostgreSQL", error)
+		print ("Error removing cardset from PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -73,7 +73,7 @@ def addToTable(record):
 
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding to cardset in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -94,7 +94,7 @@ def addManyToTable(recordTuple):
 		print("Multiple rows added to \"cardset\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding many to cardset in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -113,7 +113,7 @@ def deleteFromTable(recordId):
 		print("Row deleted from \"cardset\"")
 		
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error deleting from cardset in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -136,7 +136,7 @@ def pullFromTable(column, identifier):
 			print('')
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error pulling from cardset in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -160,7 +160,7 @@ def pullidFromTable(recordValue):
 			result = None
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error checking cardset in PostgreSQL", error)
 	finally:
 		#closing database connection.
 		if(connection):
