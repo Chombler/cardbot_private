@@ -167,10 +167,13 @@ def pullHeroRecord(recordName):
 
 		join_table_query = '''
 		SELECT	hero_name, abbreviation, firstclassid, secondclassid,
+				cardclass.cardclass,
 				card.name
 		FROM hero
 		LEFT JOIN supertohero ON hero.id = supertohero.heroid
 		LEFT JOIN card ON supertohero.cardid = card.id
+		LEFT JOIN carclass ON hero.firstclassid = cardclass.id
+		LEFT JOIN carclass ON hero.secondclassid = cardclass.id
 		WHERE hero.id = %s
 		'''
 
