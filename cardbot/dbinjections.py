@@ -170,7 +170,7 @@ def pullHeroRecord(recordName):
 				card.name
 		FROM hero
 		LEFT JOIN supertohero ON hero.id = supertohero.heroid
-		LEFT JOIN card ON supertohero.superid = card.id
+		LEFT JOIN card ON supertohero.cardid = card.id
 		WHERE card.id = %s
 		'''
 
