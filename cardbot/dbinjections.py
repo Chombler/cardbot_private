@@ -83,8 +83,7 @@ def pullCardRecord(recordName):
 		select_table_query = '''
 		SELECT id
 		FROM card
-		ORDER BY SIMILARITY(name, %s) DESC
-		LIMIT 1'''
+		where name = %s'''
 
 		cursor.execute(select_table_query, (resultname,))
 
