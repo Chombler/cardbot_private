@@ -27,6 +27,8 @@ tempString = "('Bubble Up',	'Guardian',	'Superpower Trick',	1,	0,	0,	'',	'Move a
 """
 
 def construct_card_tables():
+	success = True
+
 	card.dropTable()
 	cardclass.dropTable()
 	cardset.dropTable()
@@ -148,12 +150,14 @@ def construct_card_tables():
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error working with card_constructor in PostgreSQL", error)
+		success = False
 	finally:
 		#closing database connection.
 		if(connection):
 			cursor.close()
 			connection.close()
-			print("PostgreSQL connection is closed. Card should be built.")
+			print("PostgreSQL connection is closed. Card should be built." if success else "Something went wrong while creating card")
+			return(", you have regenerated the database." if success else ", something went wrong while creating card")
 
 
 def construct_hero_tables():

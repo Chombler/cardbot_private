@@ -72,8 +72,7 @@ async def on_message(message):
 				if(text == "Regenerate Database"):
 					if(message.author.name == "Chombler"):
 						if message.content.startswith('$'):
-							construct_card_tables()
-							await message.channel.send(message.author.name + ", you have regenerated the card database.")
+							await message.channel.send(message.author.name + construct_card_tables())
 						else:
 							await message.channel.send(message.author.name + ", that was the wrong input.")
 					else:
