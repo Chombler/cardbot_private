@@ -1,7 +1,7 @@
 import re as regex
 
 
-class cardObject(object):
+class heroObject(object):
 	record = []
 	name = ""
 	abbreviation = ""
