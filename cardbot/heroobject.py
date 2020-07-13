@@ -62,17 +62,17 @@ class heroObject(object):
 		return(returnString)
 
 	def getherosupers(self):
-		returnString = "- "
+		returnString = ""
 		for herosuper in self.herosupers:
-			returnString += herosuper + " "
+			returnString += herosuper + "\n"
 		return(returnString)
 
 	def getFlavor(self):
 		return(self.flavor)
 
 	def information(self):
-		return( self.getName() + "\{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n" +
-				self.getherosupers() + "\n" +
+		return( self.getName() + " \{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n" +
+				"Supers:\n" self.getherosupers() +
 				"*" + self.getFlavor() + "*\n")
 
 
