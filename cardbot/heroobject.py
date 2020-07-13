@@ -15,9 +15,10 @@ class heroObject(object):
 
 		for row in record:
 			self.createName(row[0])
-			self.createClasses(row[1])
-			self.createherosupers(row[2])
-			self.createFlavor(row[3])
+			self.createAbbreviation(row[1])
+			self.createClasses(row[2])
+			self.createherosupers(row[3])
+			self.createFlavor(row[4])
 
 	def resetCard(self):
 		self.record = []
