@@ -3,6 +3,7 @@ from psycopg2 import Error
 from credentials import token, db_credentials
 from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, card_constructor, nickname, rarity, cost_type, trait, tribe
 from cardobject import cardObject
+from heroobject import heroObject
 
 #Function names:
 #createTable()
@@ -166,9 +167,10 @@ def pullHeroRecord(recordName):
 		resultid = results[0][0]
 
 		join_table_query = '''
-		SELECT	hero_name, abbreviation, hero_flavor,
+		SELECT	hero_name, abbreviation,
 				cardclass.cardclass,
-				card.name
+				card.name,
+				hero_flavor
 		FROM hero
 		LEFT JOIN herotosuper ON hero.id = herotosuper.heroid
 		LEFT JOIN card ON herotosuper.cardid = card.id
@@ -187,8 +189,8 @@ def pullHeroRecord(recordName):
 				print(col)
 			print()
 
-	#	cardInstance = cardObject(results)
-	#	print(cardInstance.information())
+		heroInstance = heroObject(results)
+		print(heroInstance.information())
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -203,6 +205,6 @@ def pullHeroRecord(recordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(str(results))
+		return(heroInstance.information())
 
 

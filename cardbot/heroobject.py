@@ -4,6 +4,7 @@ import re as regex
 class cardObject(object):
 	record = []
 	name = ""
+	abbreviation = ""
 	heroclasses = []
 	herosupers = []
 	flavor = ""
@@ -21,12 +22,16 @@ class cardObject(object):
 	def resetCard(self):
 		self.record = []
 		self.name = ""
+		self.abbreviation = ""
 		self.heroclasses = []
 		self.herosupers = []
 		self.flavor = ""
 
 	def createName(self, recordName):
 		self.name = recordName
+
+	def createAbbreviation(self, recordAbbreviation):
+		self.name = recordAbbreviation
 	
 	def createClasses(self, recordClass):
 		if(recordClass in self.heroclasses):
@@ -35,8 +40,6 @@ class cardObject(object):
 			self.heroclasses.append(recordClass)
 
 	def createherosupers(self, recordSuper):
-		if(recordSuper is None):
-			return
 		if(recordSuper in self.herosupers):
 			return
 		else:
@@ -47,6 +50,9 @@ class cardObject(object):
 		
 	def getName(self):
 		return(self.name)
+
+	def getAbbreviation(self):
+		return(self.abbreviation)
 
 	def getClasses(self):
 		returnString = ""
@@ -64,8 +70,8 @@ class cardObject(object):
 		return(self.flavor)
 
 	def information(self):
-		return( self.getName() + " | " + self.getClasses() + "\n" +
-				self.getherosupers() + self.getType() + "\n" +
+		return( self.getName() + "\{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n" +
+				self.getherosupers() + "\n" +
 				"*" + self.getFlavor() + "*\n")
 
 
@@ -74,32 +80,8 @@ class cardObject(object):
 
 
 """
-
-
-<:Strength:286215395743105024> 
-<:Health:286215409072603136> 
-<:Sun:286219730296242186> 
-<:Brain:286219706883506186> 
-<:Guardian:286212288334135296> 
-<:Kabloom:286212306193481729> 
-<:Mega:286212316632973313> 
-<:Smarty:286212324996677633> 
-<:Solar:337606895135358976> 
-<:Beastly:286212259028533260> 
-<:Brainy:286212270738898945> 
-<:Crazy:286212279647731742> 
-<:Hearty:286212297775644673> 
-<:Sneaky:286212336379756564> 
-<:AntiHero:286216212831141888> 
-<:Armored:286220300763529216> 
-<:Bullseye:286215435400118272> 
-<:Deadly:286214530155937792> 
-<:DoubleStrike:331848241488461826> 
-<:Frenzy:286212444332883970> 
-<:healthstrength:289224527995600897> 
-<:Overshoot:326761366700556290> 
-<:Special:291347137365540864> 
-<:Strikethrough:286214542264893453> 
-<:Untrickable:350385647439314945>
-
+hero_name0, abbreviation1,
+cardclass.cardclass2,
+card.name3,
+hero_flavor4
 """
