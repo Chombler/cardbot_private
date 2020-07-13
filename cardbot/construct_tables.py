@@ -58,7 +58,7 @@ def construct_card_tables():
 	cardclass.addManyToTable(cardclassTuple)
 	cardset.addManyToTable(cardsetTuple)
 	cardtype.addManyToTable(cardtypeTuple)
-	card_constructor.addToTable(card_constructor_rows)
+	card_constructor.addManyToTable(card_constructor_rows)
 	cost_type.addManyToTable(cost_typeTuple)
 	nickname.addManyToTable(nicknameTuple)
 	rarity.addManyToTable(rarityTuple)
