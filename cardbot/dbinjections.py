@@ -88,7 +88,7 @@ def pullCardRecord(recordName):
 
 		results = cursor.fetchall()
 		resultid = results[0][0]
-		print("Result id: " + resultid)
+		print("Result id: " + str(resultid))
 
 		join_table_query = '''
 		SELECT	name, 
