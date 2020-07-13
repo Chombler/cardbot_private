@@ -174,10 +174,9 @@ def pullHeroRecord(recordName):
 		FROM hero
 		LEFT JOIN herotosuper ON hero.id = herotosuper.heroid
 		LEFT JOIN card ON herotosuper.cardid = card.id
-		LEFT JOIN herotoclass on hero.id = herotoclass.heroid
-		LEFT JOIN cardclass on herotoclass.classid = cardclass.id
+		LEFT JOIN herotoclass ON hero.id = herotoclass.heroid
 		LEFT JOIN cardtoclass ON card.id = cardtoclass.cardid
-		LEFT JOIN cardclass ON cardtoclass.classid = cardclass.id
+		LEFT JOIN cardclass ON herotoclass.classid = cardclass.id AND cardtoclass.classid = cardclass.id
 		WHERE hero.id = %s
 		'''
 
