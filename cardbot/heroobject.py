@@ -32,7 +32,7 @@ class heroObject(object):
 		self.name = recordName
 
 	def createAbbreviation(self, recordAbbreviation):
-		self.name = recordAbbreviation
+		self.abbreviation = recordAbbreviation
 	
 	def createClasses(self, recordClass):
 		if(recordClass in self.heroclasses):
