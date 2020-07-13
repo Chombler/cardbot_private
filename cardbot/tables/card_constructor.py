@@ -96,7 +96,7 @@ def addManyToTable(recordTuple):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
+		args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
 		cursor.execute("INSERT INTO card_constructor(name, class, tribesandtype, cost, strength, health, traits, ability, flavor, cardset, rarity, side) VALUES " + args_str)
 
