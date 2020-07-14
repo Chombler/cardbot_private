@@ -3,7 +3,7 @@ from psycopg2 import Error
 from credentials import token, db_credentials
 from tables import card, game_class, card_set, card_to_class, card_to_deck, card_to_trait, card_to_tribe, card_type, card_constructor, cost_type, deck, hero, hero_constructor, hero_to_class, hero_to_card, rarity, nickname, trait, tribe
 from cardobject import cardObject
-from constructorRows import card_constructor_rows, nicknameTuple, game_classTuple, card_setTuple, card_typeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple, heroTuple
+from constructorRows import card_constructor_rows, nicknameTuple, classTuple, setTuple, typeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple, heroTuple
 
 #Function names:
 #createTable()
@@ -57,9 +57,9 @@ def construct_card_tables():
 	trait.createTable()
 	tribe.createTable()
 
-	game_class.addManyToTable(game_classTuple)
-	card_set.addManyToTable(card_setTuple)
-	card_type.addManyToTable(card_typeTuple)
+	game_class.addManyToTable(classTuple)
+	card_set.addManyToTable(setTuple)
+	card_type.addManyToTable(typeTuple)
 	card_constructor.addManyToTable(card_constructor_rows)
 	cost_type.addManyToTable(cost_typeTuple)
 	nickname.addManyToTable(nicknameTuple)

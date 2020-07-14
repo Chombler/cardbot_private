@@ -1190,7 +1190,7 @@ nicknameTuple = [
 ('Impfinity Clone',	'Impfinity Clone'),
 ('Triple Threat',	'Triple Threat')]
 
-cardclassTuple = [
+classTuple = [
 ('<:Guardian:286212288334135296>',),
 ('<:Kabloom:286212306193481729>',),
 ('<:Mega:286212316632973313>',),
@@ -1202,14 +1202,14 @@ cardclassTuple = [
 ('<:Hearty:286212297775644673>',),
 ('<:Sneaky:286212336379756564>',)]
 
-cardsetTuple = [
+setTuple = [
 ('Basic',),
 ('Premium',),
 ('Galactic',),
 ('Colossal',),
 ('Triassic',)]
 
-cardtypeTuple = [
+typeTuple = [
 ('Plant',),
 ('Zombie',),
 ('Trick',),
