@@ -101,7 +101,7 @@ def pullCardRecord(recordName):
 				trait.strengthmodifier,
 				card.health,
 				trait.healthmodifier,
-				trait.trait,
+				trait.name,
 				card.ability,
 				card.flavor,
 				card_set.name,
