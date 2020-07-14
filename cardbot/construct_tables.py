@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtodeck, cardtotrait, cardtotribe, cardtype, card_constructor, cost_type, deck, hero, hero_constructor, herotoclass, herotosuper, rarity, nickname, trait, tribe
+from tables import card, game_class, card_set, card_to_class, card_to_deck, card_to_trait, card_to_tribe, card_type, card_constructor, cost_type, deck, hero, hero_constructor, hero_to_class, hero_to_card, rarity, nickname, trait, tribe
 from cardobject import cardObject
-from constructorRows import card_constructor_rows, nicknameTuple, cardclassTuple, cardsetTuple, cardtypeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple, heroTuple
+from constructorRows import card_constructor_rows, nicknameTuple, game_classTuple, card_setTuple, card_typeTuple, cost_typeTuple, rarityTuple, traitTuple, tribeTuple, heroTuple
 
 #Function names:
 #createTable()
@@ -30,12 +30,12 @@ def construct_card_tables():
 	success = True
 
 	card.dropTable()
-	cardclass.dropTable()
-	cardset.dropTable()
-	cardtoclass.dropTable()
-	cardtotrait.dropTable()
-	cardtotribe.dropTable()
-	cardtype.dropTable()
+	game_class.dropTable()
+	card_set.dropTable()
+	card_to_class.dropTable()
+	card_to_trait.dropTable()
+	card_to_tribe.dropTable()
+	card_type.dropTable()
 	card_constructor.dropTable()
 	cost_type.dropTable()
 	nickname.dropTable()
@@ -44,12 +44,12 @@ def construct_card_tables():
 	tribe.dropTable()
 
 	card.createTable()
-	cardclass.createTable()
-	cardset.createTable()
-	cardtoclass.createTable()
-	cardtotrait.createTable()
-	cardtotribe.createTable()
-	cardtype.createTable()
+	game_class.createTable()
+	card_set.createTable()
+	card_to_class.createTable()
+	card_to_trait.createTable()
+	card_to_tribe.createTable()
+	card_type.createTable()
 	card_constructor.createTable()
 	cost_type.createTable()
 	nickname.createTable()
@@ -57,9 +57,9 @@ def construct_card_tables():
 	trait.createTable()
 	tribe.createTable()
 
-	cardclass.addManyToTable(cardclassTuple)
-	cardset.addManyToTable(cardsetTuple)
-	cardtype.addManyToTable(cardtypeTuple)
+	game_class.addManyToTable(game_classTuple)
+	card_set.addManyToTable(card_setTuple)
+	card_type.addManyToTable(card_typeTuple)
 	card_constructor.addManyToTable(card_constructor_rows)
 	cost_type.addManyToTable(cost_typeTuple)
 	nickname.addManyToTable(nicknameTuple)
@@ -98,15 +98,15 @@ def construct_card_tables():
 			record_traits = row[7].split(", ")
 			record_ability = row[8]
 			record_flavor = row[9]
-			record_cardset = row[10]
+			record_card_set = row[10]
 			record_rarity = row[11]
 			record_cost_type = row[12]
-			record_cardtype = record_tribesandtype[-1]
+			record_card_type = record_tribesandtype[-1]
 			record_tribes = record_tribesandtype[0:-1]
 
-			setid = cardset.pullidFromTable(record_cardset) if record_cardset is not None else None
+			setid = card_set.pullidFromTable(record_card_set) if record_card_set is not None else None
 			rarityid = rarity.pullidFromTable(record_rarity)
-			typeid = cardtype.pullidFromTable(record_cardtype)
+			typeid = card_type.pullidFromTable(record_card_type)
 			cost_typeid = cost_type.pullidFromTable(record_cost_type)
 
 			card_record = (record_name, record_cost, record_strength, record_health, record_ability, record_flavor, setid, rarityid, cost_typeid, typeid)
@@ -118,28 +118,28 @@ def construct_card_tables():
 
 			for record_class in record_classes:
 				print("Record Class: %s" % record_class)
-				classid = cardclass.pullidFromTable(record_class)
-				record_cardtoclass = (cardid, classid)
-				print("Record Tuple: %s" % str(record_cardtoclass))
-				cardtoclass.addToTable(record_cardtoclass)
+				classid = game_class.pullidFromTable(record_class)
+				record_card_to_class = (cardid, classid)
+				print("Record Tuple: %s" % str(record_card_to_class))
+				card_to_class.addToTable(record_card_to_class)
 
 			for record_trait in record_traits:
 				if(len(record_trait) < 1):
 					continue
 				print("Record Trait: %s" % record_trait)
 				traitid = trait.pullidFromTable(record_trait)
-				record_cardtotrait = (cardid, traitid)
-				print("Record Tuple: %s" % str(record_cardtotrait))
-				cardtotrait.addToTable(record_cardtotrait)
+				record_card_to_trait = (cardid, traitid)
+				print("Record Tuple: %s" % str(record_card_to_trait))
+				card_to_trait.addToTable(record_card_to_trait)
 
 			for record_tribe in record_tribes:
 				if(len(record_tribe) < 1):
 					continue
 				print("Record Tribe: %s" % record_tribe)
 				tribeid = tribe.pullidFromTable(record_tribe)
-				record_cardtotribe = (cardid, tribeid)
-				print("Record Tuple: %s" % str(record_cardtotribe))
-				cardtotribe.addToTable(record_cardtotribe)
+				record_card_to_tribe = (cardid, tribeid)
+				print("Record Tuple: %s" % str(record_card_to_tribe))
+				card_to_tribe.addToTable(record_card_to_tribe)
 
 
 
@@ -164,13 +164,13 @@ def construct_hero_tables():
 
 	hero.dropTable()
 	hero_constructor.dropTable()
-	herotoclass.dropTable()
-	herotosuper.dropTable()
+	hero_to_class.dropTable()
+	hero_to_card.dropTable()
 
 	hero.createTable()
 	hero_constructor.createTable()
-	herotoclass.createTable()
-	herotosuper.createTable()
+	hero_to_class.createTable()
+	hero_to_card.createTable()
 
 	hero_constructor.addManyToTable(heroTuple)
 
@@ -208,17 +208,17 @@ def construct_hero_tables():
 
 			for record_class in record_classes:
 				print("Record Class: %s" % record_class)
-				classid = cardclass.pullidFromTable(record_class)
-				record_herotoclass = (heroid, classid)
-				print("Record Tuple: %s" % str(record_herotoclass))
-				herotoclass.addToTable(record_herotoclass)
+				classid = game_class.pullidFromTable(record_class)
+				record_hero_to_class = (heroid, classid)
+				print("Record Tuple: %s" % str(record_hero_to_class))
+				hero_to_class.addToTable(record_hero_to_class)
 
 			for herosuper in record_supers:
 				print("Hero Super: %s" % herosuper)
 				superid = card.pullidFromTable(herosuper)
-				record_herotosuper = (heroid, superid)
-				print("Record Tuple: %s" % str(record_herotosuper))
-				herotosuper.addToTable(record_herotosuper)
+				record_hero_to_card = (heroid, superid)
+				print("Record Tuple: %s" % str(record_hero_to_card))
+				hero_to_card.addToTable(record_hero_to_card)
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")

@@ -11,7 +11,7 @@ def createTable():
 
 		create_table_query = '''CREATE TABLE rarity
 								(id SERIAL PRIMARY KEY,
-								rarity varchar(16));'''
+								name varchar(16));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -65,7 +65,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO rarity(rarity) VALUES (%s)"""
+		postgres_insert_query = """ INSERT INTO rarity(name) VALUES (%s)"""
 		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
@@ -87,7 +87,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO rarity(rarity) VALUES " + args_str)
+		cursor.execute("INSERT INTO rarity(name) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"rarity\"")
@@ -149,7 +149,7 @@ def pullidFromTable(recordValue):
 		cursor = connection.cursor()
 
 		results = []
-		postgres_pull_query = """ SELECT id from rarity where rarity = %s"""
+		postgres_pull_query = """ SELECT id from rarity where name = %s"""
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
 		result = None

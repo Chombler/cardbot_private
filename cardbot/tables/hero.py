@@ -11,9 +11,9 @@ def createTable():
 
 		create_table_query = '''CREATE TABLE hero
 								(id SERIAL PRIMARY KEY,
-								hero_name varchar(32),
+								name varchar(32),
 								abbreviation varchar(16),
-								hero_flavor varchar(256) DEFAULT NULL);'''
+								flavor varchar(256) DEFAULT NULL);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -67,7 +67,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO hero(hero_name, abbreviation, hero_flavor) VALUES %s"""
+		postgres_insert_query = """ INSERT INTO hero(name, abbreviation, flavor) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
@@ -89,10 +89,10 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO hero(hero_name, abbreviation, hero_flavor) VALUES " + args_str)
+		cursor.execute("INSERT INTO hero(name, abbreviation, flavor) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"hero_name\"")
+		print("Multiple rows added to \"name\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -154,7 +154,7 @@ def pullidFromTable(recordValue):
 		postgres_pull_query = """
 		SELECT id
 		FROM hero
-		ORDER BY SIMILARITY(hero_name, %s)DESC
+		ORDER BY SIMILARITY(name, %s)DESC
 		LIMIT 1 """
 
 		cursor.execute(postgres_pull_query, (recordValue,))

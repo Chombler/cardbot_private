@@ -11,7 +11,7 @@ def createTable():
 
 		create_table_query = '''CREATE TABLE trait
 								(id SERIAL PRIMARY KEY,
-								trait varchar(16),
+								name varchar(16),
 								strengthmodifier varchar(64) DEFAULT NULL,
 								healthmodifier varchar(64) DEFAULT NULL);'''
 
@@ -67,7 +67,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO trait(trait, strengthmodifier, healthmodifier) VALUES"""
+		postgres_insert_query = """ INSERT INTO trait(name, strengthmodifier, healthmodifier) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
@@ -89,7 +89,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO trait(trait, strengthmodifier, healthmodifier) VALUES " + args_str)
+		cursor.execute("INSERT INTO trait(name, strengthmodifier, healthmodifier) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"trait\"")
@@ -151,7 +151,7 @@ def pullidFromTable(recordValue):
 		cursor = connection.cursor()
 
 		results = []
-		postgres_pull_query = """ SELECT id from trait where trait = %s"""
+		postgres_pull_query = """ SELECT id from trait where name = %s"""
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
 		result = None

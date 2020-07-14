@@ -9,13 +9,13 @@ def createTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		create_table_query = '''CREATE TABLE cardtype
+		create_table_query = '''CREATE TABLE game_class
 								(id SERIAL PRIMARY KEY,
-								cardtype varchar(16));'''
+								name varchar(64));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"cardtype\" Addition Successful!")
+		print("Table \"game_class\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -23,7 +23,7 @@ def createTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding table to PostgreSQL", error)
+		print ("Error adding game_class to PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -38,11 +38,11 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		delete_table_query = 'DROP TABLE cardtype'
+		delete_table_query = '''DROP TABLE game_class'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"cardtype\" Deletion Successful!")
+		print("Table \"game_class\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -50,7 +50,7 @@ def dropTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error removing table from PostgreSQL", error)
+		print ("Error removing game_class from PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -64,15 +64,14 @@ def addToTable(record):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
-
-		postgres_insert_query = """ INSERT INTO cardtype(cardtype) VALUES (%s)"""
+		postgres_insert_query = """ INSERT INTO game_class(name) VALUES (%s)"""
 		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
-		print("Row added to table \"cardtype\"")
+		print("Row added to \"game_class\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding to game_class in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -84,16 +83,15 @@ def addManyToTable(recordTuple):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
-
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO cardtype(cardtype) VALUES " + args_str)
+		cursor.execute("INSERT INTO game_class(name) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"cardtypr\"")
+		print("Multiple rows added to \"game_class\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error adding many to game_class in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -105,14 +103,13 @@ def deleteFromTable(recordId):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
-
-		postgres_delete_query = """ Delete from cardtype where id = %s"""
+		postgres_delete_query = """ Delete from game_class where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"cardtype\"")
-		
+		print("Row deleted from \"game_class\"")
+
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error deleting from game_class in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -120,62 +117,43 @@ def deleteFromTable(recordId):
 				connection.close()
 				print("PostgreSQL connection is closed")
 
-def pullFromTable(column, identifier):
+def pullFromTable(recordId):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_pull_query = """ SELECT * from cardtype where id = %s"""
+		postgres_pull_query = """ SELECT * from game_class where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"cardtype\" where id = %s" % (recordId))
+		print("Results from \"game_class\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')
 			print('')
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error pulling from game_class in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
 				cursor.close()
 				connection.close()
 				print("PostgreSQL connection is closed")
-
-
-def pullColumnFromTable(pullColumn, identifier, identifyingValue):
-	try:
-		connection = psycopg2.connect(db_credentials)
-		cursor = connection.cursor()
-
-		postgres_pull_query = """ SELECT * from card where id = %s"""
-		cursor.execute(postgres_delete_query, (recordId, ))
-		results = cursor.fetchall()
-		print("Results from \"card\" where id = %s" % (recordId))
-		for row in results:
-			for col in row:
-				print(col, end='')
-			print('')
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
-	finally:
-		#closing database connection.
-			if(connection):
-				cursor.close()
-				connection.close()
-				print("PostgreSQL connection is closed")
-
 
 def pullidFromTable(recordValue):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 		results = []
-		postgres_pull_query = """ SELECT id from cardtype where cardtype = %s"""
+		postgres_pull_query = """
+		SELECT id
+		FROM game_class
+		ORDER BY SIMILARITY(name, %s)DESC
+		LIMIT 1 """
+
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
+		print("Results: " + str(results))
 		result = None
 		try:
 			result = results[0][0]
@@ -183,7 +161,7 @@ def pullidFromTable(recordValue):
 			result = None
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error checking table in PostgreSQL", error)
+		print ("Error checking game_class in PostgreSQL", error)
 	finally:
 		#closing database connection.
 		if(connection):

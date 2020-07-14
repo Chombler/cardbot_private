@@ -1,7 +1,6 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
-from tables import card, cardclass, cardset, cardtoclass, cardtotrait, cardtotribe, cardtype, card_constructor, nickname, rarity, cost_type, trait, tribe
 from cardobject import cardObject
 from heroobject import heroObject
 
@@ -92,24 +91,29 @@ def pullCardRecord(recordName):
 		print("Result id: " + str(resultid))
 
 		join_table_query = '''
-		SELECT	name, 
-				cardclass.cardclass,
-				tribe.tribe, cardtype.cardtype,
-				cost, cost_type.cost_type, strength, trait.strengthmodifier, health, trait.healthmodifier,
+		SELECT	card.name, 
+				game_class.name,
+				tribe.name, card_type.card_type,
+				card.cost,
+				cost_type.cost_type,
+				card.strength,
+				trait.strengthmodifier,
+				card.health,
+				trait.healthmodifier,
 				trait.trait,
-				ability,
-				flavor,
-				cardset.cardset,
-				rarity.rarity
+				card.ability,
+				card.flavor,
+				card_set.name,
+				rarity.name
 		FROM card
-		LEFT JOIN cardtoclass ON card.id = cardtoclass.cardid
-		LEFT JOIN cardclass ON cardtoclass.classid = cardclass.id
-		LEFT JOIN cardtotrait ON cardtotrait.cardid = card.id
-		LEFT JOIN trait ON cardtotrait.traitid = trait.id
-		LEFT JOIN cardtotribe ON card.id = cardtotribe.cardid
-		LEFT JOIN tribe ON cardtotribe.tribeid = tribe.id
-		LEFT JOIN cardtype ON cardtype.id = card.typeid
-		LEFT JOIN cardset ON cardset.id = card.setid
+		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
+		LEFT JOIN game_class ON card_to_class.classid = game_class.id
+		LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
+		LEFT JOIN trait ON card_to_trait.traitid = trait.id
+		LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
+		LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
+		LEFT JOIN card_type ON card_type.id = card.typeid
+		LEFT JOIN card_set ON card_set.id = card.setid
 		LEFT JOIN rarity ON card.rarityid = rarity.id
 		LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
 		WHERE card.id = %s
@@ -167,17 +171,19 @@ def pullHeroRecord(recordName):
 		resultid = results[0][0]
 
 		join_table_query = '''
-		SELECT	hero_name, abbreviation,
-				cardclass.cardclass,
+		SELECT	hero.name,
+				hero.abbreviation,
+				hero_class.name AS hero_class,
+				game_class.name,
 				card.name,
-				hero_flavor
+				hero.flavor
 		FROM hero
-		LEFT JOIN herotosuper ON hero.id = herotosuper.heroid
-		LEFT JOIN card ON herotosuper.cardid = card.id
-		LEFT JOIN cardtoclass ON card.id = cardtoclass.cardid
-		LEFT JOIN cardclass ON cardtoclass.classid = cardclass.id
 		LEFT JOIN herotoclass ON hero.id = herotoclass.heroid
-		LEFT JOIN cardclass AS heroclass ON herotoclass.classid = heroclass.id
+		LEFT JOIN game_class AS hero_class ON herotoclass.classid = hero_class.id
+		LEFT JOIN hero_to_card ON hero.id = hero_to_card.heroid
+		LEFT JOIN card ON hero_to_card.cardid = card.id
+		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
+		LEFT JOIN game_class ON card_to_class.classid = game_class.id
 		WHERE hero.id = %s
 		'''
 

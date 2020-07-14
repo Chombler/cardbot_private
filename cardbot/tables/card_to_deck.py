@@ -9,13 +9,15 @@ def createTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		create_table_query = '''CREATE TABLE cardclass
+		create_table_query = '''CREATE TABLE card_to_deck
 								(id SERIAL PRIMARY KEY,
-								cardclass varchar(64));'''
+								cardid int,
+								deckid int,
+								quantity int);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"cardclass\" Addition Successful!")
+		print("Table \"card_to_deck\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -23,14 +25,14 @@ def createTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding cardclass to PostgreSQL", error)
+		print ("Error adding table to PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
 				cursor.close()
 				connection.close()
 				print("PostgreSQL connection is closed")
-
+				
 def dropTable():
 	try:
 		print("Trying")
@@ -38,11 +40,11 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		delete_table_query = '''DROP TABLE cardclass'''
+		delete_table_query = '''DROP TABLE card_to_deck'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"cardclass\" Deletion Successful!")
+		print("Table \"card_to_deck\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -50,7 +52,7 @@ def dropTable():
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error removing cardclass from PostgreSQL", error)
+		print ("Error removing table from PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -64,14 +66,15 @@ def addToTable(record):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
-		postgres_insert_query = """ INSERT INTO cardclass(class) VALUES (%s)"""
-		cursor.execute(postgres_insert_query, (record))
+
+		postgres_insert_query = """ INSERT INTO card_to_deck(cardid, deckid, quantity) VALUES"""
+		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
-		print("Row added to \"cardclass\"")
+		print("Row added to table \"card_to_deck\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding to cardclass in PostgreSQL", error)
+		print ("Error checking table in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -83,15 +86,16 @@ def addManyToTable(recordTuple):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
-		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
+
+		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO cardclass(cardclass) VALUES " + args_str)
+		cursor.execute("INSERT INTO card_to_deck(cardid, deckid, quantity) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"cardclass\"")
+		print("Multiple rows added to \"card_to_deck\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding many to cardclass in PostgreSQL", error)
+		print ("Error checking table in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -103,13 +107,14 @@ def deleteFromTable(recordId):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
-		postgres_delete_query = """ Delete from cardclass where id = %s"""
+
+		postgres_delete_query = """ Delete from card_to_deck where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"cardclass\"")
-
+		print("Row deleted from \"card_to_deck\"")
+		
 	except (Exception, psycopg2.Error) as error :
-		print ("Error deleting from cardclass in PostgreSQL", error)
+		print ("Error checking table in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -122,17 +127,17 @@ def pullFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_pull_query = """ SELECT * from cardclass where id = %s"""
+		postgres_pull_query = """ SELECT * from card_to_deck where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"cardclass\" where id = %s" % (recordId))
+		print("Results from \"card_to_deck\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')
 			print('')
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error pulling from cardclass in PostgreSQL", error)
+		print ("Error checking table in PostgreSQL", error)
 	finally:
 		#closing database connection.
 			if(connection):
@@ -140,32 +145,4 @@ def pullFromTable(recordId):
 				connection.close()
 				print("PostgreSQL connection is closed")
 
-def pullidFromTable(recordValue):
-	try:
-		connection = psycopg2.connect(db_credentials)
-		cursor = connection.cursor()
-		results = []
-		postgres_pull_query = """
-		SELECT id
-		FROM cardclass
-		ORDER BY SIMILARITY(cardclass, %s)DESC
-		LIMIT 1 """
 
-		cursor.execute(postgres_pull_query, (recordValue,))
-		results = cursor.fetchall()
-		print("Results: " + str(results))
-		result = None
-		try:
-			result = results[0][0]
-		except:
-			result = None
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error checking cardclass in PostgreSQL", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			#print("PostgreSQL connection is closed")
-		return(result)
