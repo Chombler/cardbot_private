@@ -93,7 +93,8 @@ def pullCardRecord(recordName):
 		join_table_query = '''
 		SELECT	card.name, 
 				game_class.name,
-				tribe.name, card_type.card_type,
+				tribe.name,
+				card_type.type,
 				card.cost,
 				cost_type.cost_type,
 				card.strength,
