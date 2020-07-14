@@ -162,7 +162,7 @@ def pullHeroRecord(recordName):
 		select_table_query = '''
 		SELECT id
 		FROM hero
-		ORDER BY SIMILARITY(hero_name, %s) DESC
+		ORDER BY SIMILARITY(name, %s) DESC
 		LIMIT 1'''
 
 		cursor.execute(select_table_query, (recordName,))
@@ -179,8 +179,8 @@ def pullHeroRecord(recordName):
 				card.name,
 				hero.flavor
 		FROM hero
-		LEFT JOIN herotoclass ON hero.id = herotoclass.heroid
-		LEFT JOIN game_class AS hero_class ON herotoclass.classid = hero_class.id
+		LEFT JOIN hero_to_class ON hero.id = hero_to_class.heroid
+		LEFT JOIN game_class AS hero_class ON hero_to_class.classid = hero_class.id
 		LEFT JOIN hero_to_card ON hero.id = hero_to_card.heroid
 		LEFT JOIN card ON hero_to_card.cardid = card.id
 		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
