@@ -234,3 +234,9 @@ def construct_hero_tables():
 			connection.close()
 			print("PostgreSQL connection is closed. Hero should be built.")
 
+
+def construct_nickname():
+	nickname.dropTable()
+	nickname.createTable()
+	nickname.addManyToTable(nicknameTuple)
+

@@ -11,10 +11,9 @@ import psycopg2
 from random import randrange
 
 from dbinjections import pullCardRecord, pullHeroRecord
-from databaseinteractions import construct_nickname
 
 from credentials import token
-from construct_tables import construct_card_tables, construct_hero_tables
+from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname
 
 client = discord.Client()
 
