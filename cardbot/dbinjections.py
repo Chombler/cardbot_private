@@ -175,8 +175,8 @@ def pullHeroRecord(recordName):
 		SELECT	hero.name,
 				hero.abbreviation,
 				hero_class.name AS hero_class,
-				game_class.name,
 				card.name,
+				game_class.name,
 				hero.flavor
 		FROM hero
 		LEFT JOIN hero_to_class ON hero.id = hero_to_class.heroid
