@@ -233,9 +233,9 @@ class cardObject(object):
 		holdText = abilityText.split(" ")
 		for word in holdText:
 			if word in self.traitSwitcher:
-				returnString += "__" + word + "__"
+				returnString += "__" + word + "__ "
 			else:
-				returnString += word
+				returnString += word + " "
 		return(returnString)
 
 	def getFlavor(self):
