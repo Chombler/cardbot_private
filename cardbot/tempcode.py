@@ -22,7 +22,7 @@ class heroObject(object):
 		self.name = ""
 		self.abbreviation = ""
 		self.heroclasses = []
-		self.herosupers = []
+		self.herosupers = {}
 		self.flavor = ""
 
 	def createName(self, recordName):
@@ -39,16 +39,13 @@ class heroObject(object):
 
 	def createherosupers(self, recordSuper):
 		print(recordSuper)
-		print(recordSuper[0])
-		print(recordSuper[1])
-		if(recordSuper[0] in self.herosupers):
-			return
-		else:
-			self.herosupers.append(recordSuper)
-		if(recordSuper[1] in self.herosupers[recordSuper[0]]):
-			return
-		else:
-			self.herosupers[recordSuper[0]].append(recordSuper)
+		try:
+			if(recordSuper[1] in self.herosupers[recordSuper[0]]):
+				return
+			else:
+				self.herosupers[recordSuper[0]].append(recordSuper[1])
+		except:
+			self.herosupers[recordSuper[0]] = [recordSuper[1]]
 
 
 	def createFlavor(self, recordFlavor):
@@ -67,9 +64,13 @@ class heroObject(object):
 		return(returnString)
 
 	def getherosupers(self):
+		print(self.herosupers)
 		returnString = ""
 		for herosuper in self.herosupers:
-			returnString += herosuper + "\n"
+			returnString += herosuper + " "
+			for superclass in self.herosupers[herosuper]:
+				returnString += superclass
+			returnString += "\n"
 		return(returnString)
 
 	def getFlavor(self):
@@ -84,7 +85,7 @@ class heroObject(object):
 	def __str__(self):
 		return self.name
 
-temp_list = [('Green Shadow', 'GS', '<:Mega:286212316632973313>', '<:Mega:286212316632973313>', 'Embiggen', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', '<:Mega:286212316632973313>', 'Embiggen', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', '<:Mega:286212316632973313>', 'Precision Blast', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', '<:Mega:286212316632973313>', 'Precision Blast', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', '<:Smarty:286212324996677633>', 'Precision Blast', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', '<:Smarty:286212324996677633>', 'Precision Blast', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', '<:Smarty:286212324996677633>', 'Big Chill', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', '<:Smarty:286212324996677633>', 'Big Chill', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', '<:Smarty:286212324996677633>', 'Whirlwind', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', '<:Smarty:286212324996677633>', 'Whirlwind', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.')]
+temp_list = [('Green Shadow', 'GS', '<:Mega:286212316632973313>', 'Embiggen', '<:Mega:286212316632973313>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', 'Embiggen', '<:Mega:286212316632973313>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', 'Precision Blast', '<:Mega:286212316632973313>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', 'Precision Blast', '<:Mega:286212316632973313>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', 'Precision Blast', '<:Smarty:286212324996677633>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', 'Precision Blast', '<:Smarty:286212324996677633>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', 'Big Chill', '<:Smarty:286212324996677633>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', 'Big Chill', '<:Smarty:286212324996677633>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Mega:286212316632973313>', 'Whirlwind', '<:Smarty:286212324996677633>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.'), ('Green Shadow', 'GS', '<:Smarty:286212324996677633>', 'Whirlwind', '<:Smarty:286212324996677633>', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.')]
 
 temp = heroObject(temp_list)
 

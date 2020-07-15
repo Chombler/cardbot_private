@@ -1,12 +1,9 @@
-import re as regex
-
-
 class heroObject(object):
 	record = []
 	name = ""
 	abbreviation = ""
 	heroclasses = []
-	herosupers = []
+	herosupers = {}
 	flavor = ""
 
 	def __init__(self, record):
@@ -25,7 +22,7 @@ class heroObject(object):
 		self.name = ""
 		self.abbreviation = ""
 		self.heroclasses = []
-		self.herosupers = []
+		self.herosupers = {}
 		self.flavor = ""
 
 	def createName(self, recordName):
@@ -41,14 +38,14 @@ class heroObject(object):
 			self.heroclasses.append(recordClass)
 
 	def createherosupers(self, recordSuper):
-		if(recordSuper[0] in self.herosupers):
-			return
-		else:
-			self.herosupers.append(recordSuper)
-		if(recordSuper[1] in self.herosupers[recordSuper[0]]):
-			return
-		else:
-			self.herosupers[recordSuper[0]].append(recordSuper)
+		print(recordSuper)
+		try:
+			if(recordSuper[1] in self.herosupers[recordSuper[0]]):
+				return
+			else:
+				self.herosupers[recordSuper[0]].append(recordSuper[1])
+		except:
+			self.herosupers[recordSuper[0]] = [recordSuper[1]]
 
 
 	def createFlavor(self, recordFlavor):
@@ -69,7 +66,10 @@ class heroObject(object):
 	def getherosupers(self):
 		returnString = ""
 		for herosuper in self.herosupers:
-			returnString += herosuper + "\n"
+			returnString += herosuper + " "
+			for superclass in self.herosupers[herosuper]:
+				returnString += superclass
+			returnString += "\n"
 		return(returnString)
 
 	def getFlavor(self):
