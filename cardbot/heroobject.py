@@ -5,6 +5,17 @@ class heroObject(object):
 	heroclasses = []
 	herosupers = {}
 	flavor = ""
+	classSelector = [
+	'<:Guardian:286212288334135296>',
+	'<:Kabloom:286212306193481729>',
+	'<:Mega:286212316632973313>',
+	'<:Smarty:286212324996677633>',
+	'<:Solar:337606895135358976>',
+	'<:Beastly:286212259028533260>',
+	'<:Brainy:286212270738898945>',
+	'<:Crazy:286212279647731742>',
+	'<:Hearty:286212297775644673>',
+	'<:Sneaky:286212336379756564>']
 
 	def __init__(self, record):
 		self.resetCard()
@@ -68,15 +79,16 @@ class heroObject(object):
 		return(returnString)
 
 	def getherosupers(self):
+		self.abilitySwitcher.get(holdText.group(1))
 		returnString = ""
-		superability = ""
 		for herosuper in self.herosupers:
+			superability = ""
 			returnString += herosuper + " "
 			for superclass in self.herosupers[herosuper]:
-				if(len(superclass)>32):
-					superability = superclass
-				else:
+				if(superclass in self.classSelector):
 					returnString += superclass
+				else:
+					superability = superclass
 			returnString += "\n" + superability + "\n"
 		return(returnString)
 
