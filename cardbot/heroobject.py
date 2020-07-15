@@ -79,10 +79,10 @@ class heroObject(object):
 		return(returnString)
 
 	def getherosupers(self):
-		returnString = ""
+		returnString = "**"
 		for herosuper in self.herosupers:
 			superability = ""
-			returnString += herosuper + " "
+			returnString += herosuper + "** "
 			for superclass in self.herosupers[herosuper]:
 				if(superclass in self.classSelector):
 					returnString += superclass
