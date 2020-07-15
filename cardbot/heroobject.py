@@ -41,11 +41,11 @@ class heroObject(object):
 		print(recordSuper)
 		try:
 			if(recordSuper[1] in self.herosupers[recordSuper[0]]):
-				return
+				pass
 			else:
 				self.herosupers[recordSuper[0]].append(recordSuper[1])
 			if(recordSuper[2] in self.herosupers[recordSuper[0]]):
-				return
+				pass
 			else:
 				self.herosupers[recordSuper[0]].append(recordSuper[2])
 		except:
