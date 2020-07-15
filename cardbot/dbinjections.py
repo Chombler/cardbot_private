@@ -191,7 +191,7 @@ def pullHeroRecord(recordName):
 		cursor.execute(join_table_query, (resultid,))
 		results = cursor.fetchall()
 
-
+		print(results)
 		print("Printing Table")
 		for row in results:
 			for col in row:

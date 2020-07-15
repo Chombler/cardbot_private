@@ -1,9 +1,94 @@
-example_list = [[1,2,3],[4,5,6],[7,8,9]]
+class heroObject(object):
+	record = []
+	name = ""
+	abbreviation = ""
+	heroclasses = []
+	herosupers = {}
+	flavor = ""
 
-print(example_list[1:3])
+	def __init__(self, record):
+		self.resetCard()
+		self.record = record
+
+		for row in record:
+			self.createName(row[0])
+			self.createAbbreviation(row[1])
+			self.createClasses(row[2])
+			self.createherosupers(row[3:5])
+			self.createFlavor(row[5])
+
+	def resetCard(self):
+		self.record = []
+		self.name = ""
+		self.abbreviation = ""
+		self.heroclasses = []
+		self.herosupers = []
+		self.flavor = ""
+
+	def createName(self, recordName):
+		self.name = recordName
+
+	def createAbbreviation(self, recordAbbreviation):
+		self.abbreviation = recordAbbreviation
+	
+	def createClasses(self, recordClass):
+		if(recordClass in self.heroclasses):
+			return
+		else:
+			self.heroclasses.append(recordClass)
+
+	def createherosupers(self, recordSuper):
+		print(recordSuper)
+		print(recordSuper[0])
+		print(recordSuper[1])
+		if(recordSuper[0] in self.herosupers):
+			return
+		else:
+			self.herosupers.append(recordSuper)
+		if(recordSuper[1] in self.herosupers[recordSuper[0]]):
+			return
+		else:
+			self.herosupers[recordSuper[0]].append(recordSuper)
 
 
+	def createFlavor(self, recordFlavor):
+		self.flavor = recordFlavor
+		
+	def getName(self):
+		return(self.name)
 
+	def getAbbreviation(self):
+		return(self.abbreviation)
+
+	def getClasses(self):
+		returnString = ""
+		for c in self.heroclasses:
+			returnString += c
+		return(returnString)
+
+	def getherosupers(self):
+		returnString = ""
+		for herosuper in self.herosupers:
+			returnString += herosuper + "\n"
+		return(returnString)
+
+	def getFlavor(self):
+		return(self.flavor)
+
+	def information(self):
+		return( self.getName() + " \{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n" +
+				"Supers:\n" + self.getherosupers() +
+				"*" + self.getFlavor() + "*\n")
+
+
+	def __str__(self):
+		return self.name
+
+temp_list = [('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Mega:', 'Precision Blast'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Smarty:', 'Precision Blast'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Mega:', 'Big Chill'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Smarty:', 'Big Chill'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Mega:', 'Whirlwind'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Smarty:', 'Whirlwind'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Mega:', 'Embiggen'), ('Green Shadow', 'GS', 'Little known fact: When she takes off the cape and mask, she goes by the name Penelopea.', ':Smarty:', 'Embiggen')]
+
+temp = heroObject(temp_list)
+
+print(temp.information())
 
 """import re as regex
 
