@@ -17,8 +17,8 @@ class heroObject(object):
 			self.createName(row[0])
 			self.createAbbreviation(row[1])
 			self.createClasses(row[2])
-			self.createherosupers(row[3])
-			self.createFlavor(row[4])
+			self.createherosupers(row[3:5])
+			self.createFlavor(row[5])
 
 	def resetCard(self):
 		self.record = []
@@ -41,10 +41,15 @@ class heroObject(object):
 			self.heroclasses.append(recordClass)
 
 	def createherosupers(self, recordSuper):
-		if(recordSuper in self.herosupers):
+		if(recordSuper[0] in self.herosupers):
 			return
 		else:
 			self.herosupers.append(recordSuper)
+		if(recordSuper[1] in self.herosupers[recordSuper[0]]):
+			return
+		else:
+			self.herosupers[recordSuper[0]].append(recordSuper)
+
 
 	def createFlavor(self, recordFlavor):
 		self.flavor = recordFlavor

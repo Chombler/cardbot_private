@@ -1,4 +1,11 @@
-import re as regex
+example_list = [[1,2,3],[4,5,6],[7,8,9]]
+
+print(example_list[1:3])
+
+
+
+
+"""import re as regex
 
 
 tempString = 'Strikethrough\nPlant Evolution: This gets +3:Strength:.'
@@ -32,7 +39,6 @@ print(emoteString)
 
 
 
-"""
 nicknameTuple = [
 ('Bubble Up',	'Bubble Up'),
 ('Ensign Uproot',	'Ensign Uproot'),

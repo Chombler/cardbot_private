@@ -14,10 +14,5 @@ except:
 	token = credentials_file.readline()[0:-1]
 
 	#Database Credentials
-	database = credentials_file.readline()[0:-1]
-	user = credentials_file.readline()[0:-1]
-	password = credentials_file.readline()[0:-1]
-	host = credentials_file.readline()[0:-1]
-	port = credentials_file.readline()
-	db_credentials = [user, password, host, port, database]
+	db_credentials = credentials_file.readline()
 
