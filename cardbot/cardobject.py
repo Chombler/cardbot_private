@@ -25,28 +25,29 @@ class cardObject(object):
 	'Brain' : "<:Brain:286219706883506186>"
 	}
 
-	traitSwitcher = [
-	'Amphibious',
-	'Anti-Hero 2',
-	'Anti-Hero 3',
-	'Anti-Hero 4',
-	'Anti-Hero 5',
-	'Armored 1',
-	'Armored 2',
-	'Bullseye',
-	'Deadly',
-	'Double Strike',
-	'Hunt',
-	'Frenzy',
-	'Gravestone',
-	'Overshoot 2',
-	'Overshoot 3',
-	'Splash Damage 2',
-	'Splash Damage 3',
-	'Splash Damage 6',
-	'Strikethrough',
-	'Team-Up',
-	'Untrickable']
+	traitSwitcher = {
+	'Amphibious' : '',
+	'Anti-Hero 2': '<:AntiHero:286216212831141888>',
+	'Anti-Hero 3': '<:AntiHero:286216212831141888>',
+	'Anti-Hero 4': '<:AntiHero:286216212831141888>',
+	'Anti-Hero 5': '<:AntiHero:286216212831141888>',
+	'Armored 1': '<:Armored:286220300763529216>',
+	'Armored 2': '<:Armored:286220300763529216>',
+	'Bullseye': '<:Bullseye:286215435400118272>',
+	'Deadly': '<:Deadly:286214530155937792>',
+	'Double Strike': '<:DoubleStrike:331848241488461826>',
+	'Hunt': '',
+	'Frenzy': '<:Frenzy:286212444332883970>',
+	'Gravestone': '',
+	'Overshoot 2': '<:Overshoot:326761366700556290>',
+	'Overshoot 3': '<:Overshoot:326761366700556290>',
+	'Splash Damage 1': '',
+	'Splash Damage 3': '',
+	'Splash Damage 6': '',
+	'Strikethrough': '<:Strikethrough:286214542264893453>',
+	'Team-Up': '',
+	'Untrickable': '<:Untrickable:350385647439314945>'
+	}
 
 
 	def __init__(self, record):
@@ -221,7 +222,6 @@ class cardObject(object):
 		return(returnString)
 
 	def getAbility(self):
-		returnString = ""
 		abilityText = self.ability + "\n" if len(self.ability) > 0 else ""
 		holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
 		while(holdText is not None):
