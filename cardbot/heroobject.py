@@ -79,7 +79,6 @@ class heroObject(object):
 		return(returnString)
 
 	def getherosupers(self):
-		self.abilitySwitcher.get(holdText.group(1))
 		returnString = ""
 		for herosuper in self.herosupers:
 			superability = ""
