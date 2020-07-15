@@ -231,7 +231,7 @@ class cardObject(object):
 
 		holdText = abilityText.split(" ")
 		for word in holdText:
-			if word in traitSwitcher:
+			if word in self.traitSwitcher:
 				returnString += "__" + word + "__"
 			else:
 				returnString += word
