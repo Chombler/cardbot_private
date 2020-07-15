@@ -69,11 +69,14 @@ class heroObject(object):
 
 	def getherosupers(self):
 		returnString = ""
+		superability = ""
 		for herosuper in self.herosupers:
 			returnString += herosuper + " "
 			for superclass in self.herosupers[herosuper]:
+				if(len(superclass)>32):
+					superability = superclass
 				returnString += superclass
-			returnString += "\n"
+			returnString += "\n" + superability + "\n"
 		return(returnString)
 
 	def getFlavor(self):
