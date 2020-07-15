@@ -176,7 +176,8 @@ def pullHeroRecord(recordName):
 				hero.abbreviation,
 				hero_class.name AS hero_class,
 				card.name,
-				game_class.name,
+				game_class.name AS card_class,
+				card.ability,
 				hero.flavor
 		FROM hero
 		LEFT JOIN hero_to_class ON hero.id = hero_to_class.heroid
@@ -184,7 +185,7 @@ def pullHeroRecord(recordName):
 		LEFT JOIN hero_to_card ON hero.id = hero_to_card.heroid
 		LEFT JOIN card ON hero_to_card.cardid = card.id
 		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
-		LEFT JOIN game_class ON card_to_class.classid = game_class.id
+		LEFT JOIN game_class ON card_to_class.classid = card_class.id
 		WHERE hero.id = %s
 		'''
 
