@@ -75,7 +75,8 @@ class heroObject(object):
 			for superclass in self.herosupers[herosuper]:
 				if(len(superclass)>32):
 					superability = superclass
-				returnString += superclass
+				else:
+					returnString += superclass
 			returnString += "\n" + superability + "\n"
 		return(returnString)
 
