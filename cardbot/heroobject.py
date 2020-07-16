@@ -91,9 +91,9 @@ class heroObject(object):
 
 	def getherosupers(self):
 		returnString = ""
-		tempsuper = []
-		tempsuperString = ""
 		for herosuper in self.herosupers:
+			tempsuper = []
+			tempsuperString = ""
 			print(herosuper)
 			abilityText = ""
 			tempsuper.append("**" + herosuper + "** ")
