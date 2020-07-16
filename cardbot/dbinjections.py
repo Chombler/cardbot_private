@@ -178,11 +178,11 @@ def pullHeroRecord(recordName):
 		cursor.execute(select_table_query, (recordName, recordName))
 		abbreviationResults = cursor.fetchall()
 		print(abbreviationResults)
-		
+
 		if(nameResults[0][1] > abbreviationResults[0][1]):
-			resultid = nameResults[0][1]
+			resultid = nameResults[0][0]
 		else:
-			resultid = abbreviationResults[0][1]
+			resultid = abbreviationResults[0][0]
 
 
 		print(resultid)
