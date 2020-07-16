@@ -49,6 +49,8 @@ async def on_message(message):
 	if message.author.bot:
 		pass
 	else:
+		if(message.content.startswith('-ignore')):
+			pass
 		if(message.content.startswith('-help')):
 			await message.channel.send("Bot Commands:\
 				\nUse [[Card Name]] to return a specific card's information. More than one card can be requested at one time.\
