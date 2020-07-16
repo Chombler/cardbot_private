@@ -94,15 +94,11 @@ class heroObject(object):
 		for herosuper in self.herosupers:
 			tempsuper = []
 			tempsuperString = ""
-			print(herosuper)
 			abilityText = ""
 			tempsuper.append("**" + herosuper + "** ")
-			#returnString += "**" + herosuper + "** "
 			for superclass in self.herosupers[herosuper]:
 				print(superclass)
 				if(superclass in self.classSelector):
-					print("Here")
-					#returnString += superclass
 					tempsuper.append(superclass)
 				else:
 					abilityText = superclass
@@ -112,7 +108,6 @@ class heroObject(object):
 						abilityText = abilityText[0:holdText.start()+1] + replacement + abilityText[holdText.end():]
 						holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
 
-			#returnString += "\n" + abilityText + "\n"
 			tempsuper.append("\n" + abilityText + "\n")
 			for entry in tempsuper:
 				tempsuperString += entry
