@@ -92,6 +92,7 @@ class heroObject(object):
 	def getherosupers(self):
 		returnString = ""
 		for herosuper in self.herosupers:
+			print(herosuper)
 			abilityText = ""
 			returnString += "**" + herosuper + "** "
 			for superclass in self.herosupers[herosuper]:
