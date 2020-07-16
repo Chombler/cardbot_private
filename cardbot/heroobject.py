@@ -103,7 +103,6 @@ class heroObject(object):
 				else:
 					abilityText = superclass
 					holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
-					returnString = ""
 					while(holdText is not None):
 						replacement = self.abilitySwitcher.get(holdText.group(1))
 						abilityText = abilityText[0:holdText.start()+1] + replacement + abilityText[holdText.end():]
