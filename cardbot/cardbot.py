@@ -54,7 +54,7 @@ async def on_message(message):
 				\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
 				\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
 				\nUse -echo at the start of a message to have the bot echo it.")
-		elif '\{\{' and '\}\}' in message.content:
+		elif '{{' and '}}' in message.content:
 			stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 			print(stringInput)
 			for text in stringInput:
