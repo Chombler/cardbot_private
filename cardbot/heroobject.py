@@ -92,7 +92,7 @@ class heroObject(object):
 	def getherosupers(self):
 		returnString = ""
 		tempsuper = []
-		tempsuperString ""
+		tempsuperString = ""
 		for herosuper in self.herosupers:
 			print(herosuper)
 			abilityText = ""
