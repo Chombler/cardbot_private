@@ -105,9 +105,7 @@ async def on_message(message):
 					await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
 				elif(text.lower() == "understandable"):
 					await message.channel.send("Have a nice day")
-				elif(text.lower() == "h"):
-					await message.channel.send(text + " indeed")
-				elif(text.count(':') > 1):
+				elif(message.content.startswith('$')):
 					await message.channel.send(text + " indeed")
 				else:
 					response = pullCardRecord(text)
