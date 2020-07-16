@@ -1035,6 +1035,7 @@ nicknameTuple = [
 ('Quasar Wizard',	'Quasar Wizard'),
 ('Space Ninja',	'Space Ninja'),
 ('Sugary Treat',	'Sugary Treat'),
+('ZBF',	'Zombie\'s Best Friend'),
 ('Zombie\'s Best Friend',	'Zombie\'s Best Friend'),
 ('Abracadaver',	'Abracadaver'),
 ('Captain Deadbeard',	'Captain Deadbeard'),
@@ -1115,6 +1116,7 @@ nicknameTuple = [
 ('Primeval Yeti',	'Primeval Yeti'),
 ('Screen Door Zombie',	'Screen Door Zombie'),
 ('Coffee Zombie',	'Coffee Zombie'),
+('DE',	'Defensive End'),
 ('Defensive End',	'Defensive End'),
 ('Ra Zombie',	'Ra Zombie'),
 ('Undying Pharoah',	'Undying Pharoah'),
@@ -1188,7 +1190,7 @@ nicknameTuple = [
 ('Zombot Plank Walker',	'Zombot Plank Walker'),
 ('Frozen Tundra',	'Frozen Tundra'),
 ('Impfinity Clone',	'Impfinity Clone'),
-('Triple Threat',	'Triple Threat')]
+('Triple Threat',	'Triple Threat'),]
 
 classTuple = [
 ('<:Guardian:286212288334135296>',),
