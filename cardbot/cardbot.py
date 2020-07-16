@@ -49,16 +49,9 @@ async def on_message(message):
 	if message.author.bot:
 		pass
 	else:
-		if message.content.startswith('$hello'):
-			await message.channel.send('Hello!')
-
-		if message.content.startswith('$goodbye'):
-			await message.channel.send('Goodbye!')
-
-		if message.content.startswith('$help'):
-			await message.channel.send('Goodbye!')
-
-		if '{' and '}' in message.content:
+		if(message.content.startswith('$help')):
+			await message.channel.send("Bot Commands:\nUse [[Card Name]] to return a specific card's information. More than one card can be requested at one time.\nUse{Hero Name} to return a specific Hero's information. More than one can be requested at one time.")
+		elif '{' and '}' in message.content:
 			stringInput = regex.findall('\{(.+?)\}', message.content)
 			print(stringInput)
 			for text in stringInput:
@@ -105,11 +98,11 @@ async def on_message(message):
 					await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
 				elif(text.lower() == "understandable"):
 					await message.channel.send("Have a nice day")
-				elif(message.content.startswith('$')):
-					await message.channel.send(text + " indeed")
 				else:
 					response = pullCardRecord(text)
 					await message.channel.send(response)
+		elif(message.content.startswith('$echo')):
+			await message.channel.send(message.content[5:] + " indeed")
 
 
 
