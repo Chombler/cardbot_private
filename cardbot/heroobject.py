@@ -96,6 +96,7 @@ class heroObject(object):
 			abilityText = ""
 			returnString += "**" + herosuper + "** "
 			for superclass in self.herosupers[herosuper]:
+				print(superclass)
 				if(superclass in self.classSelector):
 					returnString += superclass
 				else:
