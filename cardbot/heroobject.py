@@ -1,3 +1,8 @@
+import re as regex
+
+
+
+
 class heroObject(object):
 	record = []
 	name = ""
@@ -16,6 +21,12 @@ class heroObject(object):
 	'<:Crazy:286212279647731742>',
 	'<:Hearty:286212297775644673>',
 	'<:Sneaky:286212336379756564>']
+	abilitySwitcher = {
+	'Strength' : "<:Strength:286215395743105024>",
+	'Health' : "<:Health:286215409072603136>",
+	'Sun' : "<:Sun:286219730296242186>",
+	'Brain' : "<:Brain:286219706883506186>"
+	}
 
 	def __init__(self, record):
 		self.resetCard()
@@ -81,14 +92,21 @@ class heroObject(object):
 	def getherosupers(self):
 		returnString = ""
 		for herosuper in self.herosupers:
-			superability = ""
+			abilityText = ""
 			returnString += "**" + herosuper + "** "
 			for superclass in self.herosupers[herosuper]:
 				if(superclass in self.classSelector):
 					returnString += superclass
 				else:
-					superability = superclass
-			returnString += "\n" + superability + "\n"
+					abilityText = superclass
+					holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
+					returnString = ""
+					while(holdText is not None):
+						replacement = self.abilitySwitcher.get(holdText.group(1))
+						abilityText = abilityText[0:holdText.start()+1] + replacement + abilityText[holdText.end():]
+						holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
+
+			returnString += "\n" + abilityText + "\n"
 		return(returnString)
 
 	def getFlavor(self):
