@@ -160,16 +160,32 @@ def pullHeroRecord(recordName):
 		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
-		SELECT id
+		SELECT id, SIMILARITY(name, %s)
 		FROM hero
 		ORDER BY SIMILARITY(name, %s) DESC
 		LIMIT 1'''
 
-		cursor.execute(select_table_query, (recordName,))
+		cursor.execute(select_table_query, (recordName, recordName))
+		nameResults = cursor.fetchall()
+		print(nameResults)
 
-		results = cursor.fetchall()
-		print(results)
-		resultid = results[0][0]
+		select_table_query = '''
+		SELECT id, SIMILARITY(abbreviation, %s)
+		FROM hero
+		ORDER BY SIMILARITY(abbreviation, %s) DESC
+		LIMIT 1'''
+
+		cursor.execute(select_table_query, (recordName, recordName))
+		abbreviationResults = cursor.fetchall()
+		print(abbreviationResults)
+		
+		if(nameResults[0][1] > abbreviationResults[0][1]):
+			resultid = nameResults[0][1]
+		else:
+			resultid = abbreviationResults[0][1]
+
+
+		print(resultid)
 
 		join_table_query = '''
 		SELECT	hero.name,
