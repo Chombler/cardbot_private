@@ -49,7 +49,7 @@ async def on_message(message):
 	if message.author.bot:
 		pass
 	else:
-		if(message.content.startswith('$help')):
+		if(message.content.startswith('-help')):
 			await message.channel.send("Bot Commands:\nUse [[Card Name]] to return a specific card's information. More than one card can be requested at one time.\nUse{Hero Name} to return a specific Hero's information. More than one can be requested at one time.")
 		elif '{' and '}' in message.content:
 			stringInput = regex.findall('\{(.+?)\}', message.content)
@@ -101,7 +101,7 @@ async def on_message(message):
 				else:
 					response = pullCardRecord(text)
 					await message.channel.send(response)
-		elif(message.content.startswith('$echo')):
+		elif(message.content.startswith('-echo')):
 			await message.channel.send(message.content[5:] + " indeed")
 
 
