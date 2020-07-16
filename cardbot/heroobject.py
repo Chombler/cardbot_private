@@ -91,15 +91,19 @@ class heroObject(object):
 
 	def getherosupers(self):
 		returnString = ""
+		tempsuper = []
+		tempsuperString ""
 		for herosuper in self.herosupers:
 			print(herosuper)
 			abilityText = ""
-			returnString += "**" + herosuper + "** "
+			tempsuper.append("**" + herosuper + "** ")
+			#returnString += "**" + herosuper + "** "
 			for superclass in self.herosupers[herosuper]:
 				print(superclass)
 				if(superclass in self.classSelector):
 					print("Here")
-					returnString += superclass
+					#returnString += superclass
+					tempsuper.append(superclass)
 				else:
 					abilityText = superclass
 					holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
@@ -108,14 +112,22 @@ class heroObject(object):
 						abilityText = abilityText[0:holdText.start()+1] + replacement + abilityText[holdText.end():]
 						holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
 
-			returnString += "\n" + abilityText + "\n"
+			#returnString += "\n" + abilityText + "\n"
+			tempsuper.append("\n" + abilityText + "\n")
+			for entry in tempsuper:
+				tempsuperString += entry
+			if(tempsuper[2] in self.classSelector):
+				returnString = tempsuperString + returnString
+			else:
+				returnString += tempsuperString
+
 		return(returnString)
 
 	def getFlavor(self):
 		return(self.flavor)
 
 	def information(self):
-		return( self.getName() + " \{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n" +
+		return( self.getName() + " \{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n\n" +
 				"Supers:\n" + self.getherosupers() +
 				"*" + self.getFlavor() + "*\n")
 
