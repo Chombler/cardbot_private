@@ -87,7 +87,7 @@ def pullCardRecord(recordName):
 			tempString = '%' + word.lower() + '%'
 			orString += '''AND LOWER(nickname) LIKE %s''' % (tempString)
 
-		cursor.execute(select_table_query, (recordName, recordName, orString, recordStart))
+		cursor.execute(select_table_query, (recordName, orString, recordName, recordStart))
 
 		results = cursor.fetchall()
 		if(len(results) > 0):
