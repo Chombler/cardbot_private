@@ -398,7 +398,7 @@ card_constructor_rows = [
 ('Trickster',	'Brainy',	'Party Zombie',	10,	6,	6,	'',	'While in your hand: This costs 1:Brain: less when you play a Trick.\nWhen played: This does a Bonus Attack.',	'Never gets tired of the rubber chicken gag.',	'Premium',	'Legendary',	'Brain'),
 ('Zom-Bats',	'Brainy, Beastly',	'Pet Zombie',	3,	2,	1,	'Amphibious',	'When this hurts a Plant, draw a card.',	'Like chihuahuas with wings... and fangs... and a taste for Plants.',	'',	'Token',	'Brain'),
 ('Eureka',	'Brainy, Crazy',	'Mustache Science Superpower Trick',	1,	0,	0,	'',	'Conjure any three cards.',	'Professor Brainstorm\'s ideas are brilliant... totally random, but brilliant.',	'Premium',	'Legendary',	'Brain'),
-('Shrink Ray',	'Brainy, Hearty',	'Science Superpower Trick',	1,	0,	0,	'',	'A Plant gets -3:Strength.\nDraw a card.',	'Rustbolt gets a kick out of belittling Plants.',	'Premium',	'Legendary',	'Brain'),
+('Shrink Ray',	'Brainy, Hearty',	'Science Superpower Trick',	1,	0,	0,	'',	'A Plant gets -3:Strength:.\nDraw a card.',	'Rustbolt gets a kick out of belittling Plants.',	'Premium',	'Legendary',	'Brain'),
 ('Carried Away',	'Brainy, Sneaky',	'Party Superpower Trick',	1,	0,	0,	'',	'Move a Zombie. Then it does a Bonus Attack.',	'It\'s just Super Brainz\' way of sharing the wonder of flight with his fellow Zombies.',	'Premium',	'Legendary',	'Brain'),
 ('Terror-Former 10,000',	'Brainy, Sneaky',	'Science Imp Superpower Trick',	1,	0,	0,	'',	'Conjure an Environment. All cards in your hand cost 1:Brain: less.',	'This is Huge-Gigantacus\' greatest invention ever. It\'s also his only invention. But it\'s best not to point that out to him.',	'Premium',	'Legendary',	'Brain'),
 ('Backup Dancer',	'Crazy',	'Dancing Mustache Zombie',	1,	1,	1,	'',	'',	'Spent six years perfecting his art at the Chewliard School for the Performing Arts.',	'Basic',	'Common',	'Brain'),
@@ -932,6 +932,7 @@ nicknameTuple = [
 ('Supernova Gargantuar',	'Supernova Gargantuar'),
 ('Vengeful Cyborg',	'Vengeful Cyborg'),
 ('Deep Sea Gargantuar',	'Deep Sea Gargantuar'),
+('KotG',	'King of the Grill'),
 ('King of the Grill',	'King of the Grill'),
 ('Maniacal Laugh',	'Maniacal Laugh'),
 ('GTG',	'Gargantuar-Throwing Gargantuar'),
@@ -1190,7 +1191,7 @@ nicknameTuple = [
 ('Zombot Plank Walker',	'Zombot Plank Walker'),
 ('Frozen Tundra',	'Frozen Tundra'),
 ('Impfinity Clone',	'Impfinity Clone'),
-('Triple Threat',	'Triple Threat'),]
+('Triple Threat',	'Triple Threat')]
 
 classTuple = [
 ('<:Guardian:286212288334135296>',),
