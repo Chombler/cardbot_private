@@ -72,7 +72,7 @@ def pullCardRecord(recordName):
 		FROM nickname
 		WHERE SIMILARITY(nickname, %s) > 0.25
 		ORDER BY SIMILARITY(nickname, %s) DESC,
-		LOWER(nickname) LIKE '%s%' DESC
+		LOWER(nickname) LIKE '%s' DESC
 		LIMIT 1'''
 
 		cursor.execute(select_table_query, (recordName, recordName, recordName[0:3]))
