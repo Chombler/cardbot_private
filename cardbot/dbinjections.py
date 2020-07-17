@@ -70,68 +70,72 @@ def pullCardRecord(recordName):
 		select_table_query = '''
 		SELECT name
 		FROM nickname
+		WHERE SIMILARITY(nickname, %s) > 0.5
 		ORDER BY SIMILARITY(nickname, %s) DESC
 		LIMIT 1'''
 
-		cursor.execute(select_table_query, (recordName,))
+		cursor.execute(select_table_query, (recordName, recordName))
 
 		results = cursor.fetchall()
-		resultname = results[0][0]
-		print("Result Name: " + resultname)
+		if(len(results) > 0):
+			resultname = results[0][0]
+			print("Result Name: " + resultname)
 
-		select_table_query = '''
-		SELECT id
-		FROM card
-		where name = %s'''
+			select_table_query = '''
+			SELECT id
+			FROM card
+			where name = %s'''
 
-		cursor.execute(select_table_query, (resultname,))
+			cursor.execute(select_table_query, (resultname,))
 
-		results = cursor.fetchall()
-		resultid = results[0][0]
-		print("Result id: " + str(resultid))
+			results = cursor.fetchall()
+			resultid = results[0][0]
+			print("Result id: " + str(resultid))
 
-		join_table_query = '''
-		SELECT	card.name, 
-				game_class.name,
-				tribe.name,
-				card_type.type,
-				card.cost,
-				cost_type.cost_type,
-				card.strength,
-				trait.strengthmodifier,
-				card.health,
-				trait.healthmodifier,
-				trait.name,
-				card.ability,
-				card.flavor,
-				card_set.name,
-				rarity.name
-		FROM card
-		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
-		LEFT JOIN game_class ON card_to_class.classid = game_class.id
-		LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
-		LEFT JOIN trait ON card_to_trait.traitid = trait.id
-		LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
-		LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
-		LEFT JOIN card_type ON card_type.id = card.typeid
-		LEFT JOIN card_set ON card_set.id = card.setid
-		LEFT JOIN rarity ON card.rarityid = rarity.id
-		LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
-		WHERE card.id = %s
-		'''
+			join_table_query = '''
+			SELECT	card.name, 
+					game_class.name,
+					tribe.name,
+					card_type.type,
+					card.cost,
+					cost_type.cost_type,
+					card.strength,
+					trait.strengthmodifier,
+					card.health,
+					trait.healthmodifier,
+					trait.name,
+					card.ability,
+					card.flavor,
+					card_set.name,
+					rarity.name
+			FROM card
+			LEFT JOIN card_to_class ON card.id = card_to_class.cardid
+			LEFT JOIN game_class ON card_to_class.classid = game_class.id
+			LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
+			LEFT JOIN trait ON card_to_trait.traitid = trait.id
+			LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
+			LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
+			LEFT JOIN card_type ON card_type.id = card.typeid
+			LEFT JOIN card_set ON card_set.id = card.setid
+			LEFT JOIN rarity ON card.rarityid = rarity.id
+			LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
+			WHERE card.id = %s
+			'''
 
-		cursor.execute(join_table_query, (resultid,))
-		results = cursor.fetchall()
+			cursor.execute(join_table_query, (resultid,))
+			results = cursor.fetchall()
 
 
-		print("Printing Table")
-		for row in results:
-			for col in row:
-				print(col)
-			print()
+			print("Printing Table")
+			for row in results:
+				for col in row:
+					print(col)
+				print()
 
-		cardInstance = cardObject(results)
-		print(cardInstance.information())
+			cardInstance = cardObject(results)
+			print(cardInstance.information())
+		else:
+			success = False
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -146,7 +150,7 @@ def pullCardRecord(recordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(cardInstance.information())
+		return(cardInstance.information() if success else "There were no close matches.")
 
 
 def pullHeroRecord(recordName):
