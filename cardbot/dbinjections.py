@@ -75,7 +75,7 @@ def pullCardRecord(recordName):
 		LOWER(nickname) LIKE '%s%' DESC
 		LIMIT 1'''
 
-		cursor.execute(select_table_query, (recordName, recordName, recordName[0:3].lower()))
+		cursor.execute(select_table_query, (recordName, recordName, recordName[0:3]))
 
 		results = cursor.fetchall()
 		if(len(results) > 0):
