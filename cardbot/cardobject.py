@@ -94,6 +94,8 @@ class cardObject(object):
 		self.name = recordName
 	
 	def createClasses(self, recordClass):
+		if(recordClass is None):
+			pass
 		if(recordClass in self.cardclass):
 			return
 		else:
