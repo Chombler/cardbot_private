@@ -49,7 +49,9 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		if(message.content.startswith('-help')):
+		if(message.content == 'WITNESS ME!'):
+			await message.channel.send("WITNESSED!")
+		elif(message.content.startswith('-help')):
 			await message.channel.send("Bot Commands:\
 				\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
 				\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
