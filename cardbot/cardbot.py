@@ -10,7 +10,7 @@ import re as regex
 import psycopg2
 from random import randrange
 
-from dbinjections import pullCardRecord, pullHeroRecord, logRequest
+from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord
 
 from credentials import token
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type
@@ -58,7 +58,25 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		if(message.content == 'WITNESS ME!'):
+
+		if message.content.startswith('-fuzzy'):
+			if '{{' and '}}' in message.content:
+				stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+				print(stringInput)
+				for text in stringInput:
+					logRequest(message.author.name, message.content, 2, True)
+					response = pullFuzzyHeroRecord(text)
+					await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
+
+			elif '[[' and ']]' in message.content:
+				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+				print(stringInput)
+				for text in stringInput:
+					logRequest(message.author.name, message.content, 1, True)
+					response = pullFuzzyHeroRecord(text)
+					await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
+
+		elif(message.content == 'WITNESS ME!'):
 			logRequest(message.author.name, message.content, 4, None)
 			await message.channel.send("WITNESSED!")
 
@@ -74,7 +92,7 @@ async def on_message(message):
 			stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 			print(stringInput)
 			for text in stringInput:
-				logRequest(message.author.name, message.content, 2, None)
+				logRequest(message.author.name, message.content, 2, False)
 				response = pullHeroRecord(text)
 				await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 
