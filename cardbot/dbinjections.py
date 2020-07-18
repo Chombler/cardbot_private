@@ -62,12 +62,12 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 
 		if(len(requestString) < 513):
 			postgres_insert_query = '''
-			INSERT INTO past_request(author, message)
+			INSERT INTO request(author, message, typeid, is_fuzzy)
 			VALUES (%s,%s,%s,%s)
 			'''
 			cursor.execute(postgres_insert_query, (requestAuthor, requestString, requestType, fuzzyRequest))
 			connection.commit()
-			print("Request logged in \"past_request\"")
+			print("Request logged in \"request\"")
 		else:
 			raise ValueError('request message was too long to store')
 
@@ -77,7 +77,7 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in past_request,", error)
+		print ("Error logging request in request,", error)
 	finally:
 		#closing database connection.
 		if(connection):
