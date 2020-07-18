@@ -1319,6 +1319,11 @@ heroTuple = [
 ('Huge-Giganticus',	'HG',	'Brainy, Sneaky',	'Terror-Fomer 10,000, Iron Boarder, Teleportation Station, Ice Moon',	'Go on, tell him he\'s actually quite small. See what happens. You\'re not going to like it.')]
 
 
+requestTypeTuple = [
+('Card Query',),
+('Hero Query',),
+('Help Query',),
+('Fun Query',)]
 
 
 

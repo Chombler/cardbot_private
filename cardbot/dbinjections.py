@@ -49,12 +49,41 @@ from heroobject import heroObject
 #35 - Science
 #36 - Sports
 
-"""
-constructor.dropTable()
-constructor.createTable()
-constructor.addToTable(constructor_rows)
 
-"""
+
+def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+		# Print PostgreSQL Connection properties
+		print(connection.get_dsn_parameters(),"\n")
+
+		if(len(requestString) < 513):
+			postgres_insert_query = '''
+			INSERT INTO past_request(author, message)
+			VALUES (%s,%s,%s,%s)
+			'''
+			cursor.execute(postgres_insert_query, (requestAuthor, requestString, requestType, fuzzyRequest))
+			connection.commit()
+			print("Request logged in \"past_request\"")
+		else:
+			raise ValueError('request message was too long to store')
+
+		# Print PostgreSQL version
+		cursor.execute("SELECT version();")
+		record = cursor.fetchone()
+		print("You are connected to - ", record,"\n")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error logging request in past_request,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
 
 
 def pullCardRecord(recordName):
@@ -109,7 +138,7 @@ def pullCardRecord(recordName):
 			print("Result id: " + str(resultid))
 
 			join_table_query = '''
-			SELECT	card.name, 
+			SELECT	card.name,
 					game_class.name,
 					tribe.name,
 					card_type.type,
