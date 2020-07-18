@@ -285,7 +285,7 @@ def pullHeroRecord(recordName):
 
 def pullFuzzyCardRecord(recordName):
 	try:
-		returnString = ""
+		returnString = "Here are the closest matches:"
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
@@ -310,7 +310,7 @@ def pullFuzzyCardRecord(recordName):
 
 		for row in results:
 			for col in row:
-				returnString += col + "\n"
+				returnString += "\n" + col
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
