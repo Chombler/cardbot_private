@@ -150,7 +150,7 @@ async def on_message(message):
 				else:
 					logRequest(message.author.name, message.content, 1, False)
 					response = pullCardRecord(text)
-					await message.channel.send(response + "\n||Record generated from " + text + "||")
+					await message.channel.send(response + "\n||Record generated from \[\[" + text + "\]\]||")
 
 		elif(message.content.startswith('-echo')):
 			logRequest(message.author.name, message.content, 4, None)
