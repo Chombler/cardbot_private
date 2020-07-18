@@ -73,7 +73,7 @@ async def on_message(message):
 				print(stringInput)
 				for text in stringInput:
 					logRequest(message.author.name, message.content, 1, True)
-					response = pullFuzzyHeroRecord(text)
+					response = pullFuzzyCardRecord(text)
 					await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
 
 		elif(message.content == 'WITNESS ME!'):
