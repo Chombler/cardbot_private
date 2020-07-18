@@ -329,8 +329,8 @@ def pullFuzzyCardRecord(recordName):
 
 
 def pullFuzzyHeroRecord(recordName):
-	success = True
 	try:
+		returnString = "Here are the closest matches:"
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
@@ -339,63 +339,18 @@ def pullFuzzyHeroRecord(recordName):
 		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
-		SELECT id, SIMILARITY(name, %s)
+		SELECT id, name, abbreviation
 		FROM hero
 		ORDER BY SIMILARITY(name, %s) DESC
-		LIMIT 1'''
-
-		cursor.execute(select_table_query, (recordName, recordName))
-		nameResults = cursor.fetchall()
-		print(nameResults)
-
-		select_table_query = '''
-		SELECT id, SIMILARITY(abbreviation, %s)
-		FROM hero
 		ORDER BY SIMILARITY(abbreviation, %s) DESC
 		LIMIT 1'''
 
 		cursor.execute(select_table_query, (recordName, recordName))
-		abbreviationResults = cursor.fetchall()
-		print(abbreviationResults)
+		resuts = cursor.fetchall()
 
-		if(nameResults[0][1] > abbreviationResults[0][1]):
-			resultid = nameResults[0][0]
-		else:
-			resultid = abbreviationResults[0][0]
-
-
-		print(resultid)
-
-		join_table_query = '''
-		SELECT	hero.name,
-				hero.abbreviation,
-				hero_class.name AS hero_class,
-				card.name,
-				game_class.name,
-				card.ability,
-				hero.flavor
-		FROM hero
-		LEFT JOIN hero_to_class ON hero.id = hero_to_class.heroid
-		LEFT JOIN game_class AS hero_class ON hero_to_class.classid = hero_class.id
-		LEFT JOIN hero_to_card ON hero.id = hero_to_card.heroid
-		LEFT JOIN card ON hero_to_card.cardid = card.id
-		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
-		LEFT JOIN game_class ON card_to_class.classid = game_class.id
-		WHERE hero.id = %s
-		'''
-
-		cursor.execute(join_table_query, (resultid,))
-		results = cursor.fetchall()
-
-		print(results)
-		print("Printing Table")
 		for row in results:
-			for col in row:
-				print(col)
-			print()
+			returnString += "\n" = row[0] + ", (" + row[1] + ")"
 
-		heroInstance = heroObject(results)
-		print(heroInstance.information())
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -410,6 +365,6 @@ def pullFuzzyHeroRecord(recordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(heroInstance.information())
+		return(returnString)
 
 

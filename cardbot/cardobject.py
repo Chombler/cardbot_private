@@ -208,9 +208,9 @@ class cardObject(object):
 	def getStats(self):
 		if(self.health != 0):
 			if(self.strength != 0):
-				return("%s%s %s%s/%s%s" % (self.cost, self.costType, self.strength, self.strengthModifier, self.health, self.healthModifier))
+				return("%s%s   %s%s  %s%s" % (self.cost, self.costType, self.strength, self.strengthModifier, self.health, self.healthModifier))
 			else:
-				return("%s%s %s%s" % (self.cost, self.costType, self.health, self.healthModifier))
+				return("%s%s   %s%s" % (self.cost, self.costType, self.health, self.healthModifier))
 		else:
 			return("%s%s" % (self.cost, self.costType))
 
