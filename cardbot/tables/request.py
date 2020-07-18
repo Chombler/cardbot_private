@@ -13,7 +13,7 @@ def createTable():
 								(id SERIAL PRIMARY KEY,
 								author varchar(64),
 								message varchar(512),
-								typeid int
+								typeid int,
 								is_fuzzy boolean DEFAULT NULL);'''
 
 		cursor.execute(create_table_query)
