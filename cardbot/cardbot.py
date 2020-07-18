@@ -59,11 +59,11 @@ async def on_message(message):
 		pass
 	else:
 		if(message.content == 'WITNESS ME!'):
-			logRequest(message.author, message.content, 4, None)
+			logRequest(message.author.name, message.content, 4, None)
 			await message.channel.send("WITNESSED!")
 
 		elif(message.content.startswith('-help')):
-			logRequest(message.author, message.content, 3, None)
+			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Bot Commands:\
 				\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
 				\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
@@ -74,7 +74,7 @@ async def on_message(message):
 			stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 			print(stringInput)
 			for text in stringInput:
-				logRequest(message.author, message.content, 2, None)
+				logRequest(message.author.name, message.content, 2, None)
 				response = pullHeroRecord(text)
 				await message.channel.send(response)
 
@@ -133,27 +133,27 @@ async def on_message(message):
 						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
 
 				elif(text.lower() == "florasia"):
-					logRequest(message.author, message.content, 4, None)
+					logRequest(message.author.name, message.content, 4, None)
 					responseChoice = randrange(4)
 					await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
 
 				elif(text.lower() == "zombwanaland"):
-					logRequest(message.author, message.content, 4, None)
+					logRequest(message.author.name, message.content, 4, None)
 					responseChoice = randrange(4)
 					await message.channel.send(zombwanalandPraises.get(responseChoice, "Nothing to see here"))
 
 				elif(text.lower() == "panthalasaurus"):
-					logRequest(message.author, message.content, 4, None)
+					logRequest(message.author.name, message.content, 4, None)
 					responseChoice = randrange(4)
 					await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
 
 				else:
-					logRequest(message.author, message.content, 1, False)
+					logRequest(message.author.name, message.content, 1, False)
 					response = pullCardRecord(text)
 					await message.channel.send(response)
 
 		elif(message.content.startswith('-echo')):
-			logRequest(message.author, message.content, 4, None)
+			logRequest(message.author.name, message.content, 4, None)
 			await message.channel.send(message.content[5:] + " indeed")
 
 
