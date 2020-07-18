@@ -195,7 +195,7 @@ def pullCardRecord(recordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(cardInstance.information() if success else "There were no close matches.")
+		return(cardInstance.information() if success else "There are no matches. Start your message with -fuzzy for close matches or -help to get a list of commands.")
 
 
 def pullHeroRecord(recordName):
