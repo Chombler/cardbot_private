@@ -76,7 +76,7 @@ async def on_message(message):
 			for text in stringInput:
 				logRequest(message.author.name, message.content, 2, None)
 				response = pullHeroRecord(text)
-				await message.channel.send(response + "\n||Record generated from " + text + "||")
+				await message.channel.send(response + "\n||Record generated from \{\{" + text + "\}\}||")
 
 		elif '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
