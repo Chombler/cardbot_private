@@ -76,7 +76,7 @@ async def on_message(message):
 			for text in stringInput:
 				logRequest(message.author.name, message.content, 2, None)
 				response = pullHeroRecord(text)
-				await message.channel.send(response + "\n||Record generated from \{\{" + text + "\}\}||")
+				await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 
 		elif '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
@@ -150,7 +150,7 @@ async def on_message(message):
 				else:
 					logRequest(message.author.name, message.content, 1, False)
 					response = pullCardRecord(text)
-					await message.channel.send(response + "\n||Record generated from \[\[" + text + "\]\]||")
+					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
 		elif(message.content.startswith('-echo')):
 			logRequest(message.author.name, message.content, 4, None)
