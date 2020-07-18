@@ -122,7 +122,7 @@ class heroObject(object):
 		return(self.flavor)
 
 	def information(self):
-		return( self.getName() + " \{" + self.getAbbreviation() + "\} | " + self.getClasses() + "\n\n" +
+		return( self.getName() + " (" + self.getAbbreviation() + ") | " + self.getClasses() + "\n\n" +
 				"Supers:\n" + self.getherosupers() +
 				"*" + self.getFlavor() + "*\n")
 
