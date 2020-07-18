@@ -124,7 +124,7 @@ class heroObject(object):
 	def information(self):
 		return( self.getName() + " (" + self.getAbbreviation() + ") | " + self.getClasses() + "\n\n" +
 				"Supers:\n" + self.getherosupers() +
-				"*" + self.getFlavor() + "*\n")
+				"*" + self.getFlavor() + "*")
 
 
 	def __str__(self):
