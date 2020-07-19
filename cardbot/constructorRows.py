@@ -741,6 +741,7 @@ nicknameTuple = [
 ('Typical Beanstalk',	'Typical Beanstalk'),
 ('Banana Split',	'Banana Split'),
 ('Bananasaurus Rex',	'Bananasaurus Rex'),
+('PF',	'Plant Food'),
 ('Plant Food',	'Plant Food'),
 ('Re-Peat Moss',	'Re-Peat Moss'),
 ('Savage Spinach',	'Savage Spinach'),
