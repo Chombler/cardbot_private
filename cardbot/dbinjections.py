@@ -349,7 +349,7 @@ def pullFuzzyHeroRecord(recordName):
 		results = cursor.fetchall()
 
 		for row in results:
-			returnString += "\n" + row[0] + ", (" + row[1] + ")"
+			returnString += "\n" + row[0] + " (" + row[1] + ")"
 
 
 		# Print PostgreSQL version
