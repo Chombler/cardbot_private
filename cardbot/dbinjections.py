@@ -341,8 +341,8 @@ def pullFuzzyHeroRecord(recordName):
 		select_table_query = '''
 		SELECT name, abbreviation
 		FROM hero
-		ORDER BY SIMILARITY(name, %s) DESC
-		ORDER BY SIMILARITY(abbreviation, %s) DESC
+		ORDER BY SIMILARITY(name, %s) DESC,
+		SIMILARITY(abbreviation, %s) DESC
 		LIMIT 5'''
 
 		cursor.execute(select_table_query, (recordName, recordName))
