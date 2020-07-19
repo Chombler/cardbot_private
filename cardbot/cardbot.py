@@ -68,7 +68,7 @@ async def on_message(message):
 					response = pullFuzzyHeroRecord(text)
 					await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
 
-			elif '[[' and ']]' in message.content:
+			if '[[' and ']]' in message.content:
 				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 				print(stringInput)
 				for text in stringInput:
@@ -88,7 +88,11 @@ async def on_message(message):
 				\nUse -fuzzy at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
 				\nUse -echo at the start of a message to have the bot echo it.")
 
-		elif '{{' and '}}' in message.content:
+		elif(message.content.startswith('-echo')):
+			logRequest(message.author.name, message.content, 4, None)
+			await message.channel.send(message.content[5:] + " indeed")
+
+		if '{{' and '}}' in message.content:
 			stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 			print(stringInput)
 			for text in stringInput:
@@ -96,7 +100,7 @@ async def on_message(message):
 				response = pullHeroRecord(text)
 				await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 
-		elif '[[' and ']]' in message.content:
+		if '[[' and ']]' in message.content:
 			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 			print(stringInput)
 
@@ -170,9 +174,6 @@ async def on_message(message):
 					response = pullCardRecord(text)
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
-		elif(message.content.startswith('-echo')):
-			logRequest(message.author.name, message.content, 4, None)
-			await message.channel.send(message.content[5:] + " indeed")
 
 
 

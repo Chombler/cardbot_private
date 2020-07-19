@@ -339,11 +339,11 @@ def pullFuzzyHeroRecord(recordName):
 		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
-		SELECT id, name, abbreviation
+		SELECT name, abbreviation
 		FROM hero
 		ORDER BY SIMILARITY(name, %s) DESC
 		ORDER BY SIMILARITY(abbreviation, %s) DESC
-		LIMIT 1'''
+		LIMIT 5'''
 
 		cursor.execute(select_table_query, (recordName, recordName))
 		resuts = cursor.fetchall()
