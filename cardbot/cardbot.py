@@ -91,88 +91,89 @@ async def on_message(message):
 		elif(message.content.startswith('-echo')):
 			logRequest(message.author.name, message.content, 4, None)
 			await message.channel.send(message.content[5:] + " indeed")
+			
+		else:
+			if '{{' and '}}' in message.content:
+				stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+				print(stringInput)
+				for text in stringInput:
+					logRequest(message.author.name, message.content, 2, False)
+					response = pullHeroRecord(text)
+					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 
-		if '{{' and '}}' in message.content:
-			stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-			print(stringInput)
-			for text in stringInput:
-				logRequest(message.author.name, message.content, 2, False)
-				response = pullHeroRecord(text)
-				await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+			if '[[' and ']]' in message.content:
+				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+				print(stringInput)
 
-		if '[[' and ']]' in message.content:
-			stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-			print(stringInput)
-
-			for text in stringInput:
-				if(text == "Regenerate Database"):
-					if(message.author.name == "Chombler"):
-						if message.content.startswith('$'):
-							await message.channel.send(message.author.name + construct_card_tables())
+				for text in stringInput:
+					if(text == "Regenerate Database"):
+						if(message.author.name == "Chombler"):
+							if message.content.startswith('$'):
+								await message.channel.send(message.author.name + construct_card_tables())
+							else:
+								await message.channel.send(message.author.name + ", that was the wrong input.")
 						else:
-							await message.channel.send(message.author.name + ", that was the wrong input.")
-					else:
-						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
 
-				elif(text == "Regenerate Nickname"):
-					if(message.author.name == "Chombler"):
-						if message.content.startswith('$'):
-							construct_nickname()
-							await message.channel.send(message.author.name + ", you have regenerated nickname.")
+					elif(text == "Regenerate Nickname"):
+						if(message.author.name == "Chombler"):
+							if message.content.startswith('$'):
+								construct_nickname()
+								await message.channel.send(message.author.name + ", you have regenerated nickname.")
+							else:
+								await message.channel.send(message.author.name + ", that was the wrong input.")
 						else:
-							await message.channel.send(message.author.name + ", that was the wrong input.")
-					else:
-						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
 
-				elif(text == "Regenerate Hero"):
-					if(message.author.name == "Chombler"):
-						if message.content.startswith('$'):
-							construct_hero_tables()
-							await message.channel.send(message.author.name + ", you have regenerated hero.")
+					elif(text == "Regenerate Hero"):
+						if(message.author.name == "Chombler"):
+							if message.content.startswith('$'):
+								construct_hero_tables()
+								await message.channel.send(message.author.name + ", you have regenerated hero.")
+							else:
+								await message.channel.send(message.author.name + ", that was the wrong input.")
 						else:
-							await message.channel.send(message.author.name + ", that was the wrong input.")
-					else:
-						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
 
-				elif(text == "Regenerate Request"):
-					if(message.author.name == "Chombler"):
-						if message.content.startswith('$'):
-							construct_request()
-							await message.channel.send(message.author.name + ", you have regenerated request.")
+					elif(text == "Regenerate Request"):
+						if(message.author.name == "Chombler"):
+							if message.content.startswith('$'):
+								construct_request()
+								await message.channel.send(message.author.name + ", you have regenerated request.")
+							else:
+								await message.channel.send(message.author.name + ", that was the wrong input.")
 						else:
-							await message.channel.send(message.author.name + ", that was the wrong input.")
-					else:
-						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
 
-				elif(text == "Regenerate Request Type"):
-					if(message.author.name == "Chombler"):
-						if message.content.startswith('$'):
-							construct_request_type()
-							await message.channel.send(message.author.name + ", you have regenerated request_type.")
+					elif(text == "Regenerate Request Type"):
+						if(message.author.name == "Chombler"):
+							if message.content.startswith('$'):
+								construct_request_type()
+								await message.channel.send(message.author.name + ", you have regenerated request_type.")
+							else:
+								await message.channel.send(message.author.name + ", that was the wrong input.")
 						else:
-							await message.channel.send(message.author.name + ", that was the wrong input.")
+							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
+
+					elif(text.lower() == "florasia"):
+						logRequest(message.author.name, message.content, 4, None)
+						responseChoice = randrange(4)
+						await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
+
+					elif(text.lower() == "zombwanaland"):
+						logRequest(message.author.name, message.content, 4, None)
+						responseChoice = randrange(4)
+						await message.channel.send(zombwanalandPraises.get(responseChoice, "Nothing to see here"))
+
+					elif(text.lower() == "panthalasaurus"):
+						logRequest(message.author.name, message.content, 4, None)
+						responseChoice = randrange(4)
+						await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
+
 					else:
-						await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-				elif(text.lower() == "florasia"):
-					logRequest(message.author.name, message.content, 4, None)
-					responseChoice = randrange(4)
-					await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
-
-				elif(text.lower() == "zombwanaland"):
-					logRequest(message.author.name, message.content, 4, None)
-					responseChoice = randrange(4)
-					await message.channel.send(zombwanalandPraises.get(responseChoice, "Nothing to see here"))
-
-				elif(text.lower() == "panthalasaurus"):
-					logRequest(message.author.name, message.content, 4, None)
-					responseChoice = randrange(4)
-					await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
-
-				else:
-					logRequest(message.author.name, message.content, 1, False)
-					response = pullCardRecord(text)
-					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+						logRequest(message.author.name, message.content, 1, False)
+						response = pullCardRecord(text)
+						await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
 
 

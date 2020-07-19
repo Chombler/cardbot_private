@@ -346,7 +346,7 @@ def pullFuzzyHeroRecord(recordName):
 		LIMIT 5'''
 
 		cursor.execute(select_table_query, (recordName, recordName))
-		resuts = cursor.fetchall()
+		results = cursor.fetchall()
 
 		for row in results:
 			returnString += "\n" + row[0] + ", (" + row[1] + ")"
