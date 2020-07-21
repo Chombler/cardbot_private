@@ -1046,6 +1046,7 @@ nicknameTuple = [
 ('Fireworks Zombie',	'Fireworks Zombie'),
 ('Gizzard Lizard',	'Gizzard Lizard'),
 ('Jester',	'Jester'),
+('MBZ',	'Moon Base Z'),
 ('Moon Base Z',	'Moon Base Z'),
 ('Unexpected Gifts',	'Unexpected Gifts'),
 ('Zombot\'s Wrath',	'Zombot\'s Wrath'),
