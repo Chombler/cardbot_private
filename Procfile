@@ -1,1 +1,1 @@
-worker: python cardbot/cardbot.py
+worker: python3 cardbot/cardbot.py
