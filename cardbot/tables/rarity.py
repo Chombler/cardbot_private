@@ -167,3 +167,5 @@ def pullidFromTable(recordValue):
 			connection.close()
 			#print("PostgreSQL connection is closed")
 		return(result)
+
+
