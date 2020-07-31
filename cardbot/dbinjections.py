@@ -12,43 +12,6 @@ from heroobject import heroObject
 #deleteFromTable(recordId)
 #pullFromTable(recordId)
 #pullColumnFromTable(pullColumn, identifier, identifyingValue)
-#1 - Animal
-#2 - Banana
-#3 - Bean
-#4 - Berry
-#5 - Cactus
-#6 - Corn
-#7 - Dragon
-#8 - Flower
-#9 - Flytrap
-#10 - Fruit
-#11 - Leafy
-#12 - Moss
-#13 - Mushroom
-#14 - Nut
-#15 - Pea
-#16 - Pinecone
-#17 - Root
-#18 - Seed
-#19 - Squash
-#20 - Tree
-#21 - Mime
-#22 - Barrel
-#23 - Clock
-#24 - Dancing
-#25 - Gargantuar
-#26 - Gourmet
-#27 - History
-#28 - Imp
-#29 - Monster
-#30 - Mustache
-#31 - Party
-#32 - Pet
-#33 - Pirate
-#34 - Professional
-#35 - Science
-#36 - Sports
-
 
 
 def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):

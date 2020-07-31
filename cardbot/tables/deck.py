@@ -11,7 +11,7 @@ def createTable():
 
 		create_table_query = '''CREATE TABLE deck
 								(id SERIAL PRIMARY KEY,
-								name varchar(8),
+								name varchar(32),
 								heroid int);'''
 
 		cursor.execute(create_table_query)
