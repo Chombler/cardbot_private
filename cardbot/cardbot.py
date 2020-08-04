@@ -5,15 +5,17 @@ Dicord is for the functions and API connection while
 re is to obtain the reg ex module needed to extract
 strings within [[]] brackets"""
 
+
+from random import randrange
 import discord
 import re as regex
 import psycopg2
-from random import randrange
+
+
 
 from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord
-
-from credentials import token
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type
+from credentials import token
 
 client = discord.Client()
 
