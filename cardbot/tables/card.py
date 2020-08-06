@@ -164,8 +164,7 @@ def pullidFromTable(recordValue):
 		postgres_pull_query = """
 		SELECT id
 		FROM card
-		ORDER BY SIMILARITY(name, %s)DESC
-		LIMIT 1 """
+		WHERE name = %s"""
 
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
