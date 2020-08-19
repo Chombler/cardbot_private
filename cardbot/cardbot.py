@@ -166,7 +166,7 @@ async def on_message(message):
 						response = pullCardRecord(text)
 						await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
-def fuzzySearch(message):
+async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print(stringInput)
