@@ -62,7 +62,7 @@ async def on_message(message):
 	else:
 
 		if message.content.startswith('-fuzzy'):
-			fuzzySearch()
+			fuzzySearch(message)
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
