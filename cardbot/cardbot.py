@@ -62,21 +62,7 @@ async def on_message(message):
 	else:
 
 		if message.content.startswith('-fuzzy'):
-			if '{{' and '}}' in message.content:
-				stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-				print(stringInput)
-				for text in stringInput:
-					logRequest(message.author.name, message.content, 2, True)
-					response = pullFuzzyHeroRecord(text)
-					await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
-
-			if '[[' and ']]' in message.content:
-				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-				print(stringInput)
-				for text in stringInput:
-					logRequest(message.author.name, message.content, 1, True)
-					response = pullFuzzyCardRecord(text)
-					await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
+			fuzzySearch()
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
@@ -180,6 +166,22 @@ async def on_message(message):
 						response = pullCardRecord(text)
 						await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
+def fuzzySearch(message):
+	if '{{' and '}}' in message.content:
+		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+		print(stringInput)
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 2, True)
+			response = pullFuzzyHeroRecord(text)
+			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
+
+	if '[[' and ']]' in message.content:
+		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+		print(stringInput)
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 1, True)
+			response = pullFuzzyCardRecord(text)
+			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
 
 
 
