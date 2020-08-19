@@ -225,7 +225,7 @@ class cardObject(object):
 
 	def getAbility(self):
 		abilityText = self.ability + "\n" if len(self.ability) > 0 else ""
-		holdText = regex.search('[0123456789 ]\:(.+?)\:', abilityText)
+		holdText = regex.search('[\+0123456789 ]\:(.+?)\:', abilityText)
 		returnString = ""
 		while(holdText is not None):
 			replacement = self.abilitySwitcher.get(holdText.group(1))
