@@ -19,27 +19,6 @@ from credentials import token
 
 client = discord.Client()
 
-florasiaPraises = {
-0 : "Long Live Florasia!!",
-1 : "Florasia Lives On!!",
-2 : "Florasia is the Best!!",
-3 : "No one can stop Florasia!!"
-}
-
-zombwanalandPraises = {
-0 : "Long Live Zombwanaland!!",
-1 : "Zombwanaland Lives On!!",
-2 : "Zombwanaland is the Best!!",
-3 : "No one can stop Zombwanaland!!"
-}
-
-panthalasaurusPraises = {
-0 : "Long Live Panthalasaurus!!",
-1 : "Panthalasaurus Lives On!!",
-2 : "Panthalasaurus is the Best!!",
-3 : "No one can stop Panthalasaurus!!"
-}
-
 """
 requestTypeTuple = [
 ('Card Query',),
@@ -145,21 +124,6 @@ async def on_message(message):
 								await message.channel.send(message.author.name + ", that was the wrong input.")
 						else:
 							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-					elif(text.lower() == "florasia"):
-						logRequest(message.author.name, message.content, 4, None)
-						responseChoice = randrange(4)
-						await message.channel.send(florasiaPraises.get(responseChoice, "Nothing to see here"))
-
-					elif(text.lower() == "zombwanaland"):
-						logRequest(message.author.name, message.content, 4, None)
-						responseChoice = randrange(4)
-						await message.channel.send(zombwanalandPraises.get(responseChoice, "Nothing to see here"))
-
-					elif(text.lower() == "panthalasaurus"):
-						logRequest(message.author.name, message.content, 4, None)
-						responseChoice = randrange(4)
-						await message.channel.send(panthalasaurusPraises.get(responseChoice, "Nothing to see here"))
 
 					else:
 						logRequest(message.author.name, message.content, 1, False)
