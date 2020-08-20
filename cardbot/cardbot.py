@@ -41,8 +41,6 @@ async def on_message(message):
 	else:
 
 		if message.content.startswith('-fuzzy'):
-			test_var = await 5+5
-			print(test_var)
 			await fuzzySearch(message)
 
 		elif(message.content.startswith('-help')):
