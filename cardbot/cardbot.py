@@ -39,7 +39,6 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
@@ -61,11 +60,11 @@ async def on_message(message):
 		elif(message.content == 'WITNESS ME!'):
 			logRequest(message.author.name, message.content, 4, None)
 			await message.channel.send("WITNESSED!")
-			
+
 		else:
 			if '{{' and '}}' in message.content:
 				stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-				print(stringInput)
+				print("Terms input for search are: " + stringInput)
 				for text in stringInput:
 					logRequest(message.author.name, message.content, 2, False)
 					response = pullHeroRecord(text)
@@ -73,7 +72,7 @@ async def on_message(message):
 
 			if '[[' and ']]' in message.content:
 				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-				print(stringInput)
+				print("Terms input for search are: " + stringInput)
 
 				for text in stringInput:
 					if(text == "Regenerate Database"):
