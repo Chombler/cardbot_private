@@ -136,7 +136,7 @@ async def fuzzySearch(message):
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 2, True)
 			response = pullFuzzyHeroRecord(text)
-			message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
+			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
 
 	if '[[' and ']]' in message.content:
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
@@ -144,7 +144,7 @@ async def fuzzySearch(message):
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 1, True)
 			response = pullFuzzyCardRecord(text)
-			message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
+			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
 
 
 
