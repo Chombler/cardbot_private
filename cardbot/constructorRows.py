@@ -660,6 +660,7 @@ nicknameTuple = [
 ('BB',	'Berry Blast'),
 ('Berry Blast',	'Berry Blast'),
 ('Buff-Shroom',	'Buff-Shroom'),
+('Fireweed',	'Fireweed'),
 ('Seedling',	'Seedling'),
 ('Shelf Mushroom',	'Shelf Mushroom'),
 ('Wild Berry',	'Wild Berry'),
