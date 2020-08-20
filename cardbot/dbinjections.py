@@ -20,8 +20,6 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print(connection.get_dsn_parameters(),"\n")
 
 		if(len(requestString) < 513):
 			postgres_insert_query = '''
@@ -33,11 +31,6 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			print("Request logged in \"request\"")
 		else:
 			raise ValueError('request message was too long to store')
-
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error logging request in request,", error)
@@ -56,8 +49,6 @@ def pullCardRecord(recordName):
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
 		SELECT name
@@ -145,11 +136,6 @@ def pullCardRecord(recordName):
 		else:
 			success = False
 
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
-
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retrieving card information using PostgreSQL,", error)
 	finally:
@@ -168,8 +154,6 @@ def pullHeroRecord(recordName):
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
 		SELECT id, SIMILARITY(name, %s)
@@ -230,11 +214,6 @@ def pullHeroRecord(recordName):
 		heroInstance = heroObject(results)
 		print(heroInstance.information())
 
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
-
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retrieving card information using PostgreSQL,", error)
 	finally:
@@ -253,8 +232,6 @@ def pullFuzzyCardRecord(recordName):
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
 		SELECT name
@@ -275,11 +252,6 @@ def pullFuzzyCardRecord(recordName):
 			for col in row:
 				returnString += "\n" + col
 
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
-
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retrieving card information using PostgreSQL,", error)
 	finally:
@@ -298,8 +270,6 @@ def pullFuzzyHeroRecord(recordName):
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
-		# Print PostgreSQL Connection properties
-		print(connection.get_dsn_parameters(),"\n")
 
 		select_table_query = '''
 		SELECT name, abbreviation
@@ -314,11 +284,6 @@ def pullFuzzyHeroRecord(recordName):
 		for row in results:
 			returnString += "\n" + row[0] + " (" + row[1] + ")"
 
-
-		# Print PostgreSQL version
-		cursor.execute("SELECT version();")
-		record = cursor.fetchone()
-		print("You are connected to - ", record,"\n")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retrieving card information using PostgreSQL,", error)

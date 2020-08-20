@@ -57,10 +57,6 @@ async def on_message(message):
 		elif(message.content.startswith('-ultimate')):
 			await message.channel.send("PvZ Heroes Ultimate card sheet:\nhttps://docs.google.com/spreadsheets/d/1CKrYbWVdZMW4kQvTMsNgPB2YsUDz_mBnsR7J60hNp-U/edit?usp=sharing")
 
-		elif(message.content == 'WITNESS ME!'):
-			logRequest(message.author.name, message.content, 4, None)
-			await message.channel.send("WITNESSED!")
-
 		else:
 			if '{{' and '}}' in message.content:
 				stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
@@ -146,7 +142,8 @@ async def fuzzySearch(message):
 			response = pullFuzzyCardRecord(text)
 			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
 
-
+async def regularSearch(message):
+	pass
 
 
 
