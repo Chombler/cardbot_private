@@ -75,7 +75,7 @@ card_constructor_rows = [
 ('Banana Launcher',	'Kabloom',	'Banana Plant',	2,	0,	3,	'',	'Start of turn: Gain a Banana Bomb.',	'He only knows one word. But it\'s a good one.',	'Galactic',	'Super-Rare',	'Sun'),
 ('Berry Blast',	'Kabloom',	'Berry Trick',	2,	0,	0,	'',	'Do 3 damage.',	'Vicious AND nutritious',	'Basic',	'Common',	'Sun'),
 ('Buff-Shroom',	'Kabloom',	'Mushroom Plant',	2,	1,	1,	'',	'When played: All Mushrooms get +1/+1.',	'You might know him from his wildly popular series of workout videos called \"30 Days to a Buff-Shroom Body.\"',	'Basic',	'Common',	'Sun'),
-											
+('Fireweed',	'Kabloom',	'Flower Root Plant',	2,	3,	2,	'',	'When played on the Ground: Make Hot Lava here.',	'Don\'\'t touch the floor. The floor is lava.',	'Colossal',	'Super-Rare',	'Sun'),
 ('Seedling',	'Kabloom',	'Seed Plant',	2,	0,	1,	'',	'Start of turn: This transforms into a random plant that costs 6:Sun: or less.',	'It\'s the tiny seed of a... nobody actually knows.',	'Basic',	'Common',	'Sun'),
 ('Shelf Mushroom',	'Kabloom',	'Mushroom Berry Plant',	2,	2,	2,	'',	'Fusion: Do 2 damage.',	'Legnds of Hollow Earth whisper that if you stack up enough Shelf Mushrooms, you\'ll eventually reach the Surface World.',	'Triassic',	'Rare',	'Sun'),
 ('Wild Berry',	'Kabloom',	'Berry Plant',	2,	4,	1,	'',	'When played: This moves to a random lane.',	'What one word best describes Wild Berry? \"Unpredictable.\"',	'Premium',	'Rare',	'Sun'),
