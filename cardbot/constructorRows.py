@@ -167,7 +167,7 @@ card_constructor_rows = [
 ('Bamboozle',	'Mega',	'Leafy Root Plant',	6,	5,	6,	'',	'Plant Evolution: Draw two cards.',	'Only amoung the hyper-evolved Plants of Hollow Earth can you be outwitted by a tree.',	'Colossal',	'Rare',	'Sun'),
 ('Super-Phat Beets',	'Mega',	'Root Plant',	6,	3,	3,	'',	'When played: This gets +1/+1 for each Plant and Zombie.',	'When he drops the beet, everyone feels it. Especially the Zombies.',	'Premium',	'Rare',	'Sun'),
 ('Espresso Fiesta',	'Mega',	'Bean Trick',	8,	0,	0,	'',	'A Plant does three Bonus Attacks.',	'Don\'t consume after 5 p.m. You\'ll be up all night.',	'Premium',	'Super-Rare',	'Sun'),
-('Power Pummel',	'Mega, Guardian',	'Leafy Superpower Trick',	1,	0,	0,	'',	'Attack for 2 damage in each Ground lane.',	'\"Knuckle sandwiches for all my enemies!\"',	'Premium',	'Super-Rare',	'Sun'),
+('Power Pummel',	'Mega, Guardian',	'Leafy Superpower Trick',	1,	0,	0,	'',	'Attack for 2 damage in each Ground lane.',	'\"Knuckle sandwiches for all my enemies!\"',	'Premium',	'Legendary',	'Sun'),
 ('Precision Blast',	'Mega, Smarty',	'Pea Superpower Trick',	1,	0,	0,	'',	'Attack for 5 damage in the middle lane.',	'Green Shadow\'s approach is right down the middle.',	'Premium',	'Legendary',	'Sun'),
 ('Devour',	'Mega, Solar',	'Flytrap Superpower Trick',	1,	0,	0,	'',	'Destroy a Zombie with the lowest Health.',	'Chompzilla enjoys eating Zombies whole. She does not enjoy the indigestion that follows.',	'Premium',	'Legendary',	'Sun'),
 ('Admiral Navy Bean',	'Smarty',	'Bean Plant',	1,	1,	1,	'Amphibious, Team-Up',	'When you play a Bean, do 2 damage to the Zombie Hero.',	'\"Heavy is the weight of my command. And my cap. Heavy is the cap.\"',	'Premium',	'Rare',	'Sun'),
