@@ -39,7 +39,7 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		checkForRegeneration(message)
+		await checkForRegeneration(message)
 
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
