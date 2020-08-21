@@ -99,19 +99,19 @@ async def checkForRegeneration(message):
 			await message.channel.send(message.author.name + construct_card_tables())
 
 		elif message.content.startswith("$[[Regenerate Nickname]]"):
-			await construct_nickname()
+			construct_nickname()
 			await message.channel.send(message.author.name + ", you have regenerated nickname.")
 
 		elif message.content.startswith("$[[Regenerate Hero]]"):
-			await construct_hero_tables()
+			construct_hero_tables()
 			await message.channel.send(message.author.name + ", you have regenerated hero.")
 
 		elif message.content.startswith("$[[Regenerate Request]]"):
-			await construct_request()
+			construct_request()
 			await message.channel.send(message.author.name + ", you have regenerated request.")
 
 		elif message.content.startswith("$[[Regenerate Request Type]]"):
-			await construct_request_type()
+			construct_request_type()
 			await message.channel.send(message.author.name + ", you have regenerated request_type.")
 
 
