@@ -39,6 +39,8 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
+		checkForRegeneration(message)
+
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
@@ -69,61 +71,10 @@ async def on_message(message):
 			if '[[' and ']]' in message.content:
 				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 				print("Terms input for search are: %s" % (stringInput))
-
 				for text in stringInput:
-					if(text == "Regenerate Database"):
-						if(message.author.name == "Chombler"):
-							if message.content.startswith('$'):
-								await message.channel.send(message.author.name + construct_card_tables())
-							else:
-								await message.channel.send(message.author.name + ", that was the wrong input.")
-						else:
-							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-					elif(text == "Regenerate Nickname"):
-						if(message.author.name == "Chombler"):
-							if message.content.startswith('$'):
-								construct_nickname()
-								await message.channel.send(message.author.name + ", you have regenerated nickname.")
-							else:
-								await message.channel.send(message.author.name + ", that was the wrong input.")
-						else:
-							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-					elif(text == "Regenerate Hero"):
-						if(message.author.name == "Chombler"):
-							if message.content.startswith('$'):
-								construct_hero_tables()
-								await message.channel.send(message.author.name + ", you have regenerated hero.")
-							else:
-								await message.channel.send(message.author.name + ", that was the wrong input.")
-						else:
-							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-					elif(text == "Regenerate Request"):
-						if(message.author.name == "Chombler"):
-							if message.content.startswith('$'):
-								construct_request()
-								await message.channel.send(message.author.name + ", you have regenerated request.")
-							else:
-								await message.channel.send(message.author.name + ", that was the wrong input.")
-						else:
-							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-					elif(text == "Regenerate Request Type"):
-						if(message.author.name == "Chombler"):
-							if message.content.startswith('$'):
-								construct_request_type()
-								await message.channel.send(message.author.name + ", you have regenerated request_type.")
-							else:
-								await message.channel.send(message.author.name + ", that was the wrong input.")
-						else:
-							await message.channel.send("<:forgetthis:592554507766857731> Nice try " + message.author.name)
-
-					else:
-						logRequest(message.author.name, message.content, 1, False)
-						response = pullCardRecord(text)
-						await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+					logRequest(message.author.name, message.content, 1, False)
+					response = pullCardRecord(text)
+					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
@@ -142,8 +93,32 @@ async def fuzzySearch(message):
 			response = pullFuzzyCardRecord(text)
 			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \[\[" + text + "\]\]||")
 
+async def checkForRegeneration(message):
+	if(message.author.name == "Chombler"):
+		if message.content.startswith('$[[Regenerate Database]]'):
+			await message.channel.send(message.author.name + construct_card_tables())
+
+		elif message.content.startswith("$[[Regenerate Nickname]]"):
+			await construct_nickname()
+			await message.channel.send(message.author.name + ", you have regenerated nickname.")
+
+		elif message.content.startswith("$[[Regenerate Hero]]"):
+			await construct_hero_tables()
+			await message.channel.send(message.author.name + ", you have regenerated hero.")
+
+		elif message.content.startswith("$[[Regenerate Request]]"):
+			await construct_request()
+			await message.channel.send(message.author.name + ", you have regenerated request.")
+
+		elif message.content.startswith("$[[Regenerate Request Type]]"):
+			await construct_request_type()
+			await message.channel.send(message.author.name + ", you have regenerated request_type.")
+
+
+
 async def regularSearch(message):
 	pass
+
 
 
 
