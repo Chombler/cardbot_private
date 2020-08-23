@@ -42,7 +42,7 @@ async def on_message(message):
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
 			return
-			
+
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
@@ -62,21 +62,7 @@ async def on_message(message):
 			await message.channel.send("PvZ Heroes Ultimate card sheet:\nhttps://docs.google.com/spreadsheets/d/1CKrYbWVdZMW4kQvTMsNgPB2YsUDz_mBnsR7J60hNp-U/edit?usp=sharing")
 
 		else:
-			if '{{' and '}}' in message.content:
-				stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-				print("Terms input for search are: %s" % (stringInput))
-				for text in stringInput:
-					logRequest(message.author.name, message.content, 2, False)
-					response = pullHeroRecord(text)
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
-
-			if '[[' and ']]' in message.content:
-				stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-				print("Terms input for search are: %s" % (stringInput))
-				for text in stringInput:
-					logRequest(message.author.name, message.content, 1, False)
-					response = pullCardRecord(text)
-					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+			await regularSearch(message)
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
@@ -124,7 +110,21 @@ async def checkForRegeneration(message):
 
 
 async def regularSearch(message):
-	pass
+	if '{{' and '}}' in message.content:
+		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+		print("Terms input for search are: %s" % (stringInput))
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 2, False)
+			response = pullHeroRecord(text)
+			await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+
+	if '[[' and ']]' in message.content:
+		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+		print("Terms input for search are: %s" % (stringInput))
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 1, False)
+			response = pullCardRecord(text)
+			await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
 
 
