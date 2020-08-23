@@ -1322,7 +1322,7 @@ heroTuple = [
 ('Immorticia',	'IM',	'Brainy, Beastly',	'Witch\'s Familiar, Summoning, Evaporate, Acid Rain',	'Yes, she\'s a Zombie AND a witch. She believes death is too short to limit oneself.'),
 ('Z-Mech',	'ZM',	'Hearty, Crazy',	'Missile Madness, Rock Wall, Brute Strength, Electrobolt',	'Once watched giant mecha anime for 12 hours straight.'),
 ('Neptuna',	'NT',	'Hearty, Sneaky',	'Octo-Pult, Dolphinado, Possessed, In-Crypted',	'She is the first Zombie to fight in a tank.'),
-('Huge-Giganticus',	'HG',	'Brainy, Sneaky',	'Terror-Fomer 10,000, Iron Boarder, Teleportation Station, Ice Moon',	'Go on, tell him he\'s actually quite small. See what happens. You\'re not going to like it.')]
+('Huge-Giganticus',	'HG',	'Brainy, Sneaky',	'Terror-Former 10,000, Iron Boarder, Teleportation Station, Ice Moon',	'Go on, tell him he\'s actually quite small. See what happens. You\'re not going to like it.')]
 
 
 requestTypeTuple = [
