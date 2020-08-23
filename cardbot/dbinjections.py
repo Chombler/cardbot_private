@@ -41,6 +41,33 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		if(len(requestString) < 513):
+			postgres_insert_query = '''
+			INSERT INTO request(author, message, typeid, is_fuzzy)
+			VALUES (%s,%s,%s,%s)
+			'''
+			cursor.execute(postgres_insert_query, (requestAuthor, requestString, requestType, fuzzyRequest))
+			connection.commit()
+			print("Request logged in \"request\"")
+		else:
+			raise ValueError('request message was too long to store')
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+
 
 def pullCardRecord(recordName):
 	success = True
