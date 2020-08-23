@@ -81,17 +81,17 @@ def pullCardRecord(recordName):
 		SELECT name
 		FROM nickname
 		WHERE SIMILARITY(nickname, %s) > 0.25
-		OR LOWER(nickname) LIKE %s
+		OR LOWER(nickname) LIKE LOWER(%s)
 		ORDER BY SIMILARITY(nickname, %s) DESC,
-		LOWER(nickname) LIKE %s DESC
+		LOWER(nickname) LIKE LOWER(%s) DESC
 		LIMIT 1'''
 
 #		OR(1 %s)
 
 		try:
-			recordStart = recordName[0:3].lower() + '%'
+			recordStart = recordName[0:3] + '%'
 		except:
-			recordStart = recordName[0:].lower() + '%'
+			recordStart = recordName[0:] + '%'
 
 #		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 
