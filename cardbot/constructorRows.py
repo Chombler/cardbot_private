@@ -1311,7 +1311,7 @@ heroTuple = [
 ('Nightcap',	'NC',	'Kabloom, Smarty',	'Mush-Boom, More Spore, Whirlwind, Storm Front',	'He\'s a fun guy.'),
 ('Rose',	'RO',	'Smarty, Solar',	'Goatify, Transmogrify, Big Chill, Weed Whack',	'Refuses to be nerfed.'),
 ('Captain Combustible',	'CC',	'Kabloom, Mega',	'Blazing Bark, Meteor Strike, Embiggen, Time to Shine',	'If you want to see him blow his top, try calling him \"Stumpy\". Go on. Try it.'),
-('Beta-Carrotina',	'BC',	'Guardian, Smarty',	'Genetic Amplification, Ensign Uproot, Lieutenant Carrrotron, Lightspeed Seed',	'As leader of the Plant-etary Guard, she\'s ready to root out Zombies wherever they crop up.'),
+('Beta-Carrotina',	'BC',	'Guardian, Smarty',	'Genetic Amplification, Ensign Uproot, Lieutenant Carrotron, Lightspeed Seed',	'As leader of the Plant-etary Guard, she\'s ready to root out Zombies wherever they crop up.'),
 ('Super Brainz',	'SB',	'Brainy, Sneaky',	'Carried Away, Telepathy, Cut Down to Size, Super Stench',	'His most heroic quality is his hairstyle.'),
 ('The Smash',	'SM',	'Hearty, Beastly',	'Slammin\' Smackdown, Heroic Health, Possessed, Galvanize',	'The Smash enjoys...SMASHING!'),
 ('Impfinity',	'IF',	'Sneaky, Crazy',	'Triple Threat, Super Stench, In-Crypted, Brute Strength',	'He believes good things come in small packages. And in threes.'),
