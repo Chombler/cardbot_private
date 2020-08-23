@@ -39,8 +39,10 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		await checkForRegeneration(message)
-
+		database_was_regenerated = await checkForRegeneration(message)
+		if(database_was_regenerated):
+			return
+			
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
@@ -97,23 +99,28 @@ async def checkForRegeneration(message):
 	if(message.author.name == "Chombler"):
 		if message.content.startswith('$[[Regenerate Database]]'):
 			await message.channel.send(message.author.name + construct_card_tables())
+			return True
 
 		elif message.content.startswith("$[[Regenerate Nickname]]"):
 			construct_nickname()
 			await message.channel.send(message.author.name + ", you have regenerated nickname.")
+			return True
 
 		elif message.content.startswith("$[[Regenerate Hero]]"):
 			construct_hero_tables()
 			await message.channel.send(message.author.name + ", you have regenerated hero.")
+			return True
 
 		elif message.content.startswith("$[[Regenerate Request]]"):
 			construct_request()
 			await message.channel.send(message.author.name + ", you have regenerated request.")
+			return True
 
 		elif message.content.startswith("$[[Regenerate Request Type]]"):
 			construct_request_type()
 			await message.channel.send(message.author.name + ", you have regenerated request_type.")
-
+			return True
+	return False
 
 
 async def regularSearch(message):
