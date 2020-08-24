@@ -12,6 +12,8 @@ def createTable():
 		create_table_query = '''CREATE TABLE participant
 								(id SERIAL PRIMARY KEY,
 								discord_username varchar(64),
+								in_game_username varchar(64),
+								timezone varchar(8),
 								first_plant_hero_ban varchar(8),
 								second_plant_hero_ban varchar(8),
 								first_zombie_hero_ban varchar(8),
@@ -69,7 +71,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO participant(discord_username, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban) VALUES"""
+		postgres_insert_query = """ INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
@@ -91,7 +93,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO participant(discord_username, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban) VALUES " + args_str)
+		cursor.execute("INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"participant\"")

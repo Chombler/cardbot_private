@@ -41,6 +41,52 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+def determineHeroSide(recordName):
+	success = True
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_table_query = '''
+		SELECT id, SIMILARITY(name, %s)
+		FROM hero
+		ORDER BY SIMILARITY(name, %s) DESC
+		LIMIT 1'''
+
+		cursor.execute(select_table_query, (recordName, recordName))
+		nameResults = cursor.fetchall()
+		print(nameResults)
+
+		select_table_query = '''
+		SELECT id, SIMILARITY(abbreviation, %s)
+		FROM hero
+		ORDER BY SIMILARITY(abbreviation, %s) DESC
+		LIMIT 1'''
+
+		cursor.execute(select_table_query, (recordName, recordName))
+		abbreviationResults = cursor.fetchall()
+		print(abbreviationResults)
+
+		if(nameResults[0][1] > abbreviationResults[0][1]):
+			resultid = nameResults[0][0]
+		else:
+			resultid = abbreviationResults[0][0]
+
+
+		print(resultid)
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error retrieving card information using PostgreSQL,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+		return(heroInstance.information())
+
 def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2):
 	try:
 		print("Trying")
@@ -48,16 +94,14 @@ def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantH
 		print("connected")
 		cursor = connection.cursor()
 
-		if(len(requestString) < 513):
-			postgres_insert_query = '''
-			INSERT INTO request(author, message, typeid, is_fuzzy)
-			VALUES (%s,%s,%s,%s)
-			'''
-			cursor.execute(postgres_insert_query, (requestAuthor, requestString, requestType, fuzzyRequest))
-			connection.commit()
-			print("Request logged in \"request\"")
-		else:
-			raise ValueError('request message was too long to store')
+		postgres_insert_query = '''
+		INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban)
+		VALUES (%s,%s,%s,%s,%s,%s,%s)
+		'''
+
+		cursor.execute(postgres_insert_query, (discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2))
+		connection.commit()
+		print("Participant logged in \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error logging request in request,", error)

@@ -39,12 +39,33 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
+
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
 			return
 
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
+
+		elif message.content.startswith('-register'):
+			if '(' and ')' and '[' and ']' and '{' and '}' in message.content:
+				in_game_username = regex.findall('\((.+?)\)', message.content)
+				timezone = regex.findall('\[(.+?)\]', message.content)
+				hero_bans = regex.findall('\{(.+?)\}', message.content)
+
+				print(in_game_username)
+				print(timezone)
+				print(hero_bans)
+
+				if len(hero_bans) != 4:
+					await message.channel.send("You entered an incorrect number of Hero Bans. Please try again.")
+					return
+
+				#Plant Heroes have a Hero Side value of 0, while Zombie Heroes have a Hero Side value of 1
+				#Since there should be 2 Plant Hero Bans and 2 Zombie Hero Bans, if the hero_side_counter
+				#is not equal to 0, then they do not have the correct ban structure
+				for hero in hero_bans:
+					hero_side_counter += await determineHeroSide(text)
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
@@ -66,6 +87,8 @@ async def on_message(message):
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
+		if(message.author.name == "Gking10"):
+			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print(stringInput)
 		for text in stringInput:
@@ -74,6 +97,8 @@ async def fuzzySearch(message):
 			await message.channel.send(response + "\n||Record generated in response to command: -fuzzy \{\{" + text + "\}\}||")
 
 	if '[[' and ']]' in message.content:
+		if(message.author.name == "Gking10"):
+			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print(stringInput)
 		for text in stringInput:
@@ -111,6 +136,8 @@ async def checkForRegeneration(message):
 
 async def regularSearch(message):
 	if '{{' and '}}' in message.content:
+		if(message.author.name == "Gking10"):
+			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
@@ -119,6 +146,8 @@ async def regularSearch(message):
 			await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 
 	if '[[' and ']]' in message.content:
+		if(message.author.name == "Gking10"):
+			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:

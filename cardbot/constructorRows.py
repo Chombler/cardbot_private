@@ -510,7 +510,7 @@ card_constructor_rows = [
 ('Rodeo Gargantuar',	'Hearty',	'Sports Gargantuar Zombie',	7,	5,	9,	'Gravestone',	'When revealed: Move a Plant.',	'Why yes, this IS his first rodeo.',	'Premium',	'Rare',	'Brain'),
 ('Wannabe Hero',	'Hearty',	'Gargantuar Zombie',	7,	6,	1,	'Frenzy',	'When played: This gets +1:Health: for each Health your Hero has.',	'He has Super Brainz stickers all over his binder.',	'Premium',	'Legendary',	'Brain'),
 ('Slammin\' Smackdown',	'Hearty, Beastly',	'Gargantuar Superpower Trick',	1,	0,	0,	'',	'Destroy a Plant with 4:Strength: or less.',	'The Smash\'s wresting moves are real all right. Too real. Just ask any Plant.',	'Premium',	'Legendary',	'Brain'),
-('Missle Madness',	'Hearty, Crazy',	'Science Imp Superpower Trick',	1,	0,	0,	'',	'Do 3 damage to a Plant and 1 damage to all other Plants.',	'For Z-Mech, any target is a good target.',	'Premium',	'Legendary',	'Brain'),
+('Missile Madness',	'Hearty, Crazy',	'Science Imp Superpower Trick',	1,	0,	0,	'',	'Do 3 damage to a Plant and 1 damage to all other Plants.',	'For Z-Mech, any target is a good target.',	'Premium',	'Legendary',	'Brain'),
 ('Octo-Pult',	'Hearty, Sneaky',	'Pet Superpower Trick',	1,	0,	0,	'',	'Make a 3/2 Octo-Pet with Amphibious.',	'Octopus incoming! Two words a Plant never wants to hear.',	'Premium',	'Legendary',	'Brain'),
 ('Octo-Pet',	'Hearty, Sneaky',	'Pet Zombie',	3,	3,	2,	'Amphibious',	'',	'It\'s slimy, beady-eyed, and it leaves ink splotches wherever it goes. Neptuna loves it all the same.',	'',	'Token',	'Brain'),
 ('Swabbie',	'Sneaky',	'Imp Pirate Zombie',	0,	1,	1,	'Amphibious',	'',	'When he\'s not fighting Plants, you\'ll find him scrubbing the Zombot Plank Walker\'s poop deck.',	'Colossal',	'Uncommon',	'Brain'),
