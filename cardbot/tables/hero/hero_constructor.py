@@ -90,7 +90,7 @@ def addManyToTable(recordTuple):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
+		args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
 		cursor.execute("INSERT INTO hero_constructor(name, abbreviation, classes, supers, flavor, side) VALUES " + args_str)
 
