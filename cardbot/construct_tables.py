@@ -191,11 +191,10 @@ def construct_hero_tables():
 		results = cursor.fetchall()
 
 
-		"""print("Printing Table")
+		print("Printing Table")
 		print(results)
 		for row in results:
-			for col in row:
-				print(col)"""
+			print(row)
 
 		for row in results:
 			record_name = row[1]
