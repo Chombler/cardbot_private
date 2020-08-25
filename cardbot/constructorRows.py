@@ -13,7 +13,7 @@ card_constructor_rows = [
 ('Small-Nut',	'Guardian',	'Nut Plant',	1,	1,	1,	'',	'',	'A violin virtuoso, Small-Nut began taking lessons when he was still in the shell.',	'Basic',	'Common',	'Sun'),
 ('Sting Bean',	'Guardian',	'Bean Pea Plant',	1,	1,	2,	'Bullseye, Amphibious',	'',	'\"I try to warn them, \'This is going to sting.\' But the Zombies, they never listen.\"',	'Basic',	'Common',	'Sun'),
 ('Wall-Nut',	'Guardian',	'Nut Plant',	1,	0,	6,	'Team Up',	'',	'Works well with others. Says so, right there on his resume.',	'Basic',	'Common',	'Sun'),
-('Cactus',	'Guardian',	'Cactus Plant',	2,	1,	5,	'Bullseye',	'',	'\"It\'s true. I\'m prickly on the outside but spongy on the inside.\"',	'Premium',	'Uncommon',	'Sun'),
+('Cactus',	'Guardian',	'Cactus Flower Plant',	2,	1,	5,	'Bullseye',	'',	'\"It\'s true. I\'m prickly on the outside but spongy on the inside.\"',	'Premium',	'Uncommon',	'Sun'),
 ('Corn Dog',	'Guardian',	'Corn Animal Plant',	2,	3,	2,	'Amphibious, Hunt',	'',	'\"Who\'s a good vegetable? You are! Yes, you are!\"',	'',	'Event',	'Sun'),
 ('Gardening Gloves',	'Guardian',	'Trick',	2,	0,	0,	'',	'Move a plant.\nDraw a card.',	'Made of the softest fabric for that gentle Plant touch.',	'Premium',	'Uncommon',	'Sun'),
 ('Grave Buster',	'Guardian',	'Root Trick',	2,	0,	0,	'',	'Destroy a Gravestone.',	'\"MUST. DESTROY. GRAVES.\"',	'Premium',	'Rare',	'Sun'),
