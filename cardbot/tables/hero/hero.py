@@ -13,7 +13,8 @@ def createTable():
 								(id SERIAL PRIMARY KEY,
 								name varchar(32),
 								abbreviation varchar(16),
-								flavor varchar(256) DEFAULT NULL);'''
+								flavor varchar(256) DEFAULT NULL,
+								side varchar(15));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -67,7 +68,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO hero(name, abbreviation, flavor) VALUES %s"""
+		postgres_insert_query = """ INSERT INTO hero(name, abbreviation, flavor, side) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
@@ -89,7 +90,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO hero(name, abbreviation, flavor) VALUES " + args_str)
+		cursor.execute("INSERT INTO hero(name, abbreviation, flavor, side) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"name\"")

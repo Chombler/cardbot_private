@@ -203,9 +203,10 @@ def construct_hero_tables():
 			record_classes = row[3].split(", ")
 			record_supers = row[4].split(", ")
 			record_flavor = row[5]
+			record_side = row[6]
 
-			hero_record = (record_name, record_abbreviation, record_flavor)
-			print("\nHero Record: (%s,%s,%s)" % hero_record)
+			hero_record = (record_name, record_abbreviation, record_flavor, record_side)
+			print("\nHero Record: (%s,%s,%s, %s)" % hero_record)
 			hero.addToTable(hero_record)
 			heroid = hero.pullidFromTable(record_name)
 

@@ -15,7 +15,8 @@ def createTable():
 								abbreviation varchar(16),
 								classes varchar(32),
 								supers varchar(128),
-								flavor varchar(128));'''
+								flavor varchar(128),
+								side varchar(15));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -69,7 +70,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO hero_constructor(name, abbreviation, classes, supers, flavor) VALUES"""
+		postgres_insert_query = """ INSERT INTO hero_constructor(name, abbreviation, classes, supers, flavor, side) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
@@ -91,7 +92,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO hero_constructor(name, abbreviation, classes, supers, flavor) VALUES " + args_str)
+		cursor.execute("INSERT INTO hero_constructor(name, abbreviation, classes, supers, flavor, side) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"hero_constructor\"")

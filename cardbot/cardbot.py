@@ -57,15 +57,21 @@ async def on_message(message):
 				print(timezone)
 				print(hero_bans)
 
+				if len(in_game_username) != 1:
+					await message.channel.send("You entered an incorrect number of in-game usernames. Please try again.")
+					return
+
+				if len(timezone) != 4:
+					await message.channel.send("You entered an incorrect number of timezones. Please try again.")
+					return
+
 				if len(hero_bans) != 4:
 					await message.channel.send("You entered an incorrect number of Hero Bans. Please try again.")
 					return
 
-				#Plant Heroes have a Hero Side value of 0, while Zombie Heroes have a Hero Side value of 1
-				#Since there should be 2 Plant Hero Bans and 2 Zombie Hero Bans, if the hero_side_counter
-				#is not equal to 0, then they do not have the correct ban structure
-				for hero in hero_bans:
-					hero_side_counter += await determineHeroSide(text)
+				
+
+
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
