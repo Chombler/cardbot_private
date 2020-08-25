@@ -61,15 +61,13 @@ async def on_message(message):
 					await message.channel.send("You entered an incorrect number of in-game usernames. Please try again.")
 					return
 
-				if len(timezone) != 4:
+				if len(timezone) != 1:
 					await message.channel.send("You entered an incorrect number of timezones. Please try again.")
 					return
 
 				if len(hero_bans) != 4:
 					await message.channel.send("You entered an incorrect number of Hero Bans. Please try again.")
 					return
-
-				
 
 
 
@@ -86,7 +84,8 @@ async def on_message(message):
 			await message.channel.send(message.content[5:] + " indeed")
 
 		elif(message.content.startswith('-ultimate')):
-			await message.channel.send("PvZ Heroes Ultimate card sheet:\nhttps://docs.google.com/spreadsheets/d/1CKrYbWVdZMW4kQvTMsNgPB2YsUDz_mBnsR7J60hNp-U/edit?usp=sharing")
+			await message.channel.send("PvZ Heroes Ultimate card sheet:\n\
+				https://docs.google.com/spreadsheets/d/1I3OHjTIclNTfv5Sk27oAycIDK1sDzb4F2JwQqZ64jH8/edit?usp=sharing")
 
 		else:
 			await regularSearch(message)
