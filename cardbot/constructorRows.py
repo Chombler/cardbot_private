@@ -193,7 +193,7 @@ card_constructor_rows = [
 ('Laser Cattail',	'Smarty',	'Animal Plant',	2,	2,	1,	'Amphibious, Team-Up',	'This gets +1/+1 when you play a Plant here.',	'He\'s really good at entertaining himself.',	'Galactic',	'Super-Rare',	'Sun'),
 ('Pear Pal',	'Smarty',	'Fruit Plant',	2,	2,	2,	'Amphibious, Team-Up',	'',	'Has codependency issues, but he\'s working on it.',	'Colossal',	'Uncommon',	'Sun'),
 ('Rotobaga',	'Smarty',	'Root Plant',	2,	2,	1,	'Amphibious',	'This attacks both lanes next door instead of this lane.',	'Without flying roots, how would we get Sky-Trees??',	'Triassic',	'Super-Rare',	'Sun'),
-('Snow Pea',	'Smarty',	'Pea Plant',	2,	2,	2,	'',	'',	'When this hurts a Zombie, Freeze that Zombie.',	'Basic',	'Common',	'Sun'),
+('Snow Pea',	'Smarty',	'Pea Plant',	2,	2,	2,	'',	'When this hurts a Zombie, Freeze that Zombie.',	'Learned everything he knows during the Great Freeze Tag Wars of \'\'08.',	'Basic',	'Common',	'Sun'),
 ('Sow Magic Beans',	'Smarty',	'Leafy Bean Trick',	2,	0,	0,	'',	'Shuffle four Magic Beanstalks into your deck.',	'Totally worth the cow.',	'Premium',	'Super-Rare',	'Sun'),
 ('Cattail',	'Smarty',	'Animal Plant',	3,	3,	2,	'Amphibious',	'',	'\"My secret weapon? It\'s my cute little hat!\"',	'Basic',	'Common',	'Sun'),
 ('Chilly Pepper',	'Smarty',	'Fruit Plant',	3,	2,	1,	'',	'When played: Freeze a Zombie.',	'\"It\'s not easy being both hot \\*and\\* cold. A comfortable lukewarm might be nice for a change.\"',	'Premium',	'Rare',	'Sun'),

@@ -112,33 +112,6 @@ def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantH
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-
-def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2):
-	try:
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
-
-		postgres_insert_query = '''
-		INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban)
-		VALUES (%s,%s,%s,%s,%s,%s,%s)
-		'''
-
-		cursor.execute(postgres_insert_query, (discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2))
-		connection.commit()
-		print("Participant logged in \"participant\"")
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-
-
 def pullCardRecord(recordName):
 	success = True
 	try:
