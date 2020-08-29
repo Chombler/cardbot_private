@@ -179,6 +179,10 @@ def pullCardRecord(recordName):
 	success = True
 	resultid = getBestCardMatch(recordName)
 	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
 
 		join_table_query = '''
 		SELECT	card.name,
