@@ -178,7 +178,7 @@ def getBestCardMatch(recordName):
 def pullCardRecord(recordName):
 	success = True
 	resultid = getBestCardMatch(recordName)
-	print("Result id: " + String(resultid))
+	print("Result id: " + str(resultid))
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
