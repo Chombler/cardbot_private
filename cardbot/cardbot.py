@@ -84,8 +84,8 @@ async def on_message(message):
 			await message.channel.send(message.content[5:] + " indeed")
 
 		elif(message.content.startswith('-ultimate')):
-			await message.channel.send("PvZ Heroes Ultimate card sheet:\n\
-				https://docs.google.com/spreadsheets/d/1I3OHjTIclNTfv5Sk27oAycIDK1sDzb4F2JwQqZ64jH8/edit?usp=sharing")
+			await message.channel.send("PvZ Heroes Ultimate cards:\n\
+				https://dulst.com/pvzhu/cards")
 
 		else:
 			await regularSearch(message)
