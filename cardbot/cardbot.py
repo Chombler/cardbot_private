@@ -47,6 +47,10 @@ async def on_message(message):
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
+		#Ideal Input Structure:
+		#-register [Tournament Name] (ign) {Hero ban 1} {Hero ban 2} {Hero ban 3} {Hero ban 4}
+		#Actual Input Structure:
+		#-register (ign) [timezone] {Hero ban 1} {Hero ban 2} {Hero ban 3} {Hero ban 4}
 		elif message.content.startswith('-register'):
 			if '(' and ')' and '[' and ']' and '{' and '}' in message.content:
 				in_game_username = regex.findall('\((.+?)\)', message.content)
@@ -68,7 +72,7 @@ async def on_message(message):
 				if len(hero_bans) != 4:
 					await message.channel.send("You entered an incorrect number of Hero Bans. Please try again.")
 					return
-
+     
 
 
 		elif(message.content.startswith('-help')):

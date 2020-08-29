@@ -112,7 +112,8 @@ def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantH
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def pullCardRecord(recordName):
+
+def getBestCardMatch(recordName):
 	success = True
 	try:
 		print("Trying")
@@ -146,7 +147,7 @@ def pullCardRecord(recordName):
 		cursor.execute(select_table_query, (recordName, orString, recordName, recordStart))
 
 		results = cursor.fetchall()
-		if(len(results) > 0):
+		try:
 			resultname = results[0][0]
 			print("Result Name: " + resultname)
 
@@ -160,54 +161,70 @@ def pullCardRecord(recordName):
 			results = cursor.fetchall()
 			resultid = results[0][0]
 			print("Result id: " + str(resultid))
-
-			join_table_query = '''
-			SELECT	card.name,
-					game_class.name,
-					tribe.name,
-					card_type.type,
-					card.cost,
-					cost_type.cost_type,
-					card.strength,
-					trait.strengthmodifier,
-					card.health,
-					trait.healthmodifier,
-					trait.name,
-					card.ability,
-					card.flavor,
-					card_set.name,
-					rarity.name
-			FROM card
-			LEFT JOIN card_to_class ON card.id = card_to_class.cardid
-			LEFT JOIN game_class ON card_to_class.classid = game_class.id
-			LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
-			LEFT JOIN trait ON card_to_trait.traitid = trait.id
-			LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
-			LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
-			LEFT JOIN card_type ON card_type.id = card.typeid
-			LEFT JOIN card_set ON card_set.id = card.setid
-			LEFT JOIN rarity ON card.rarityid = rarity.id
-			LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
-			WHERE card.id = %s
-			'''
-
-			cursor.execute(join_table_query, (resultid,))
-			results = cursor.fetchall()
-
-
-			print("Printing Table")
-			for row in results:
-				for col in row:
-					print(col)
-				print()
-
-			cardInstance = cardObject(results)
-			print(cardInstance.information())
-		else:
+		except:
 			success = False
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retrieving card information using PostgreSQL,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+		return(resultid if success else None)
+
+
+def pullCardRecord(recordName):
+	success = True
+	resultid = getBestCardMatch(recordName)
+	try:
+
+		join_table_query = '''
+		SELECT	card.name,
+				game_class.name,
+				tribe.name,
+				card_type.type,
+				card.cost,
+				cost_type.cost_type,
+				card.strength,
+				trait.strengthmodifier,
+				card.health,
+				trait.healthmodifier,
+				trait.name,
+				card.ability,
+				card.flavor,
+				card_set.name,
+				rarity.name
+		FROM card
+		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
+		LEFT JOIN game_class ON card_to_class.classid = game_class.id
+		LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
+		LEFT JOIN trait ON card_to_trait.traitid = trait.id
+		LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
+		LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
+		LEFT JOIN card_type ON card_type.id = card.typeid
+		LEFT JOIN card_set ON card_set.id = card.setid
+		LEFT JOIN rarity ON card.rarityid = rarity.id
+		LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
+		WHERE card.id = %s
+		'''
+
+		cursor.execute(join_table_query, (resultid,))
+		results = cursor.fetchall()
+
+		print("Printing Table")
+		for row in results:
+			for col in row:
+				print(col)
+			print()
+
+		cardInstance = cardObject(results)
+		print(cardInstance.information())
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error retrieving card information using PostgreSQL,", error)
+		success = False
 	finally:
 		#closing database connection.
 		if(connection):
