@@ -176,9 +176,11 @@ def getBestCardMatch(recordName):
 
 
 def pullCardRecord(recordName):
-	success = True
 	resultid = getBestCardMatch(recordName)
 	print("Result id: " + str(resultid))
+	
+	if(resultid is None):
+		return("There are no matches. Start your message with -fuzzy for close matches or -help to get a list of commands.")
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -229,14 +231,13 @@ def pullCardRecord(recordName):
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retrieving card information using PostgreSQL,", error)
-		success = False
 	finally:
 		#closing database connection.
 		if(connection):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(cardInstance.information() if success else "There are no matches. Start your message with -fuzzy for close matches or -help to get a list of commands.")
+		return(cardInstance.information())
 
 
 def pullHeroRecord(recordName):
