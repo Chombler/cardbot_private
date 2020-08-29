@@ -159,8 +159,8 @@ def getBestCardMatch(recordName):
 			cursor.execute(select_table_query, (resultname,))
 
 			results = cursor.fetchall()
-			resultid = results[0][0]
-			print("Result id: " + str(resultid))
+			cardid = results[0][0]
+			print("Result id: " + str(cardid))
 		except:
 			success = False
 
@@ -172,14 +172,14 @@ def getBestCardMatch(recordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-		return(resultid if success else None)
+		return(cardid if success else None)
 
 
 def pullCardRecord(recordName):
-	resultid = getBestCardMatch(recordName)
-	print("Result id: " + str(resultid))
+	cardid = getBestCardMatch(recordName)
+	print("Result id: " + str(cardid))
 
-	if(resultid is None):
+	if(cardid is None):
 		return("There are no matches. Start your message with -fuzzy for close matches or -help to get a list of commands.")
 	try:
 		print("Trying")
@@ -217,7 +217,7 @@ def pullCardRecord(recordName):
 		WHERE card.id = %s
 		'''
 
-		cursor.execute(join_table_query, (resultid,))
+		cursor.execute(join_table_query, (cardid,))
 		results = cursor.fetchall()
 
 		print("Printing Table")
@@ -239,9 +239,7 @@ def pullCardRecord(recordName):
 			print("PostgreSQL connection is closed")
 		return(cardInstance.information())
 
-
-def pullHeroRecord(recordName):
-	success = True
+def getBestHeroMatch(recordName):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -269,12 +267,30 @@ def pullHeroRecord(recordName):
 		print(abbreviationResults)
 
 		if(nameResults[0][1] > abbreviationResults[0][1]):
-			resultid = nameResults[0][0]
+			heroid = nameResults[0][0]
 		else:
-			resultid = abbreviationResults[0][0]
+			heroid = abbreviationResults[0][0]
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error retrieving hero information using PostgreSQL,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+		return(heroid)
 
 
-		print(resultid)
+def pullHeroRecord(recordName):
+	heroid = getBestHeroMatch(recordName)
+	print("Hero id: " + str(heroid))
+	
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
 
 		join_table_query = '''
 		SELECT	hero.name,
@@ -294,7 +310,7 @@ def pullHeroRecord(recordName):
 		WHERE hero.id = %s
 		'''
 
-		cursor.execute(join_table_query, (resultid,))
+		cursor.execute(join_table_query, (heroid,))
 		results = cursor.fetchall()
 
 		print(results)

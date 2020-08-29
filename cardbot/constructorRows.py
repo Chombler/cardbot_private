@@ -572,7 +572,6 @@ card_constructor_rows = [
 ('Triple Threat',	'Sneaky, Crazy',	'Imp Superpower Trick',	1,	0,	0,	'',	'Make two 2/1 Impfinity Clones with Amphibious in random lanes.',	'That\'s how you get Imps.',	'Premium',	'Legendary',	'Brain')]
 
 nicknameTuple = [
-Nickname	Name
 ('Bubble Up',	'Bubble Up'),
 ('Ensign Uproot',	'Ensign Uproot'),
 ('FMN',	'Forget-Me-Nuts'),
