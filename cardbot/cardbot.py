@@ -48,40 +48,31 @@ async def on_message(message):
 			await fuzzySearch(message)
 
 		#Ideal Input Structure:
-		#-register [Tournament Name] (ign) {Hero ban 1} {Hero ban 2} {Hero ban 3} {Hero ban 4}
-		#Actual Input Structure:
-		#-register (ign) [timezone] {Hero ban 1} {Hero ban 2} {Hero ban 3} {Hero ban 4}
+		#-register (Tournament Name) [ign UTC+X] {Hero bans}
 		elif message.content.startswith('-register'):
 			if '(' and ')' and '[' and ']' and '{' and '}' in message.content:
-				in_game_username = regex.findall('\((.+?)\)', message.content)
-				timezone = regex.findall('\[(.+?)\]', message.content)
+				tournament_name = regex.findall('\((.+?)\)', message.content)
+				ign_and_timezone = regex.findall('\[(.+?)\]', message.content)
 				hero_bans = regex.findall('\{(.+?)\}', message.content)
 
-				print(in_game_username)
-				print(timezone)
+				print(tournament_name)
+				print(ign_and_timezone)
 				print(hero_bans)
+			else:
+				await message.channel.send("Your registration command is missing a (), [], or \{\}.")
 
-				if len(in_game_username) != 1:
-					await message.channel.send("You entered an incorrect number of in-game usernames. Please try again.")
-					return
-
-				if len(timezone) != 1:
-					await message.channel.send("You entered an incorrect number of timezones. Please try again.")
-					return
-
-				if len(hero_bans) != 4:
-					await message.channel.send("You entered an incorrect number of Hero Bans. Please try again.")
-					return
-     
-
+		#Ideal Input Structure:
+		#-register (Tournament Name) [ign UTC+X] {Hero bans}
+		elif message.content.startswith('-tournament-create'):
+			pass
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Bot Commands:\
-				\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
-				\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
-				\nUse -fuzzy at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
-				\nUse -echo at the start of a message to have the bot echo it.")
+				\n\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
+				\n\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
+				\n\nUse -fuzzy at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
+				\n\nUse -echo at the start of a message to have the bot echo it.")
 
 		elif(message.content.startswith('-echo')):
 			logRequest(message.author.name, message.content, 4, None)

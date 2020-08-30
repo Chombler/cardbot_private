@@ -113,7 +113,7 @@ def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantH
 			print("PostgreSQL connection is closed")
 
 
-def getBestCardMatch(recordName):
+def getBestCardMatchId(recordName):
 	success = True
 	try:
 		print("Trying")
@@ -176,7 +176,7 @@ def getBestCardMatch(recordName):
 
 
 def pullCardRecord(recordName):
-	cardid = getBestCardMatch(recordName)
+	cardid = getBestCardMatchId(recordName)
 	print("Result id: " + str(cardid))
 
 	if(cardid is None):
@@ -239,7 +239,7 @@ def pullCardRecord(recordName):
 			print("PostgreSQL connection is closed")
 		return(cardInstance.information())
 
-def getBestHeroMatch(recordName):
+def getBestHeroMatchId(recordName):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -283,9 +283,9 @@ def getBestHeroMatch(recordName):
 
 
 def pullHeroRecord(recordName):
-	heroid = getBestHeroMatch(recordName)
+	heroid = getBestHeroMatchId(recordName)
 	print("Hero id: " + str(heroid))
-	
+
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
