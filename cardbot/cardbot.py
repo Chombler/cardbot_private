@@ -66,8 +66,8 @@ async def on_message(message):
 		elif message.content.startswith('-tournament-create'):
 			if discord.utils.get(message.author.roles, name="Verified") is not None:
 				if '(' and ')' and '[' and ']' in message.content:
-				tournament_name = regex.findall('\((.+?)\)', message.content)
-				number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)2
+					tournament_name = regex.findall('\((.+?)\)', message.content)
+					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)
 			else:
 				await message.channel.send("You don't have the permissions to make a tournament.")
 
