@@ -62,17 +62,22 @@ async def on_message(message):
 				await message.channel.send("Your registration command is missing a (), [], or \{\}.")
 
 		#Ideal Input Structure:
-		#-register (Tournament Name) [ign UTC+X] {Hero bans}
+		#-tournament-create (Tournament Name) [# of Hero bans per side]
 		elif message.content.startswith('-tournament-create'):
-			pass
+			if discord.utils.get(message.author.roles, name="Verified") is not None:
+				if '(' and ')' and '[' and ']' in message.content:
+				tournament_name = regex.findall('\((.+?)\)', message.content)
+				number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)2
+			else:
+				await message.channel.send("You don't have the permissions to make a tournament.")
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Bot Commands:\
-				\n\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
-				\n\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
-				\n\nUse -fuzzy at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
-				\n\nUse -echo at the start of a message to have the bot echo it.")
+				\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
+				\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
+				\nUse -fuzzy at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
+				\nUse -echo at the start of a message to have the bot echo it.")
 
 		elif(message.content.startswith('-echo')):
 			logRequest(message.author.name, message.content, 4, None)
