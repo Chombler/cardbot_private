@@ -293,13 +293,11 @@ class cardObject(object):
 <:Strikethrough:286214542264893453> 
 <:Untrickable:350385647439314945>
 
-0name, 
-1cardclass.cardclass,
-2tribe.tribe, 3cardtype.cardtype,
-4cost, 5side.side, 6strength, 7trait.strengthmodifier, 8health, 9trait.healthmodifier,
+0name | 1cardclass.cardclass,
+2tribe.tribe 3cardtype.cardtype,
+4cost 5side.side, 6strength, 7trait.strengthmodifier, 8health, 9trait.healthmodifier,
 10trait.trait,
 11ability,
 12flavor,
-13cardset.cardset,
-14rarity.rarity
+13cardset.cardset 14rarity.rarity
 """
