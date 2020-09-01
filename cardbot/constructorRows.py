@@ -1202,7 +1202,6 @@ nicknameTuple = [
 ('Walrus Rider',	'Walrus Rider'),
 ('Cursed Gargolith',	'Cursed Gargolith'),
 ('Zombot Aerostatic Gondola',	'Zombot Aerostatic Gondola'),
-('Shark',	'Zombot Sharktronic Sub'),
 ('Zombot Sharktronic Sub',	'Zombot Sharktronic Sub'),
 ('Zombot Stomp',	'Zombot Stomp'),
 ('Zombot Plank Walker',	'Zombot Plank Walker'),
