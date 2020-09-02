@@ -787,6 +787,7 @@ nicknameTuple = [
 ('Bog',	'Bog of Enlightenment'),
 ('Bog of Enlightenment',	'Bog of Enlightenment'),
 ('Cosmic Bean',	'Cosmic Bean'),
+('Flick',	'Grave Mistake'),
 ('Grave Mistake',	'Grave Mistake'),
 ('Laser Cattail',	'Laser Cattail'),
 ('Lightning Reed',	'Lightning Reed'),
