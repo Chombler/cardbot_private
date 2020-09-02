@@ -68,7 +68,11 @@ async def on_message(message):
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)
 					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)
-					await createTournament(tournament_name, number_of_hero_bans)
+					successful_creation = createTournament(tournament_name, number_of_hero_bans)
+					if(successful_creation):
+						await message.channel.send(message.author.nickname + " you created a new tournament called " + tournament_name + " with " + str(number_of_hero_bans) + " per side.")
+					else:
+						await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please try again.")
 			else:
 				await message.channel.send("You don't have the permissions to make a tournament.")
 
