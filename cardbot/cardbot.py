@@ -70,15 +70,15 @@ async def on_message(message):
 				except:
 					await message.channel.send(message.author.name + ", please hold. We are attempting to make a new tournament just the way you like it.")
 				if '(' and ')' and '[' and ']' in message.content:
-					tournament_name = regex.findall('\((.+?)\)', message.content)
-					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)
-					successful_creation = createTournament(tournament_name[0], number_of_hero_bans[0], message.author.name)
+					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)[0]
+					successful_creation = createTournament(tournament_name, number_of_hero_bans, message.author.name)
 
 					if(successful_creation):
 						try:
-							await message.channel.send(message.author.nickname + " you created a new tournament called " + tournament_name + " with " + str(number_of_hero_bans) + " per side.")
+							await message.channel.send("%s you created a new tournament called %s with %s per side." % (message.author.nickname, tournament_name, number_of_hero_bans))
 						except:
-							await message.channel.send(message.author.name + " you created a new tournament called " + tournament_name + " with " + str(number_of_hero_bans) + " per side.")
+							await message.channel.send("%s you created a new tournament called %s with %s per side." % (message.author.name, tournament_name, number_of_hero_bans))
 					else:
 						try:
 							await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please make sure to follow the format:\
