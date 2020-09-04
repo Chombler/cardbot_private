@@ -75,6 +75,7 @@ async def on_message(message):
 					else:
 						await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please try again.")
 			else:
+				print(message.author.roles)
 				await message.channel.send("You don't have the permissions to make a tournament.")
 
 		elif(message.content.startswith('-help')):
