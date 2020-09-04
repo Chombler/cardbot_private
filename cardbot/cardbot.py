@@ -74,6 +74,9 @@ async def on_message(message):
 						await message.channel.send(message.author.nickname + " you created a new tournament called " + tournament_name + " with " + str(number_of_hero_bans) + " per side.")
 					else:
 						await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please try again.")
+				else:
+					await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please make sure to follow the format:\
+						\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 			else:
 				print(message.author.roles)
 				await message.channel.send("You don't have the permissions to make a tournament.")

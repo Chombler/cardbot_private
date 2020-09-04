@@ -40,53 +40,7 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-"""
-def determineHeroSide(recordName):
-	success = True
-	try:
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
 
-		select_table_query = '''
-		SELECT id, SIMILARITY(name, %s)
-		FROM hero
-		ORDER BY SIMILARITY(name, %s) DESC
-		LIMIT 1'''
-
-		cursor.execute(select_table_query, (recordName, recordName))
-		nameResults = cursor.fetchall()
-		print(nameResults)
-
-		select_table_query = '''
-		SELECT id, SIMILARITY(abbreviation, %s)
-		FROM hero
-		ORDER BY SIMILARITY(abbreviation, %s) DESC
-		LIMIT 1'''
-
-		cursor.execute(select_table_query, (recordName, recordName))
-		abbreviationResults = cursor.fetchall()
-		print(abbreviationResults)
-
-		if(nameResults[0][1] > abbreviationResults[0][1]):
-			resultid = nameResults[0][0]
-		else:
-			resultid = abbreviationResults[0][0]
-
-
-		print(resultid)
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving card information using PostgreSQL,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(heroInstance.information())
-"""
 def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2):
 	try:
 		print("Trying")
