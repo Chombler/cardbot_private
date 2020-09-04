@@ -64,7 +64,7 @@ async def on_message(message):
 		#Ideal Input Structure:
 		#-tournament-create (Tournament Name) [# of Hero bans per side]
 		elif message.content.startswith('-tournament-create'):
-			if discord.utils.get(message.author.roles, name="Verified") is not None:
+			if discord.utils.get(message.author.roles, name="PVZHU Dev") is not None:
 				await message.channel.send(message.author.nickname + ", please hold. We are attempting to make a new tournament just the way you like it.")
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)
