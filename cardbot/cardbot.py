@@ -51,9 +51,9 @@ async def on_message(message):
 		#-register (Tournament Name) [ign UTC+X] {Hero bans}
 		elif message.content.startswith('-register'):
 			if '(' and ')' and '[' and ']' and '{' and '}' in message.content:
-				tournament_name = regex.findall('\((.+?)\)', message.content)
-				ign_and_timezone = regex.findall('\[(.+?)\]', message.content)
-				hero_bans = regex.findall('\{(.+?)\}', message.content)
+				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+				ign_and_timezone = regex.findall('\[(.+?)\]', message.content)[0].split()
+				hero_bans = regex.findall('\{(.+?)\}', message.content)[0].split()
 
 				print(tournament_name)
 				print(ign_and_timezone)
@@ -76,9 +76,9 @@ async def on_message(message):
 
 					if(successful_creation):
 						try:
-							await message.channel.send("%s you created a new tournament called %s with %s per side." % (message.author.nickname, tournament_name, number_of_hero_bans))
+							await message.channel.send("%s you created a new tournament called %s with %s Hero bans per side." % (message.author.nickname, tournament_name, number_of_hero_bans))
 						except:
-							await message.channel.send("%s you created a new tournament called %s with %s per side." % (message.author.name, tournament_name, number_of_hero_bans))
+							await message.channel.send("%s you created a new tournament called %s with %s Hero bans per side." % (message.author.name, tournament_name, number_of_hero_bans))
 					else:
 						try:
 							await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please make sure to follow the format:\
