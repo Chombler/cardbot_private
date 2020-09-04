@@ -67,7 +67,8 @@ def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantH
 			print("PostgreSQL connection is closed")
 
 
-def createTournament(name, number_of_bans):
+def createTournament(tournament_name, number_of_bans, creator_name):
+	success = True
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -75,15 +76,16 @@ def createTournament(name, number_of_bans):
 		cursor = connection.cursor()
 
 		postgres_insert_query = '''
-		INSERT INTO tournament(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban)
-		VALUES (%s,%s,%s,%s,%s,%s,%s)
+		INSERT INTO tournament(name, number_of_bans, creator)
+		VALUES (%s,%s,%s)
 		'''
 
-		cursor.execute(postgres_insert_query, (discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2))
+		cursor.execute(postgres_insert_query, (tournament_name, number_of_bans, creator_name))
 		connection.commit()
-		print("Participant logged in \"participant\"")
+		print("Tournament '%s' created" % (tournament_name))
 
 	except (Exception, psycopg2.Error) as error :
+		success = False
 		print ("Error logging request in request,", error)
 	finally:
 		#closing database connection
@@ -91,6 +93,7 @@ def createTournament(name, number_of_bans):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
+			return(success)
 
 
 def getBestCardMatchId(recordName):
