@@ -13,7 +13,7 @@ import psycopg2
 
 
 
-from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord
+from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
 
@@ -73,7 +73,7 @@ async def on_message(message):
 					tournament_name = regex.findall('\((.+?)\)', message.content)
 					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)
 					successful_creation = createTournament(tournament_name[0], number_of_hero_bans[0], message.author.name)
-					
+
 					if(successful_creation):
 						try:
 							await message.channel.send(message.author.nickname + " you created a new tournament called " + tournament_name + " with " + str(number_of_hero_bans) + " per side.")
