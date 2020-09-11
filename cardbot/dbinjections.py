@@ -63,7 +63,7 @@ def verifyTournament(tournament_name):
 		print(results)
 
 		if(len(results) > 0):
-			name_and_bans.append(results[0])
+			name_and_bans = [results[0][0], results[0][1]]
 		else:
 			success = False
 
@@ -71,7 +71,7 @@ def verifyTournament(tournament_name):
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
-		print ("Error logging request in request,", error)
+		print ("Error logging request in verifyTournament,", error)
 	finally:
 		#closing database connection
 		name_and_bans.insert(0, success)
