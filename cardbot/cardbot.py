@@ -13,7 +13,7 @@ import psycopg2
 
 
 
-from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament
+from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
 
@@ -58,6 +58,25 @@ async def on_message(message):
 				print(tournament_name)
 				print(ign_and_timezone)
 				print(hero_bans)
+
+				tournament_info = verifyTournament(tournament_name)
+				is_verified = 0
+				official_name = 1
+				number_of_hero_bans = 2
+				if(tournament_info[is_verified]):
+					for heroid in hero_bans:
+						hero_sum += 12 / getBestHeroMatchId(heroid)
+					print(hero_sum)
+					if(hero_sum == tournament_info[number_of_hero_bans]):
+						print("You got the hero bans right!")
+					else:
+						print("Uh oh. You got the hero bans wrong!")
+
+				else:
+					await message.channel.send("Your registration command is missing a (), [], or \{\}.")
+
+
+
 			else:
 				await message.channel.send("Your registration command is missing a (), [], or \{\}.")
 

@@ -41,6 +41,47 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+
+def verifyTournament(tournament_name):
+	success = True
+	name_and_bans = []
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_table_query = '''
+		SELECT name, number_of_bans
+		FROM tournament
+		WHERE SIMILARITY(tournament_name, %s) > 0.5
+		LIMIT 1'''
+
+		cursor.execute(postgres_insert_query, (tournament_name,))
+		results = cursor.fetchall()
+		
+		print results
+
+		if(len(results) > 0):
+			name_and_bans = results[0]
+		else:
+			success = False
+
+		print("Tournament '%s' exists" % (name_and_bans[0]))
+
+	except (Exception, psycopg2.Error) as error :
+		success = False
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection
+		name_and_bans.insert(0, success)
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(name_and_bans)
+
+
 def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2):
 	try:
 		print("Trying")
