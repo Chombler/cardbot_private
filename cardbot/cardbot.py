@@ -72,7 +72,7 @@ async def on_message(message):
 					else:
 						print("Uh oh. You got the hero bans wrong!")
 				else:
-					await message.channel.send("Your registration command is missing a (), [], or \{\}.")
+					await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
 			else:
 				await message.channel.send("Your registration command is missing a (), [], or \{\}.")
 
