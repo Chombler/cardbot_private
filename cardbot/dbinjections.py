@@ -63,7 +63,7 @@ def verifyTournament(tournament_name):
 		print(results)
 
 		if(len(results) > 0):
-			name_and_bans = results[0]
+			name_and_bans.append(results[0])
 		else:
 			success = False
 
