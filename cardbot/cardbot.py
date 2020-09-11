@@ -55,9 +55,9 @@ async def on_message(message):
 				ign_and_timezone = regex.findall('\[(.+?)\]', message.content)[0].split()
 				hero_bans = regex.findall('\{(.+?)\}', message.content)[0].split()
 
-				print(tournament_name)
-				print(ign_and_timezone)
-				print(hero_bans)
+				print('Tournament Name: %s' %( tournament_name))
+				print('IGN and Timezone: %s' % (ign_and_timezone))
+				print('Hero Bans: %s' % (hero_bans))
 
 				tournament_info = verifyTournament(tournament_name)
 				is_verified = 0
@@ -71,12 +71,8 @@ async def on_message(message):
 						print("You got the hero bans right!")
 					else:
 						print("Uh oh. You got the hero bans wrong!")
-
 				else:
 					await message.channel.send("Your registration command is missing a (), [], or \{\}.")
-
-
-
 			else:
 				await message.channel.send("Your registration command is missing a (), [], or \{\}.")
 
