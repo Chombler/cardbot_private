@@ -677,6 +677,7 @@ nicknameTuple = [
 ('Poison Ivy',	'Poison Ivy'),
 ('Punish-Shroom',	'Punish-Shroom'),
 ('Strawberrian',	'Strawberrian'),
+('VRH',	'Veloci-Radish Hunter'),
 ('Veloci-Radish Hunter',	'Veloci-Radish Hunter'),
 ('Zapricot',	'Zapricot'),
 ('Molekale',	'Molekale'),
