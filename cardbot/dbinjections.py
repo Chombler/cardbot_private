@@ -59,8 +59,8 @@ def verifyTournament(tournament_name):
 
 		cursor.execute(postgres_insert_query, (tournament_name,))
 		results = cursor.fetchall()
-		
-		print results
+
+		print(results)
 
 		if(len(results) > 0):
 			name_and_bans = results[0]
