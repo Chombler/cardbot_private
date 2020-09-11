@@ -10,7 +10,7 @@ from random import randrange
 import discord
 import re as regex
 import psycopg2
-
+import math
 
 
 from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament
@@ -66,7 +66,7 @@ async def on_message(message):
 				if(tournament_info[is_verified]):
 					hero_sum = 0
 					for heroid in hero_bans:
-						hero_sum += 12 / getBestHeroMatchId(heroid)
+						hero_sum += math.floor(12 / getBestHeroMatchId(heroid))
 					print(hero_sum)
 					if(hero_sum == tournament_info[number_of_hero_bans]):
 						print("You got the hero bans right!")
