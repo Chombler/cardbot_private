@@ -57,7 +57,7 @@ def verifyTournament(tournament_name):
 		WHERE SIMILARITY(LOWER(tournament_name), LOWER(%s)) > 0.5
 		LIMIT 1'''
 
-		cursor.execute(postgres_insert_query, (tournament_name,))
+		cursor.execute(select_table_query, (tournament_name,))
 		results = cursor.fetchall()
 
 		print(results)
