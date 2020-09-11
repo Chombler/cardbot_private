@@ -54,7 +54,7 @@ def verifyTournament(tournament_name):
 		select_table_query = '''
 		SELECT name, number_of_bans
 		FROM tournament
-		WHERE SIMILARITY(LOWER(tournament_name), LOWER(%s)) > 0.5
+		WHERE SIMILARITY(LOWER(name), LOWER(%s)) > 0.5
 		LIMIT 1'''
 
 		cursor.execute(select_table_query, (tournament_name,))
