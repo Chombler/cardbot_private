@@ -64,6 +64,7 @@ async def on_message(message):
 				official_name = 1
 				number_of_hero_bans = 2
 				if(tournament_info[is_verified]):
+					hero_sum = 0
 					for heroid in hero_bans:
 						hero_sum += 12 / getBestHeroMatchId(heroid)
 					print(hero_sum)
