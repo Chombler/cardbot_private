@@ -117,7 +117,7 @@ def getTimezoneId(timezone_abbreviation):
 
 		postgres_select_query = '''
 		SELECT id from timezone
-		ORDER BY SIMILARITY(LOWER(abbreviation), LOWER(%s)) DESC,
+		ORDER BY SIMILARITY(LOWER(abbreviation), LOWER(%s)) DESC
 		LIMIT 1
 		'''
 
