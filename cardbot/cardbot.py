@@ -157,13 +157,13 @@ async def on_message(message):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Example Tournament Commands:\
 				\n**Registration:**\
-				\n-register (DeprivedSheep) [EST].\
+				\n-register (DeprivedSheep) [EST].\n\
 				\n**Joining a Tournament:**\
-				\n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\
+				\n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\n\
 				\n**Creating a Tournament:**\
-				\n-tournament-create (The Greatest Tournament of All Time!) [2].\
+				\n-tournament-create (The Greatest Tournament of All Time!) [2].\n\
 				\n**Deregistering:**\
-				\n-deregister\
+				\n-deregister\n\
 				\nUse **-t-help** to get a list of tournament commands.")
 
 		elif(message.content.startswith('-echo')):
