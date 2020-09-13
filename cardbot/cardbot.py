@@ -62,7 +62,7 @@ async def on_message(message):
 				print('Timezone: %s' % (timezone))
 
 				registerParticipant(message.author.name, ign, timezone)
-				await message.channel.send("%s, you have successfully registered as %s who lives in the %s timezone" % (message.content.author.name, ign, timezone))
+				await message.channel.send("%s, you have successfully registered as %s who lives in the %s timezone" % (message.author.name, ign, timezone))
 
 			else:
 				await message.channel.send("Your registration command is missing a () or [].")
