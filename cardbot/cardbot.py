@@ -173,7 +173,7 @@ async def fuzzySearch(message):
 
 async def checkForRegeneration(message):
 	if(message.author.name == "Chombler"):
-		if message.content.startswith("handyman"):
+		if message.content.startswith("$handyman"):
 			await message.channel.send("Chombler " + handyman())
 			return True
 
