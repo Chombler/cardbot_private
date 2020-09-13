@@ -13,7 +13,7 @@ def createTable():
 								(id SERIAL PRIMARY KEY,
 								discord_username varchar(64),
 								in_game_username varchar(64),
-								timezone int);'''
+								timezone_id int);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()

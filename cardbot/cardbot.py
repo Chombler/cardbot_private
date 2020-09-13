@@ -52,7 +52,7 @@ async def on_message(message):
 
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
-		#-register (ign) [timezone]
+		#-register (ign) [timezone abbreviation]
 		elif message.content.startswith('-register'):
 			if '(' and ')' and '[' and ']' in message.content:
 				ign = regex.findall('\((.+?)\)', message.content)[0]

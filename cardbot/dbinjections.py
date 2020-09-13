@@ -89,12 +89,13 @@ def registerParticipant(discordName, inGameName, timezone):
 		print("connected")
 		cursor = connection.cursor()
 
+		timezoneid = getTimezoneId(timezone)
 		postgres_insert_query = '''
-		INSERT INTO participant(discord_username, in_game_username, timezone)
+		INSERT INTO participant(discord_username, in_game_username, timezone_id)
 		VALUES (%s,%s,%s)
 		'''
 
-		cursor.execute(postgres_insert_query, (discordName, inGameName, timezone))
+		cursor.execute(postgres_insert_query, (discordName, inGameName, timezoneid))
 		connection.commit()
 		print("Participant logged in \"participant\"")
 
@@ -107,6 +108,35 @@ def registerParticipant(discordName, inGameName, timezone):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+def getTimezoneId(timezone_abbreviation):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_select_query = '''
+		SELECT id from timezone
+		ORDER BY SIMILARITY(LOWER(abbreviation), LOWER(%s)) DESC,
+		LIMIT 1
+		'''
+
+		cursor.execute(postgres_select_query, (timezone_abbreviation,))
+		connection.commit()
+		results = cursor.fetchall()
+
+		print(results)
+		resultid = results[0][0]
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return resultid
 
 def createTournament(tournament_name, number_of_bans, creator_name):
 	success = True
