@@ -16,6 +16,7 @@ import math
 from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
+from tempcode import handyman
 
 client = discord.Client()
 
@@ -47,22 +48,38 @@ async def on_message(message):
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
+		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
-		#-register (Tournament Name) [ign UTC+X] {Hero bans}
+		#-register (ign) [timezone]
 		elif message.content.startswith('-register'):
-			if '(' and ')' and '[' and ']' and '{' and '}' in message.content:
+			if '(' and ')' and '[' and ']' in message.content:
+				ign = regex.findall('\((.+?)\)', message.content)[0]
+				timezone = regex.findall('\[(.+?)\]', message.content)[0]
+
+				print('IGN: %s' % (ign))
+				print('Timezone: %s' % (timezone))
+
+				registerParticipant(message.author.name, ign, timezone)
+				await message.channel.send("%s, you have successfully registered as %s who lives in the %s timezone" % (message.content.author.name, ign, timezone))
+
+			else:
+				await message.channel.send("Your registration command is missing a () or [].")
+
+		#Ideal Input Structure:
+		#-join (Tournament Name) {Hero bans}
+		elif message.content.startswith('-join'):
+			if '(' and ')' and '{' and '}' in message.content:
 				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-				ign_and_timezone = regex.findall('\[(.+?)\]', message.content)[0].split()
 				hero_bans = regex.findall('\{(.+?)\}', message.content)[0].split()
 
 				print('Tournament Name: %s' %( tournament_name))
-				print('IGN and Timezone: %s' % (ign_and_timezone))
 				print('Hero Bans: %s' % (hero_bans))
 
 				tournament_info = verifyTournament(tournament_name)
 				is_verified = 0
 				official_name = 1
 				number_of_hero_bans = 2
+
 				if(tournament_info[is_verified]):
 					hero_sum = 0
 					for heroid in hero_bans:
@@ -75,7 +92,7 @@ async def on_message(message):
 				else:
 					await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
 			else:
-				await message.channel.send("Your registration command is missing a (), [], or \{\}.")
+				await message.channel.send("Your join command is missing a () or \{\}.")
 
 		#Ideal Input Structure:
 		#-tournament-create (Tournament Name) [# of Hero bans per side]
@@ -154,6 +171,10 @@ async def fuzzySearch(message):
 
 async def checkForRegeneration(message):
 	if(message.author.name == "Chombler"):
+		if message.content.startswith("handyman"):
+			await message.channel.send("Chombler " + handyman())
+			return True
+
 		if message.content.startswith('$[[Regenerate Database]]'):
 			await message.channel.send("Chombler " + construct_card_tables())
 			return True
@@ -194,6 +215,8 @@ async def regularSearch(message):
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 2, False)
 			response = pullHeroRecord(text)
+			print("Channel name: %s" % (message.channel.name))
+			print("Channel id: %s" % (message.channel.id))
 			await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 
 	if '[[' and ']]' in message.content:
@@ -204,6 +227,8 @@ async def regularSearch(message):
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 1, False)
 			response = pullCardRecord(text)
+			print("Channel name: %s" % (message.channel.name))
+			print("Channel id: %s" % (message.channel.id))
 			await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 
 

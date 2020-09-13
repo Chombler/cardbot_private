@@ -1,7 +1,17 @@
 
-tempString = 'Temporary'
+from tables.tournament import timezone, participant
+from constructorRows import timezone_rows
 
-print(tempString[0:3].lower())
+def handyman():
+	timezone.dropTable()
+	timezone.createTable()
+	timezone.addManyToTable(timezone_rows)
+
+	participant.createTable()
+
+	return("Handyman is finished")
+
+
 
 """import re as regex
 

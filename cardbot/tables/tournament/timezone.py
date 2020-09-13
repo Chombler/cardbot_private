@@ -9,15 +9,14 @@ def createTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		create_table_query = '''CREATE TABLE participant
+		create_table_query = '''CREATE TABLE timezone
 								(id SERIAL PRIMARY KEY,
-								discord_username varchar(64),
-								in_game_username varchar(64),
-								timezone varchar(8));'''
+								abbreviation varchar(99),
+								utc_offset varchar(99));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"participant\" Addition Successful!")
+		print("Table \"timezone\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -32,7 +31,7 @@ def createTable():
 				cursor.close()
 				connection.close()
 				print("PostgreSQL connection is closed")
-				
+
 def dropTable():
 	try:
 		print("Trying")
@@ -40,11 +39,11 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		delete_table_query = '''DROP TABLE participant'''
+		delete_table_query = '''DROP TABLE timezone'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"participant\" Deletion Successful!")
+		print("Table \"timezone\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -60,18 +59,17 @@ def dropTable():
 				connection.close()
 				print("PostgreSQL connection is closed")
 
-
 #Adding to database
 def addToTable(record):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban) VALUES"""
-		cursor.execute(postgres_insert_query + record)
+		postgres_insert_query = """ INSERT INTO timezone(abbreviation, utc_offset) VALUES (%s)"""
+		cursor.execute(postgres_insert_query, (record))
 
 		connection.commit()
-		print("Row added to table \"participant\"")
+		print("Row added to table \"timezone\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -87,12 +85,12 @@ def addManyToTable(recordTuple):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s)", x).decode("utf-8") for x in recordTuple)
+		args_str = ','.join(cursor.mogrify("(%s,%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban) VALUES " + args_str)
+		cursor.execute("INSERT INTO timezone(abbreviation, utc_offset) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"participant\"")
+		print("Multiple rows added to \"timezone\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -108,10 +106,10 @@ def deleteFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_delete_query = """ Delete from participant where id = %s"""
+		postgres_delete_query = """ Delete from timezone where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"participant\"")
+		print("Row deleted from \"timezone\"")
 		
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -127,10 +125,10 @@ def pullFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_pull_query = """ SELECT * from participant where id = %s"""
+		postgres_pull_query = """ SELECT * from timezone where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"participant\" where id = %s" % (recordId))
+		print("Results from \"timezone\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')
@@ -145,13 +143,18 @@ def pullFromTable(recordId):
 				connection.close()
 				print("PostgreSQL connection is closed")
 
-def pullidFromTable(recordValue):
+def pullutc_offsetFromTable(recordValue):
 	try:
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
 		results = []
-		postgres_pull_query = """ SELECT id from participant where discord_username = %s"""
+		postgres_pull_query = """
+		SELECT utc_offset
+		FROM timezone
+		ORDER BY SIMILARITY(abbreviation, %s)DESC
+		LIMIT 1 """
+
 		cursor.execute(postgres_pull_query, (recordValue,))
 		results = cursor.fetchall()
 		result = None

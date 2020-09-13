@@ -82,7 +82,7 @@ def verifyTournament(tournament_name):
 			return(name_and_bans)
 
 
-def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2):
+def registerParticipant(discordName, inGameName, timezone):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -90,11 +90,11 @@ def registerParticipant(discordName, inGameName, timezone, plantHeroBan1, plantH
 		cursor = connection.cursor()
 
 		postgres_insert_query = '''
-		INSERT INTO participant(discord_username, in_game_username, timezone, first_plant_hero_ban, second_plant_hero_ban, first_zombie_hero_ban, second_zombie_hero_ban)
-		VALUES (%s,%s,%s,%s,%s,%s,%s)
+		INSERT INTO participant(discord_username, in_game_username, timezone)
+		VALUES (%s,%s,%s)
 		'''
 
-		cursor.execute(postgres_insert_query, (discordName, inGameName, timezone, plantHeroBan1, plantHeroBan2, zombieHeroBan1, zombieHeroBan2))
+		cursor.execute(postgres_insert_query, (discordName, inGameName, timezone))
 		connection.commit()
 		print("Participant logged in \"participant\"")
 
