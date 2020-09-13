@@ -144,14 +144,14 @@ async def on_message(message):
 		elif(message.content.startswith('-t-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Tournament Commands:\
-				\n*Use* **-register** *to register your name with the bot in order to sign up for tournaments. Registration must follow the format:*\
-				\n-register (in game username) [timezone abbreviation].\
-				\n*Once you've registered, you can use* **-join** *to join a tournament that hasn't started yet. Joining must follow the format:*\
-				\n-join (Tournament Name) {List of Hero bans seperated by a space}.\
-				\n*If you have the role Tournament Creators, you can use the command* **-create-tournament** *to create a tournament of your own. Tournament Creation must follow the format:*\
-				\n-tournament-create (Tournament Name) [# of Hero bans per side].\
-				\n*If you've registered as a participant with the bot and would like to remove yourself, use* **-deregister** *to remove your name from the registry and from any tournaments you are currently involved in.*\
-				\n*Use* **-t-examples** *to see example calls of all of these commands.*")
+				\n*Use* ***-register*** *to register your name with the bot in order to sign up for tournaments. Registration must follow the format:*\
+				\n-register (in game username) [timezone abbreviation].\n\
+				\n*Once you've registered, you can use* ***-join*** *to join a tournament that hasn't started yet. Joining must follow the format:*\
+				\n-join (Tournament Name) {List of Hero bans seperated by a space}.\n\
+				\n*If you have the role Tournament Creators, you can use the command* ***-create-tournament*** *to create a tournament of your own. Tournament Creation must follow the format:*\
+				\n-tournament-create (Tournament Name) [# of Hero bans per side].\n\
+				\n*If you've registered as a participant with the bot and would like to remove yourself, use* ***-deregister*** *to remove your name from the registry and from any tournaments you are currently involved in.*\
+				\nUse **-t-examples** to see example calls of all of these commands.")
 
 		elif(message.content.startswith('-t-examples')):
 			logRequest(message.author.name, message.content, 3, None)
@@ -268,7 +268,7 @@ async def regularSearch(message):
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
 				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 				else:
 					await message.channel.send(response)
 			except:
