@@ -135,36 +135,36 @@ async def on_message(message):
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Bot Commands:\
-				\nUse \[\[Card Name\]\] to return a specific card's information. More than one card can be requested at one time.\
-				\nUse \{\{Hero Name\}\} to return a specific Hero's information. More than one Hero can be requested at one time.\
-				\nUse -fuzzy at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
-				\nUse -echo at the start of a message to have the bot echo it.\
-				\nUse -t-help to get a list of tournament commands.")
+				\nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
+				\nUse **\{\{Hero Name\}\}** to return a specific Hero's information. More than one Hero can be requested at one time.\
+				\nUse **-fuzzy** at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
+				\nUse **-echo** at the start of a message to have the bot echo it.\
+				\nUse **-t-help** to get a list of tournament commands.")
 
 		elif(message.content.startswith('-t-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Tournament Commands:\
-				\nUse -register to register your name with the bot in order to sign up for tournaments. Registration must follow the format:\
+				\nUse **-register** to register your name with the bot in order to sign up for tournaments. Registration must follow the format:\
 				\n-register (in game username) [timezone abbreviation].\
-				\nOnce you've registered, you can use -join to join a tournament that hasn't started yet. Joining must follow the format:\
+				\nOnce you've registered, you can use **-join** to join a tournament that hasn't started yet. Joining must follow the format:\
 				\n-join (Tournament Name) {List of Hero bans seperated by a space}.\
-				\nIf you have the role Tournament Creators, you can use the command -create-tournament to create a tournament of your own. Tournament Creation must follow the format:\
+				\nIf you have the role Tournament Creators, you can use the command **-create-tournament** to create a tournament of your own. Tournament Creation must follow the format:\
 				\n-tournament-create (Tournament Name) [# of Hero bans per side].\
-				\nIf you've registered your name with the bot and would like to remove it, use -deregister to remove your name from the registry and from any tournaments you are currently involved in.\
-				\nUse -t-examples see example calls of all of these commands.")
+				\nIf you've registered as a participant with the bot and would like to remove yourself, use **-deregister** to remove your name from the registry and from any tournaments you are currently involved in.\
+				\nUse **-t-examples** see example calls of all of these commands.")
 
 		elif(message.content.startswith('-t-examples')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Example Tournament Commands:\
-				\nRegistration:\
+				\n**Registration:**\
 				\n-register (DeprivedSheep) [EST].\
-				\nJoining a Tournament:\
+				\n**Joining a Tournament:**\
 				\n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\
-				\nCreating a Tournament:\
+				\n**Creating a Tournament:**\
 				\n-tournament-create (The Greatest Tournament of All Time!) [2].\
-				\nDeregistering:\
+				\n**Deregistering:**\
 				\n-deregister\
-				\nUse -t-help to get a list of tournament commands.")
+				\nUse **-t-help** to get a list of tournament commands.")
 
 		elif(message.content.startswith('-echo')):
 			logRequest(message.author.name, message.content, 4, None)
