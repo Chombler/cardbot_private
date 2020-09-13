@@ -217,9 +217,9 @@ async def regularSearch(message):
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 2, False)
 			response = pullHeroRecord(text)
-			print("Channel name: %s" % (message.channel.name))
-			print("Channel id: %s" % (message.channel.id))
 			try:
+				print("Channel name: %s" % (message.channel.name))
+				print("Channel id: %s" % (message.channel.id))
 				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				else:
@@ -235,9 +235,9 @@ async def regularSearch(message):
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 1, False)
 			response = pullCardRecord(text)
-			print("Channel name: %s" % (message.channel.name))
-			print("Channel id: %s" % (message.channel.id))
 			try:
+				print("Channel name: %s" % (message.channel.name))
+				print("Channel id: %s" % (message.channel.id))
 				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				else:
