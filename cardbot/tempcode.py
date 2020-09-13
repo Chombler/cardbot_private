@@ -2,7 +2,10 @@
 from tables.tournament import timezone, participant
 from constructorRows import timezone_rows
 
-def handyman():
+def handyman(complete_call):
+	if(complete_call):
+		participant.dropTable()
+		
 	timezone.dropTable()
 	timezone.createTable()
 	timezone.addManyToTable(timezone_rows)
