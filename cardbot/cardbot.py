@@ -144,14 +144,14 @@ async def on_message(message):
 		elif(message.content.startswith('-t-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Tournament Commands:\
-				\nUse **-register** to register your name with the bot in order to sign up for tournaments. Registration must follow the format:\
+				\n*Use* **-register** *to register your name with the bot in order to sign up for tournaments. Registration must follow the format:*\
 				\n-register (in game username) [timezone abbreviation].\
-				\nOnce you've registered, you can use **-join** to join a tournament that hasn't started yet. Joining must follow the format:\
+				\n*Once you've registered, you can use* **-join** *to join a tournament that hasn't started yet. Joining must follow the format:*\
 				\n-join (Tournament Name) {List of Hero bans seperated by a space}.\
-				\nIf you have the role Tournament Creators, you can use the command **-create-tournament** to create a tournament of your own. Tournament Creation must follow the format:\
+				\n*If you have the role Tournament Creators, you can use the command* **-create-tournament** *to create a tournament of your own. Tournament Creation must follow the format:*\
 				\n-tournament-create (Tournament Name) [# of Hero bans per side].\
-				\nIf you've registered as a participant with the bot and would like to remove yourself, use **-deregister** to remove your name from the registry and from any tournaments you are currently involved in.\
-				\nUse **-t-examples** see example calls of all of these commands.")
+				\n*If you've registered as a participant with the bot and would like to remove yourself, use* **-deregister** *to remove your name from the registry and from any tournaments you are currently involved in.*\
+				\n*Use* **-t-examples** *to see example calls of all of these commands.*")
 
 		elif(message.content.startswith('-t-examples')):
 			logRequest(message.author.name, message.content, 3, None)
