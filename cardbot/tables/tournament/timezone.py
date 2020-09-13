@@ -12,7 +12,7 @@ def createTable():
 		create_table_query = '''CREATE TABLE timezone
 								(id SERIAL PRIMARY KEY,
 								abbreviation varchar(99),
-								utc_offset varchar(99));'''
+								utc_offset decimal);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
