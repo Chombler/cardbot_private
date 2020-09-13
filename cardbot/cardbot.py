@@ -28,6 +28,8 @@ requestTypeTuple = [
 ('Fun Query',)]
 """
 
+bot_spam_channel_id = 343233158483017748
+cardbot_bugs_report_channel_id = 447437688254103552
 
 @client.event
 async def on_ready():
@@ -217,7 +219,10 @@ async def regularSearch(message):
 			response = pullHeroRecord(text)
 			print("Channel name: %s" % (message.channel.name))
 			print("Channel id: %s" % (message.channel.id))
-			await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+			if(message.channel.id == bot_spam_channel_id || message.channel.id == cardbot_bugs_report_channel_id):
+				await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+			else:
+				await message.channel.send(response)
 
 	if '[[' and ']]' in message.content:
 		if(message.author.name == "Gking10"):
@@ -229,7 +234,10 @@ async def regularSearch(message):
 			response = pullCardRecord(text)
 			print("Channel name: %s" % (message.channel.name))
 			print("Channel id: %s" % (message.channel.id))
-			await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+			if(message.channel.id == bot_spam_channel_id || message.channel.id == cardbot_bugs_report_channel_id):
+				await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+			else:
+				await message.channel.send(response)
 
 
 
