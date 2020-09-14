@@ -109,7 +109,7 @@ def registerParticipant(discordName, inGameName, timezoneid):
 		print(registration_info)
 
 		postgres_select_query = '''
-		SELECT abbreviation, utf_offset
+		SELECT abbreviation, utc_offset
 		FROM timezone
 		WHERE id = %s
 		'''
