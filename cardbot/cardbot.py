@@ -162,7 +162,7 @@ async def on_message(message):
 		elif(message.content.startswith('-t-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send("Tournament Commands:\
-				\n*Use* ***-register*** *to register your name with the bot in order to sign up for tournaments. Registration must follow the format:*\
+				\n*Use* ***-register*** *to register your name with the bot so that you can sign up for tournaments. Registration must follow the format:*\
 				\n-register (in game username) [timezone abbreviation].\n\
 				\n*Once you've registered, you can use* ***-join*** *to join a tournament that hasn't started yet. Joining must follow the format:*\
 				\n-join (Tournament Name) {List of Hero bans seperated by a space}.\n\
