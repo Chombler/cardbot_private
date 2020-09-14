@@ -146,14 +146,6 @@ def isRegistered(discordName):
 		if(len(results) > 0):
 			name_is_registered = True
 
-			postgres_delete_query = '''
-			DELETE FROM participant
-			WHERE discord_username = %s
-			'''
-
-			cursor.execute(postgres_delete_query, (discordName,))
-			connection.commit()
-
 		print("Participant logged in \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
@@ -166,6 +158,33 @@ def isRegistered(discordName):
 			connection.close()
 			print("PostgreSQL connection is closed")
 			return(name_is_registered)
+
+def deRegister(discordName):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_delete_query = '''
+		DELETE FROM participant
+		WHERE discord_username = %s
+		'''
+
+		cursor.execute(postgres_delete_query, (discordName,))
+		connection.commit()
+
+		print("Participant removed from \"participant\"")
+
+	except (Exception, psycopg2.Error) as error :
+		name_is_registered = False
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
 
 def getTimezoneId(timezone_abbreviation):
 	return_timezone_id = 0
