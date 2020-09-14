@@ -73,9 +73,17 @@ async def on_message(message):
 
 			else:
 				await message.channel.send("Your registration command is missing a () or [].")
-
+		"""
+		elif message.content.startswith('-deregister'):
+			if isRegistered(message.author.name):
+				deRegister(message.author.name)
+				await message.channel.send("You have been deregistered.")
+			else:
+				await message.channel.send("Your registration command is missing a () or [].")
+		"""
 		#Ideal Input Structure:
 		#-join (Tournament Name) {Hero bans}
+		"""
 		elif message.content.startswith('-join'):
 			if '(' and ')' and '{' and '}' in message.content:
 				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
@@ -138,6 +146,7 @@ async def on_message(message):
 			else:
 				print(message.author.roles)
 				await message.channel.send("You don't have the permissions to make a tournament.")
+		"""
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
