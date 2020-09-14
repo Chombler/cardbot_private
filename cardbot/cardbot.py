@@ -74,7 +74,7 @@ async def on_message(message):
 			else:
 				await message.channel.send("Your registration command is missing a () or [].")
 		
-		"""elif message.content.startswith('-deregister'):
+		elif message.content.startswith('-deregister'):
 			if isRegistered(message.author.name):
 				deRegister(message.author.name)
 				await message.channel.send("You have been deregistered.")
@@ -145,7 +145,7 @@ async def on_message(message):
 							\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 			else:
 				print(message.author.roles)
-				await message.channel.send("You don't have the permissions to make a tournament.")"""
+				await message.channel.send("You don't have the permissions to make a tournament.")
 		
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
