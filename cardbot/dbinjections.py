@@ -98,7 +98,7 @@ def registerParticipant(discordName, inGameName, timezoneid):
 		print("Participant logged in \"participant\"")
 
 		postgres_select_query = '''
-		SELECT * FROM participant
+		SELECT discord_username, in_game_username, timezone_id FROM participant
 		WHERE discord_username = %s
 		'''
 
