@@ -58,6 +58,10 @@ async def on_message(message):
 				ign = regex.findall('\((.+?)\)', message.content)[0]
 				timezone = regex.findall('\[(.+?)\]', message.content)[0]
 
+				if(isRegistered(message.author.name)):
+					await message.channel.send("You are already registered.")
+					return
+
 				print('IGN: %s' % (ign))
 				print('Timezone: %s' % (timezone))
 
