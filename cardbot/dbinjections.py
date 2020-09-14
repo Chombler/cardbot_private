@@ -97,6 +97,25 @@ def registerParticipant(discordName, inGameName, timezoneid):
 		connection.commit()
 		print("Participant logged in \"participant\"")
 
+		postgres_select_query = '''
+		SELECT * FROM participant
+		WHERE discord_username = %s
+		'''
+
+		cursor.execute(postgres_insert_query, (discordName,))
+
+		registration_info = cursor.fetchall()[0]
+
+		postgres_select_query = '''
+		SELECT abbreviation, utf_offset
+		FROM timezone
+		WHERE id = %s
+		'''
+
+		cursor.execute(postgres_insert_query, (registration_info[2],))
+
+		timezone_info = cursor.fetchall()[0]
+
 	except (Exception, psycopg2.Error) as error :
 		print ("Error logging request in request,", error)
 	finally:
@@ -105,6 +124,7 @@ def registerParticipant(discordName, inGameName, timezoneid):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
+			return("%s, you registered as %s in the timezone %s, which has a UTC offset of %s" % (registration_info[0], registration_info[1], timezone_info[0], timezone_info[1]))
 
 def isRegistered(discordName):
 	name_is_registered = False
@@ -125,7 +145,7 @@ def isRegistered(discordName):
 
 		if(len(results) > 0):
 			name_is_registered = True
-			
+
 			postgres_delete_query = '''
 			DELETE FROM participant
 			WHERE discord_username = %s
