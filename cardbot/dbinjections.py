@@ -143,7 +143,7 @@ def isRegistered(discordName):
 
 		cursor.execute(postgres_select_query, (discordName,))
 
-		results = connection.fetchall()
+		results = cursor.fetchall()
 
 		if(len(results) > 0):
 			name_is_registered = True
@@ -179,7 +179,6 @@ def deRegister(discordName):
 		print("Participant removed from \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		name_is_registered = False
 		print ("Error logging request in request,", error)
 	finally:
 		#closing database connection
