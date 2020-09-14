@@ -102,7 +102,7 @@ def registerParticipant(discordName, inGameName, timezoneid):
 		WHERE discord_username = %s
 		'''
 
-		cursor.execute(postgres_insert_query, (discordName,))
+		cursor.execute(postgres_select_query, (discordName,))
 
 		registration_info = cursor.fetchall()[0]
 		print(registration_info)
