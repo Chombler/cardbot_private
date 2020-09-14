@@ -41,7 +41,6 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-
 def verifyTournament(tournament_name):
 	success = True
 	name_and_bans = []
@@ -107,6 +106,47 @@ def registerParticipant(discordName, inGameName, timezoneid):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+def isRegistered(discordName):
+	name_is_registered = False
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_select_query = '''
+		SELECT discord_username FROM participant
+		WHERE discord_username = %s
+		'''
+
+		cursor.execute(postgres_select_query, (discordName,))
+
+		results = connection.fetchall()
+
+		if(len(results) > 0):
+			name_is_registered = True
+			
+			postgres_delete_query = '''
+			DELETE FROM participant
+			WHERE discord_username = %s
+			'''
+
+			cursor.execute(postgres_delete_query, (discordName,))
+			connection.commit()
+
+		print("Participant logged in \"participant\"")
+
+	except (Exception, psycopg2.Error) as error :
+		name_is_registered = False
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(name_is_registered)
+
 def getTimezoneId(timezone_abbreviation):
 	return_timezone_id = 0
 	try:
@@ -137,7 +177,7 @@ def getTimezoneId(timezone_abbreviation):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-			return return_timezone_id
+			return(return_timezone_id)
 
 def createTournament(tournament_name, number_of_bans, creator_name):
 	success = True

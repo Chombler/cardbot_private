@@ -13,7 +13,7 @@ import psycopg2
 import math
 
 
-from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament, registerParticipant, getTimezoneId
+from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament, registerParticipant, getTimezoneId, isRegistered
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
 from tempcode import handyman
@@ -76,14 +76,12 @@ async def on_message(message):
 		
 		elif message.content.startswith('-deregister'):
 			if isRegistered(message.author.name):
-				deRegister(message.author.name)
 				await message.channel.send("You have been deregistered.")
 			else:
-				await message.channel.send("Your registration command is missing a () or [].")
+				await message.channel.send("You are not currently registered.")
 		
 		#Ideal Input Structure:
 		#-join (Tournament Name) {Hero bans}
-		
 		elif message.content.startswith('-join'):
 			if '(' and ')' and '{' and '}' in message.content:
 				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
