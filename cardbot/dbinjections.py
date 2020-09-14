@@ -147,8 +147,9 @@ def isRegistered(discordName):
 
 		if(len(results) > 0):
 			name_is_registered = True
-
-		print("Participant logged in \"participant\"")
+			print("Participant is already registered in \"participant\"")
+		else:
+			print("Participant is not registered in \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
 		name_is_registered = False
@@ -205,7 +206,7 @@ def getTimezoneId(timezone_abbreviation):
 		connection.commit()
 		results = cursor.fetchall()
 
-		print(results)
+		print("Timezone id: %s" % (results))
 		return_timezone_id = results[0][0]
 
 	except (Exception, psycopg2.Error) as error :
