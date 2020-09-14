@@ -13,7 +13,7 @@ import psycopg2
 import math
 
 
-from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament, registerParticipant
+from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament, registerParticipant, getTimezoneId
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
 from tempcode import handyman
@@ -61,8 +61,15 @@ async def on_message(message):
 				print('IGN: %s' % (ign))
 				print('Timezone: %s' % (timezone))
 
-				registerParticipant(message.author.name, ign, timezone)
-				await message.channel.send("%s, you have successfully registered as %s who lives in the %s timezone" % (message.author.name, ign, timezone))
+				timezoneId = getTimezoneId(timezone)
+
+				print('Timezone Id: %s' % (timezoneId))
+
+				if(timezoneId > 0):
+					confirmation_response = registerParticipant(message.author.name, ign, timezoneId)
+					await message.channel.send(confirmation_response)
+				else:
+					await message.channel.send("The timezone you provided wasn't recognized. Please try again.")
 
 			else:
 				await message.channel.send("Your registration command is missing a () or [].")
