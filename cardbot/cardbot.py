@@ -225,7 +225,7 @@ async def fuzzySearch(message):
 		if(len(stringInput) < 1):
 			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
-			if(text == '\u2028')
+			if(text == '\u2028'):
 				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 2, True)
 			response = pullFuzzyHeroRecord(text)
@@ -247,7 +247,7 @@ async def fuzzySearch(message):
 		if(len(stringInput) < 1):
 			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
-			if(text == '\u2028')
+			if(text == '\u2028'):
 				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 1, True)
 			response = pullFuzzyCardRecord(text)
@@ -310,7 +310,7 @@ async def regularSearch(message):
 		if(len(stringInput) < 1):
 			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
-			if(text == '\u2028')
+			if(text == '\u2028'):
 				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 2, False)
 			response = pullHeroRecord(text)
@@ -332,7 +332,7 @@ async def regularSearch(message):
 		if(len(stringInput) < 1):
 			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
-			if(text == '\u2028')
+			if(text == '\u2028'):
 				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 1, False)
 			response = pullCardRecord(text)
