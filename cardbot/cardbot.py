@@ -66,7 +66,8 @@ async def on_message(message):
 			await fuzzySearch(message)
 
 		elif message.content.startswith('Take it away cardbot'):
-			await message.channel.send(speech)
+			if(message.author.name == "Chombler"):
+				await message.channel.send(speech)
 
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
