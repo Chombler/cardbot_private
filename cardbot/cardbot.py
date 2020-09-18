@@ -45,6 +45,9 @@ requestTypeTuple = [
 
 bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
+presidental_debate_hub_id = 755917829689049208
+
+#client.channels.get(`channelID`).send(`Text`)
 
 @client.event
 async def on_ready():
@@ -220,6 +223,8 @@ async def fuzzySearch(message):
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print(stringInput)
 		for text in stringInput:
+			if(len(text) < 1):
+				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 2, True)
 			response = pullFuzzyHeroRecord(text)
 			try:
@@ -238,6 +243,8 @@ async def fuzzySearch(message):
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print(stringInput)
 		for text in stringInput:
+			if(len(text) < 1):
+				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 1, True)
 			response = pullFuzzyCardRecord(text)
 			try:
@@ -297,6 +304,8 @@ async def regularSearch(message):
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
+			if(len(text) < 1):
+				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 2, False)
 			response = pullHeroRecord(text)
 			try:
@@ -315,6 +324,8 @@ async def regularSearch(message):
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
+			if(len(text) < 1):
+				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 			logRequest(message.author.name, message.content, 1, False)
 			response = pullCardRecord(text)
 			try:
