@@ -224,6 +224,7 @@ async def fuzzySearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
+				await message.channel.send(message.channel.id)
 				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				else:
