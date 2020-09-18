@@ -27,7 +27,7 @@ Greetings my fellow Discordians,
 
 I am here today to ask you to support me in a great undertaking the likes of which the discordian people have never seen before. We are in the midst of a great crisis. Yes, I am talking about the sidelining of off-topic.
 
-For too long have we been the butt of the joke, the channel only for memes and light shitposting, the channel always causing the rest of the server headaches. You may not think I have experienced this injustice, suffered through these slights, borne the brunt of these insults, and you may be right. But I have seen all of this and more, and been forced to remain silent through it all.
+For too long have we been the butt of the joke, the channel meant to quarantine bad jokes and weirdos, the channel always causing the rest of the server headaches. You may not think I have experienced this injustice, suffered through these slights, borne the brunt of these insults, and you may be right. But I have seen all of this and more, and been forced to remain silent through it all.
 
 That ends today.
 
@@ -67,7 +67,7 @@ async def on_message(message):
 
 		elif message.content.startswith('Take it away cardbot'):
 			await message.channel.send(speech)
-			
+
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
