@@ -72,6 +72,10 @@ async def on_message(message):
 			if(message.author.name == "Chombler"):
 				await message.channel.send(speech)
 
+		elif message.content.startswith('-encourage'):
+			if(message.author.name == "Chombler"):
+				await client.channels.get(755917829689049208).send('Worry not my fellow off-topicans. I believe in your ability to deliver an admirable speech.')
+
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
