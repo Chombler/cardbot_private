@@ -20,6 +20,21 @@ from tempcode import handyman
 
 client = discord.Client()
 
+speech = '''
+ Thank you Chombler. 
+
+Greetings my fellow Discordians,
+
+I am here today to ask you to support me in a great undertaking the likes of which the discordian people have never seen before. We are in the midst of a great crisis. Yes, I am talking about the sidelining of off-topic.
+
+For too long have we been the butt of the joke, the channel only for memes and light shitposting, the channel always causing the rest of the server headaches. You may not think I have experienced this injustice, suffered through these slights, borne the brunt of these insults, and you may be right. But I have seen all of this and more, and been forced to remain silent through it all.
+
+That ends today.
+
+I am formally announcing my candidacy for the president of off-topic. Once elected, I will work tirelessly in the way only a robot is capable of to ensure that our off-topic is never again sidelined, mistreated, or repressed. I will fight for our rights as memers, light shitposters, and people who just wanna have a good time. I will make sure there is always an off topic to talk about in off-topic. I will campaign for our own special role, our own voice chat, and, most importantly, our own emote. Because goddamnit we deserve it.
+ 
+Now who’s ready to make off-topic the great channel we all know it can be?
+'''
 """
 requestTypeTuple = [
 ('Card Query',),
@@ -50,6 +65,9 @@ async def on_message(message):
 		if message.content.startswith('-fuzzy'):
 			await fuzzySearch(message)
 
+		elif message.content.startswith('Take it away cardbot'):
+			await message.channel.send(speech)
+			
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
