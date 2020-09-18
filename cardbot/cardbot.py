@@ -29,11 +29,11 @@ I am here today to ask you to support me in a great undertaking the likes of whi
 
 For too long have we been the butt of the joke, the channel meant to quarantine bad jokes and weirdos, the channel always causing the rest of the server headaches. You may not think I have experienced this injustice, suffered through these slights, borne the brunt of these insults, and you may be right. But I have seen all of this and more, and been forced to remain silent through it all.
 
-That ends today.
+**That ends today.**
 
-I am formally announcing my candidacy for the president of off-topic. Once elected, I will work tirelessly in the way only a robot is capable of to ensure that our off-topic is never again sidelined, mistreated, or repressed. I will fight for our rights as memers, light shitposters, and people who just wanna have a good time. I will make sure there is always an off topic to talk about in off-topic. I will campaign for our own special role, our own voice chat, and, most importantly, our own emote. Because goddamnit we deserve it.
+I am now formally announcing my candidacy for the president of off-topic. Once elected, I will work tirelessly in the way only a robot is capable of to ensure that our off-topic is never again sidelined, mistreated, or repressed. I will fight for our rights as memers, light shitposters, and people who just wanna have a good time. I will make sure there is always an off topic to talk about in off-topic, always a funny image ready to be seen for the first time, always an event for people to join and compete in. I will campaign for our own special role, our own voice chat, and, most importantly, our own emote. Because goddamnit we deserve it.
  
-Now who’s ready to make off-topic the great channel we all know it can be?
+**Now who’s ready to make off-topic the glorious channel we all know it can be?**
 '''
 """
 requestTypeTuple = [
