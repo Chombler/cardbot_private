@@ -47,6 +47,7 @@ bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
 presidental_debate_hub_id = 755917829689049208
 
+presidental_debate_hub_channel = client.get_channel(755917829689049208)
 #client.channels.get(`channelID`).send(`Text`)
 
 @client.event
@@ -74,7 +75,7 @@ async def on_message(message):
 
 		elif message.content.startswith('-encourage'):
 			if(message.author.name == "Chombler"):
-				await client.channels.get(755917829689049208).send('Worry not my fellow off-topicans. I believe in your ability to deliver an admirable speech.')
+				await presidental_debate_hub_channel.send('Worry not my fellow off-topicans. I believe in your ability to deliver an admirable speech.')
 
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
