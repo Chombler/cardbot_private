@@ -47,7 +47,6 @@ bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
 presidental_debate_hub_id = 755917829689049208
 
-presidental_debate_hub_channel = client.get_channel(755917829689049208)
 #client.channels.get(`channelID`).send(`Text`)
 
 @client.event
@@ -74,6 +73,7 @@ async def on_message(message):
 				await message.channel.send(speech)
 
 		elif message.content.startswith('-encourage'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('Worry not my fellow off-topicans. I believe in your ability to deliver an admirable speech.')
 
