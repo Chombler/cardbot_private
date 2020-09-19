@@ -82,6 +82,11 @@ async def on_message(message):
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('Anytime.')
 
+		elif message.content.startswith('-weapon'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await presidental_debate_hub_channel.send('My weapon would be the sword of justice, with which I would carve a bright new future for all off-topicans.')
+
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
