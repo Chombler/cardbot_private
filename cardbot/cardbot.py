@@ -107,6 +107,11 @@ async def on_message(message):
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('Should read \"Enjoy your stay.\", but other than that it\'s a pretty good slogan.')
 
+		elif message.content.startswith('-defend'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await presidental_debate_hub_channel.send('I\'d argue that mocking a mod is a less than ideal path to take, and that the apostrophe could still be added in while remaining more grammatically correct i.e. "Enjoy your \'Stay.')
+
 		elif message.content.startswith('-future'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
