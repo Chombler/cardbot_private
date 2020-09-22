@@ -82,6 +82,16 @@ async def on_message(message):
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('Anytime.')
 
+		elif message.content.startswith('-bossman'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await presidental_debate_hub_channel.send('My fellow off-topicans, we must ask ourselves if this is what we wish to be known as?')
+
+		elif message.content.startswith('-retort'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await presidental_debate_hub_channel.send('No.')
+
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
