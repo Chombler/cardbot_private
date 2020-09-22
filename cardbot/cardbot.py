@@ -82,6 +82,11 @@ async def on_message(message):
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('Anytime.')
 
+		elif message.content.startswith('-np2'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await presidental_debate_hub_channel.send('Of course.')
+
 		elif message.content.startswith('-bossman'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
@@ -96,6 +101,11 @@ async def on_message(message):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('My weapon would be the sword of justice, with which I would carve a bright new future for all off-topicans.')
+
+		elif message.content.startswith('-fix'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await presidental_debate_hub_channel.send('Should read \"Enjoy your stay.\", but other than that it\'s a pretty good slogan.')
 
 		elif message.content.startswith('-future'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
