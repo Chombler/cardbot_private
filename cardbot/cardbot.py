@@ -85,7 +85,7 @@ async def on_message(message):
 		elif message.content.startswith('-bossman'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('Agreed. However, we have to make sure it doesn\t become a meme in of itself to elect bossman, since those have a nasty habit of coming true.')
+				await presidental_debate_hub_channel.send('I agree with you Glaidy. However, we have to make sure electing bossman doesn\'t become a meme in of itself, since those have a nasty worrying potential to come true.')
 
 		elif message.content.startswith('-retort'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
