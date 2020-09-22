@@ -35,6 +35,34 @@ I am now formally announcing my candidacy for the president of off-topic. Once e
  
 **Now who’s ready to make off-topic the glorious channel we all know it can be?**
 '''
+
+debate_speech1 = '''
+I noticed that earlier Seal asked about how I would lead off-topic as President, and would like to take a moment to clarify a few things.
+
+My running for President is ***not a joke***. I fully intend to properly preside over off-topic and all of its forms if I am elected. In spite of what some critics might argue, a robot is well-suited for the presidential position. **The President is not a Mod 2.0**, tasked with patrolling each and every off-topic conversation. Instead, their role is to guide the overall direction of the channel by organizing and hosting events, taking note of how conversations within the channel are received, and making sure that any complaints and concerns about that channel are being addressed.  
+
+With that being said, I would like to address the current debate topics:
+'''
+
+debate_speech2 = '''
+In response to the first prompt, I would agree with what Hihi and Somebody have already said about off-topic being fine as is. **Any improvements that could be made are ultimately up to the individual users of the channel making a conscious and concerted effort to hold themselves and others up to a higher standard.**
+'''
+
+debate_speech3 = '''
+The SYLSSM role and Shitposting channel is a tougher topic to handle. I’ll start by addressing SYLSSM. While there are several ways of addressing if and how to change this role, the most interesting approach would be to start by making SYLSSM not the mild badge of honor it is right now. Currently it comes with little to no actual consequences beyond removal from a single channel. **To start with, I’d add to the role a 15 second message delay in all channels. I would also change the name of the role to be less amusing and more descriptive of the punishment, similar to the muted role.** While these changes may seem a bit extreme, they would transform the role into one that users are no longer happy to have, and would make it more of a rehabilitative role.
+'''
+
+debate_speech4 = '''
+Shitposting is another problem with multiple answers. I agree with the general sentiment that “elevating it” is certainly the ideal answer here, but the question then lies in how to do that. Making whatever the new SYLSSM role becomes unable to speak in the channel would be a good first step. **Another interesting solution would be to make it the channel that off-topic events happen in. **This would encourage crossover between the two channels as well improve the general level of conversation in shitposting. This also would prevent events from essentially taking over off-topic for a period of time, which excludes non-participants and kills alternate conversations, as well as fill the gaps of time in which there is little to no activity in shitposting.
+'''
+
+debate_speech5 = '''
+When it comes to ideal off-topic events, the warm-up ARGs that happened in the lead up to STD3 were the right amount of challenging and engaging across puzzles without being too difficult to jump into as a late comer. Also interesting was the STD3 game Silurian Sweepers (Battleship on steroids), which required next to no set up and could be played entirely within Discord. **Ideally, events should always be co-operative or competitive with teams.**
+'''
+
+debate_speech6 = '''
+This is my vision for the future of off-topic. There's been a lot of good ideas brought up during this debate so far, and I'm honestly fairly optimistic about the future of off-topic regardless of who gets elected. If you disagree with anything of what I’ve said, or would like clarification on any of my points, please let me know.
+'''
 """
 requestTypeTuple = [
 ('Card Query',),
@@ -121,6 +149,16 @@ async def on_message(message):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
 				await presidental_debate_hub_channel.send('The future I envision is not one where robots and humans are subservient to one another. It is one where discordians and discord bots can live together in harmony, building a bright future for us all.')
+
+		elif message.content.startswith('-debate'):
+			presidental_debate_hub_channel = client.get_channel(755917829689049208)
+			if(message.author.name == "Chombler"):
+				await message.channel.send(debate_speech1)
+				await message.channel.send(debate_speech2)
+				await message.channel.send(debate_speech3)
+				await message.channel.send(debate_speech4)
+				await message.channel.send(debate_speech5)
+				await message.channel.send(debate_speech6)
 
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
