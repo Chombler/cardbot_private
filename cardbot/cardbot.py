@@ -85,7 +85,7 @@ async def on_message(message):
 		elif message.content.startswith('-bossman'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('My fellow off-topicans, we must ask ourselves if this is what we wish to be known as?')
+				await presidental_debate_hub_channel.send('Agreed.')
 
 		elif message.content.startswith('-retort'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
