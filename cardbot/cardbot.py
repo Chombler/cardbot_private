@@ -153,12 +153,12 @@ async def on_message(message):
 		elif message.content.startswith('-debate'):
 			presidental_debate_hub_channel = client.get_channel(755917829689049208)
 			if(message.author.name == "Chombler"):
-				await message.channel.send(debate_speech1)
-				await message.channel.send(debate_speech2)
-				await message.channel.send(debate_speech3)
-				await message.channel.send(debate_speech4)
-				await message.channel.send(debate_speech5)
-				await message.channel.send(debate_speech6)
+				await presidental_debate_hub_channel.send(debate_speech1)
+				await presidental_debate_hub_channel.send(debate_speech2)
+				await presidental_debate_hub_channel.send(debate_speech3)
+				await presidental_debate_hub_channel.send(debate_speech4)
+				await presidental_debate_hub_channel.send(debate_speech5)
+				await presidental_debate_hub_channel.send(debate_speech6)
 
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
