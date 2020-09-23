@@ -13,7 +13,9 @@ import psycopg2
 import math
 
 
-from dbinjections import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, createTournament, getBestHeroMatchId, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister
+from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord
+from db_interactions_tournaments import createTournament, getBestHeroMatchId, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister
+
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
 from tempcode import handyman

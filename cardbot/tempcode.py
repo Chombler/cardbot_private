@@ -1,22 +1,27 @@
 
-from tables.tournament import timezone, participant
+from tables.tournament import timezone, participant, tournament, participant_to_tournament
 from constructorRows import timezone_rows
 
 def handyman(complete_call):
 	if(complete_call):
 		participant.dropTable()
-		
-	timezone.dropTable()
-	timezone.createTable()
-	timezone.addManyToTable(timezone_rows)
 
-	participant.createTable()
+	participant_to_tournament.dropTable()
+	participant_to_tournament.createTable()
+	tournament.dropTable()
+	tournament.createTable()
 
 	return("Handyman is finished")
 
 
 
 """import re as regex
+	timezone.dropTable()
+	timezone.createTable()
+	timezone.addManyToTable(timezone_rows)
+
+	participant.createTable()
+
 
 
 tempString = 'Strikethrough\nPlant Evolution: This gets +3:Strength:.'
