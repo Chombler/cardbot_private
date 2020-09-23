@@ -14,7 +14,7 @@ import math
 
 
 from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
-from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister
+from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
@@ -132,6 +132,7 @@ async def on_message(message):
 					tournament_exists = tournament_info[0]
 					tournament_id = tournament_info[1]
 					number_of_hero_bans = tournament_info[2]
+					participant_id = isRegistered(message.author.name[1])
 
 					if(tournament_exists and number_of_hero_bans > 0):
 						hero_sum = 0
@@ -141,11 +142,15 @@ async def on_message(message):
 							hero_sum += 1 + math.floor(getBestHeroMatchId(heroid) / 12)
 						print(hero_sum)
 						if(hero_sum == number_of_hero_bans * 3):
-							joinTournament()
+							joinTournament(participant_id, tournament_id)
+							await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
 						else:
 							print("Uh oh. You got the hero bans wrong!")
+
 					elif(tournament_exists):
 						print("That tournament exists!")
+						joinTournament(participant_id, tournament_id)
+						await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
 
 					else:
 						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
