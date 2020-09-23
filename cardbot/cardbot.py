@@ -113,7 +113,7 @@ async def on_message(message):
 				await message.channel.send("Your registration command is missing [] brackets to indicate timezone.")
 
 		elif message.content.startswith('-deregister'):
-			if isRegistered(message.author.name):
+			if isRegistered(message.author.name)[0]:
 				deRegister(message.author.name)
 				await message.channel.send("You have been deregistered.")
 			else:
@@ -122,7 +122,7 @@ async def on_message(message):
 		#Ideal Input Structure:
 		#-join (Tournament Name) [Hero bans]
 		elif message.content.startswith('-join'):
-			if isRegistered(message.author.name):	
+			if isRegistered(message.author.name)[0]:	
 				if '(' and ')' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 
@@ -130,7 +130,7 @@ async def on_message(message):
 
 					tournament_info = verifyTournament(tournament_name)
 					tournament_exists = tournament_info[0]
-					official_name = tournament_info[1]
+					tournament_id = tournament_info[1]
 					number_of_hero_bans = tournament_info[2]
 
 					if(tournament_exists and number_of_hero_bans > 0):
@@ -141,7 +141,7 @@ async def on_message(message):
 							hero_sum += 1 + math.floor(getBestHeroMatchId(heroid) / 12)
 						print(hero_sum)
 						if(hero_sum == number_of_hero_bans * 3):
-							print("You got the hero bans right!")
+							joinTournament()
 						else:
 							print("Uh oh. You got the hero bans wrong!")
 					elif(tournament_exists):
@@ -150,7 +150,7 @@ async def on_message(message):
 					else:
 						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
 				else:
-					await message.channel.send("Your join command is missing a () or \{\}.")
+					await message.channel.send("Your join command is missing () brackets.")
 			else:
 				await message.channel.send("Please register with the bot using the command \"-register [Timezone Abbreviation]\" before joining a tournament.")
 

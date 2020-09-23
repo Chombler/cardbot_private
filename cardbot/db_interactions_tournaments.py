@@ -53,7 +53,7 @@ def registerParticipant(discordName, timezoneid):
 			return("%s, you registered in the timezone %s, which has a UTC offset of %s" % (registration_info[0], timezone_info[0], timezone_info[1]))
 
 def isRegistered(discordName):
-	name_is_registered = False
+	is_registered_and_id = []
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -61,7 +61,7 @@ def isRegistered(discordName):
 		cursor = connection.cursor()
 
 		postgres_select_query = '''
-		SELECT discord_username FROM participant
+		SELECT id FROM participant
 		WHERE discord_username = %s
 		'''
 
@@ -70,13 +70,13 @@ def isRegistered(discordName):
 		results = cursor.fetchall()
 
 		if(len(results) > 0):
-			name_is_registered = True
+			is_registered_and_id = [True, results[0][0]]
 			print("Participant is already registered in \"participant\"")
 		else:
 			print("Participant is not registered in \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		name_is_registered = False
+		is_registered_and_id = [False, results[0][0]]
 		print ("Error logging request in request,", error)
 	finally:
 		#closing database connection
@@ -84,7 +84,7 @@ def isRegistered(discordName):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-			return(name_is_registered)
+			return(is_registered_and_id)
 
 def deRegister(discordName):
 	try:
@@ -174,7 +174,7 @@ def createTournament(tournament_name, number_of_bans, creator_name):
 
 def verifyTournament(tournament_name):
 	success = True
-	name_and_bans = []
+	id_and_bans = []
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -182,7 +182,7 @@ def verifyTournament(tournament_name):
 		cursor = connection.cursor()
 
 		select_table_query = '''
-		SELECT name, number_of_bans
+		SELECT id, number_of_bans
 		FROM tournament
 		WHERE SIMILARITY(LOWER(name), LOWER(%s)) > 0.5
 		LIMIT 1'''
@@ -193,23 +193,23 @@ def verifyTournament(tournament_name):
 		print(results)
 
 		if(len(results) > 0):
-			name_and_bans = [results[0][0], results[0][1]]
+			id_and_bans = [results[0][0], results[0][1]]
+			print("A tournament with id %s exists" % (id_and_bans[0]))
 		else:
 			success = False
 
-		print("Tournament '%s' exists" % (name_and_bans[0]))
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
 		print ("Error logging request in verifyTournament,", error)
 	finally:
 		#closing database connection
-		name_and_bans.insert(0, success)
+		id_and_bans.insert(0, success)
 		if(connection):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-			return(name_and_bans)
+			return(id_and_bans)
 
 def joinTournament(participant_id, tournament_id):
 	try:
@@ -226,7 +226,7 @@ def joinTournament(participant_id, tournament_id):
 		cursor.execute(postgres_insert_query, (participant_id, tournament_id))
 		connection.commit()
 
-		print("Participant removed from \"participant\"")
+		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error logging request in request,", error)
