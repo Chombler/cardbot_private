@@ -150,10 +150,8 @@ async def on_message(message):
 		#-tournament-create (Tournament Name) [# of Hero bans per side]
 		elif message.content.startswith('-tournament-create'):
 			if "pvzhu dev" in [role.name.lower() for role in message.author.roles] or "pokemod" in [role.name.lower() for role in message.author.roles]:
-				try:
-					await message.channel.send(message.author.nickname + ", please hold. We are attempting to make a new tournament just the way you like it.")
-				except:
-					await message.channel.send(message.author.name + ", please hold. We are attempting to make a new tournament just the way you like it.")
+				await message.channel.send(message_author + ", please hold. We are attempting to make a new tournament just the way you like it.")
+				
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)[0]
