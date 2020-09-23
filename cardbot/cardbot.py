@@ -120,7 +120,7 @@ async def on_message(message):
 				await message.channel.send("You are not currently registered.")
 		
 		#Ideal Input Structure:
-		#-join (Tournament Name) {Hero bans}
+		#-join (Tournament Name) [Hero bans]
 		elif message.content.startswith('-join'):
 			if isRegistered(message.author.name):	
 				if '(' and ')' in message.content:
@@ -135,7 +135,7 @@ async def on_message(message):
 
 					if(tournament_exists and number_of_hero_bans > 0):
 						hero_sum = 0
-						hero_bans = regex.findall('\{(.+?)\}', message.content)
+						hero_bans = regex.findall('\[(.+?)\]', message.content)
 						print(hero_bans)
 						for heroid in hero_bans:
 							hero_sum += 1 + math.floor(12 / getBestHeroMatchId(heroid))
