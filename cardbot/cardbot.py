@@ -75,7 +75,7 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		
+
 		message_author = ""
 		try:
 			message_author = message.author.nickname
@@ -85,7 +85,8 @@ async def on_message(message):
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
 			return
-		#This is for registering your username, IGN, and Timezone into cardbot
+
+		#This is for registering your username and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
 		elif message.content.startswith('-register'):
@@ -121,35 +122,41 @@ async def on_message(message):
 		#Ideal Input Structure:
 		#-join (Tournament Name) {Hero bans}
 		elif message.content.startswith('-join'):
-			if '(' and ')' in message.content:
-				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+			if isRegistered(message.author.name):	
+				if '(' and ')' in message.content:
+					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 
-				print('Tournament Name: %s' %( tournament_name))
+					print('Tournament Name: %s' % (tournament_name))
 
-				tournament_info = verifyTournament(tournament_name)
-				is_verified = 0
-				official_name = 1
-				number_of_hero_bans = 2
+					tournament_info = verifyTournament(tournament_name)
+					tournament_exists = tournament_info[0]
+					official_name = tournament_info[1]
+					number_of_hero_bans = tournament_info[2]
 
-				if(tournament_info[is_verified]):
-					hero_sum = 0
-					for heroid in hero_bans:
-						hero_sum += math.floor(12 / getBestHeroMatchId(heroid))
-					print(hero_sum)
-					if(hero_sum == tournament_info[number_of_hero_bans]):
-						print("You got the hero bans right!")
+					if(tournament_exists and number_of_hero_bans > 0):
+						hero_sum = 0
+						hero_bans = regex.findall('\{(.+?)\}', message.content)
+						for heroid in hero_bans:
+							hero_sum += math.floor(1 + 12 / getBestHeroMatchId(heroid))
+						print(hero_sum)
+						if(hero_sum == number_of_hero_bans * 3):
+							print("You got the hero bans right!")
+						else:
+							print("Uh oh. You got the hero bans wrong!")
+					elif(tournament_exists):
+						print("That tournament exists!")
+
 					else:
-						print("Uh oh. You got the hero bans wrong!")
+						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
 				else:
-					await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
+					await message.channel.send("Your join command is missing a () or \{\}.")
 			else:
-				await message.channel.send("Your join command is missing a () or \{\}.")
+				await message.channel.send("Please register with the bot using the command \"-register [Timezone Abbreviation]\" before joining a tournament.")
 
 		#Ideal Input Structure:
 		#-tournament-create (Tournament Name) [# of Hero bans per side]
 		elif message.content.startswith('-tournament-create'):
 			if "pvzhu dev" in [role.name.lower() for role in message.author.roles] or "pokemod" in [role.name.lower() for role in message.author.roles]:
-				await message.channel.send(message_author + ", please hold. We are attempting to make a new tournament just the way you like it.")
 
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
@@ -157,12 +164,12 @@ async def on_message(message):
 					successful_creation = createTournament(tournament_name, number_of_hero_bans, message.author.name)
 
 					if(successful_creation):
-						await message.channel.send("%s you created a new tournament called %s with %s Hero bans per side." % (message_author, tournament_name, number_of_hero_bans))
+						await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side." % (message_author, tournament_name, number_of_hero_bans))
 					else:
 						await message.channel.send(message_author + ", something went wrong when creating the tournament. Please make sure to follow the format:\
 								\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 				else:
-					await message.channel.send(message_author + ", you are missing a name and/or hero bans. Please make sure to follow the format:\
+					await message.channel.send(message_author + ", you are missing a tournament name and/or hero bans. Please make sure to follow the format:\
 							\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 			else:
 				print(message.author.roles)
