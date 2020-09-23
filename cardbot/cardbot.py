@@ -164,15 +164,13 @@ async def on_message(message):
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
 		elif message.content.startswith('-register'):
-			if '(' and ')' and '[' and ']' in message.content:
-				ign = regex.findall('\((.+?)\)', message.content)[0]
+			if '[' and ']' in message.content:
 				timezone = regex.findall('\[(.+?)\]', message.content)[0]
 
 				if(isRegistered(message.author.name)):
 					await message.channel.send("You are already registered.")
 					return
 
-				print('IGN: %s' % (ign))
 				print('Timezone: %s' % (timezone))
 
 				timezoneId = getTimezoneId(timezone)
@@ -180,14 +178,14 @@ async def on_message(message):
 				print('Timezone Id: %s' % (timezoneId))
 
 				if(timezoneId > 0):
-					confirmation_response = registerParticipant(message.author.name, ign, timezoneId)
+					confirmation_response = registerParticipant(message.author.name, timezoneId)
 					await message.channel.send(confirmation_response)
 				else:
 					await message.channel.send("The timezone you provided wasn't recognized. Please try again.")
 
 			else:
-				await message.channel.send("Your registration command is missing a () or [].")
-		
+				await message.channel.send("Your registration command is missing [] brackets to indicate timezone.")
+
 		elif message.content.startswith('-deregister'):
 			if isRegistered(message.author.name):
 				deRegister(message.author.name)
