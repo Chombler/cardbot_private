@@ -81,7 +81,7 @@ def verifyTournament(tournament_name):
 			return(name_and_bans)
 
 
-def registerParticipant(discordName, inGameName, timezoneid):
+def registerParticipant(discordName, timezoneid):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -89,16 +89,16 @@ def registerParticipant(discordName, inGameName, timezoneid):
 		cursor = connection.cursor()
 
 		postgres_insert_query = '''
-		INSERT INTO participant(discord_username, in_game_username, timezone_id)
+		INSERT INTO participant(discord_username, timezone_id)
 		VALUES (%s,%s,%s)
 		'''
 
-		cursor.execute(postgres_insert_query, (discordName, inGameName, timezoneid))
+		cursor.execute(postgres_insert_query, (discordName, timezoneid))
 		connection.commit()
 		print("Participant logged in \"participant\"")
 
 		postgres_select_query = '''
-		SELECT discord_username, in_game_username, timezone_id
+		SELECT discord_username, timezone_id
 		FROM participant
 		WHERE discord_username = %s
 		'''
@@ -114,7 +114,7 @@ def registerParticipant(discordName, inGameName, timezoneid):
 		WHERE id = %s
 		'''
 
-		cursor.execute(postgres_select_query, (registration_info[2],))
+		cursor.execute(postgres_select_query, (registration_info[1],))
 
 		timezone_info = cursor.fetchall()[0]
 
@@ -126,7 +126,7 @@ def registerParticipant(discordName, inGameName, timezoneid):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-			return("%s, you registered as %s in the timezone %s, which has a UTC offset of %s" % (registration_info[0], registration_info[1], timezone_info[0], timezone_info[1]))
+			return("%s, you registered in the timezone %s, which has a UTC offset of %s" % (registration_info[0], timezone_info[0], timezone_info[1]))
 
 def isRegistered(discordName):
 	name_is_registered = False
