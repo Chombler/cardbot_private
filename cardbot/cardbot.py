@@ -22,49 +22,6 @@ from tempcode import handyman
 
 client = discord.Client()
 
-speech = '''
- Thank you Chombler. 
-
-Greetings my fellow Discordians,
-
-I am here today to ask you to support me in a great undertaking the likes of which the discordian people have never seen before. We are in the midst of a great crisis. Yes, I am talking about the sidelining of off-topic.
-
-For too long have we been the butt of the joke, the channel meant to quarantine bad jokes and weirdos, the channel always causing the rest of the server headaches. You may not think I have experienced this injustice, suffered through these slights, borne the brunt of these insults, and you may be right. But I have seen all of this and more, and been forced to remain silent through it all.
-
-**That ends today.**
-
-I am now formally announcing my candidacy for the president of off-topic. Once elected, I will work tirelessly in the way only a robot is capable of to ensure that our off-topic is never again sidelined, mistreated, or repressed. I will fight for our rights as memers, light shitposters, and people who just wanna have a good time. I will make sure there is always an off topic to talk about in off-topic, always a funny image ready to be seen for the first time, always an event for people to join and compete in. I will campaign for our own special role, our own voice chat, and, most importantly, our own emote. Because goddamnit we deserve it.
- 
-**Now who’s ready to make off-topic the glorious channel we all know it can be?**
-'''
-
-debate_speech1 = '''
-I noticed that earlier Seal asked about how I would lead off-topic as President, and would like to take a moment to clarify a few things.
-
-My running for President is ***not a joke***. I fully intend to properly preside over off-topic and all of its forms if I am elected. In spite of what some critics might argue, a robot is well-suited for the presidential position. **The President is not a Mod 2.0**, tasked with patrolling each and every off-topic conversation. Instead, their role is to guide the overall direction of the channel by organizing and hosting events, taking note of how conversations within the channel are received, and making sure that any complaints and concerns about that channel are being addressed.  
-
-With that being said, I would like to address the current debate topics:
-'''
-
-debate_speech2 = '''
-In response to the first prompt, I would agree with what Hihi and Somebody have already said about off-topic being fine as is. **Any improvements that could be made are ultimately up to the individual users of the channel making a conscious and concerted effort to hold themselves and others up to a higher standard.**
-'''
-
-debate_speech3 = '''
-The SYLSSM role and Shitposting channel is a tougher topic to handle. I’ll start by addressing SYLSSM. While there are several ways of addressing if and how to change this role, the most interesting approach would be to start by making SYLSSM not the mild badge of honor it is right now. Currently it comes with little to no actual consequences beyond removal from a single channel. **To start with, I’d add to the role a 15 second message delay in all channels. I would also change the name of the role to be less amusing and more descriptive of the punishment, similar to the muted role.** While these changes may seem a bit extreme, they would transform the role into one that users are no longer happy to have, and would make it more of a rehabilitative role.
-'''
-
-debate_speech4 = '''
-Shitposting is another problem with multiple answers. I agree with the general sentiment that “elevating it” is certainly the ideal answer here, but the question then lies in how to do that. Making whatever the new SYLSSM role becomes unable to speak in the channel would be a good first step. **Another interesting solution would be to make it the channel that off-topic events happen in. **This would encourage crossover between the two channels as well improve the general level of conversation in shitposting. This also would prevent events from essentially taking over off-topic for a period of time, which excludes non-participants and kills alternate conversations, as well as fill the gaps of time in which there is little to no activity in shitposting.
-'''
-
-debate_speech5 = '''
-When it comes to ideal off-topic events, the warm-up ARGs that happened in the lead up to STD3 were the right amount of challenging and engaging across puzzles without being too difficult to jump into as a late comer. Also interesting was the STD3 game Silurian Sweepers (Battleship on steroids), which required next to no set up and could be played entirely within Discord. **Ideally, events should always be co-operative or competitive with teams.**
-'''
-
-debate_speech6 = '''
-This is my vision for the future of off-topic. There's been a lot of good ideas brought up during this debate so far, and I'm honestly fairly optimistic about the future of off-topic regardless of who gets elected. If you disagree with anything of what I’ve said, or would like clarification on any of my points, please let me know.
-'''
 """
 requestTypeTuple = [
 ('Card Query',),
@@ -90,77 +47,16 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
 			return
 
-		if message.content.startswith('-fuzzy'):
-			await fuzzySearch(message)
-
-		elif message.content.startswith('Take it away cardbot'):
-			if(message.author.name == "Chombler"):
-				await message.channel.send(speech)
-
-		elif message.content.startswith('-encourage'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('Worry not my fellow off-topicans. I believe in your ability to deliver an admirable speech.')
-
-		elif message.content.startswith('-np'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('Anytime.')
-
-		elif message.content.startswith('-np2'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('Of course.')
-
-		elif message.content.startswith('-bossman'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('I agree with you Glaidy. However, we have to make sure electing bossman doesn\'t become a meme in of itself, since those have a nasty worrying potential to come true.')
-
-		elif message.content.startswith('-retort'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('I wouldn\'t drink it.')
-
-		elif message.content.startswith('-weapon'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('My weapon would be the sword of justice, with which I would carve a bright new future for all off-topicans.')
-
-		elif message.content.startswith('-fix'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('Should read \"Enjoy your stay.\", but other than that it\'s a pretty good slogan.')
-
-		elif message.content.startswith('-defend'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('I\'d argue that mocking a mod is a less than ideal path to take, and that the apostrophe could still be added in while remaining more grammatically correct i.e. "Enjoy your \'Stay.')
-
-		elif message.content.startswith('-apo'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('\'')
-
-		elif message.content.startswith('-future'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send('The future I envision is not one where robots and humans are subservient to one another. It is one where discordians and discord bots can live together in harmony, building a bright future for us all.')
-
-		elif message.content.startswith('-debate'):
-			presidental_debate_hub_channel = client.get_channel(755917829689049208)
-			if(message.author.name == "Chombler"):
-				await presidental_debate_hub_channel.send(debate_speech1)
-				await presidental_debate_hub_channel.send(debate_speech2)
-				await presidental_debate_hub_channel.send(debate_speech3)
-				await presidental_debate_hub_channel.send(debate_speech4)
-				await presidental_debate_hub_channel.send(debate_speech5)
-				await presidental_debate_hub_channel.send(debate_speech6)
+		message_author = ""
+		
+		try:
+			message_author = message.author.nickname
+		except:
+			message_author = message.author.name
 
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
@@ -198,12 +94,10 @@ async def on_message(message):
 		#Ideal Input Structure:
 		#-join (Tournament Name) {Hero bans}
 		elif message.content.startswith('-join'):
-			if '(' and ')' and '{' and '}' in message.content:
+			if '(' and ')' in message.content:
 				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-				hero_bans = regex.findall('\{(.+?)\}', message.content)[0].split()
 
 				print('Tournament Name: %s' %( tournament_name))
-				print('Hero Bans: %s' % (hero_bans))
 
 				tournament_info = verifyTournament(tournament_name)
 				is_verified = 0
@@ -227,7 +121,7 @@ async def on_message(message):
 		#Ideal Input Structure:
 		#-tournament-create (Tournament Name) [# of Hero bans per side]
 		elif message.content.startswith('-tournament-create'):
-			if "pvzhu dev" in [role.name.lower() for role in message.author.roles]:
+			if "pvzhu dev" in [role.name.lower() for role in message.author.roles] or "pokemod" in [role.name.lower() for role in message.author.roles]:
 				try:
 					await message.channel.send(message.author.nickname + ", please hold. We are attempting to make a new tournament just the way you like it.")
 				except:
@@ -238,23 +132,12 @@ async def on_message(message):
 					successful_creation = createTournament(tournament_name, number_of_hero_bans, message.author.name)
 
 					if(successful_creation):
-						try:
-							await message.channel.send("%s you created a new tournament called %s with %s Hero bans per side." % (message.author.nickname, tournament_name, number_of_hero_bans))
-						except:
-							await message.channel.send("%s you created a new tournament called %s with %s Hero bans per side." % (message.author.name, tournament_name, number_of_hero_bans))
+						await message.channel.send("%s you created a new tournament called %s with %s Hero bans per side." % (message_author, tournament_name, number_of_hero_bans))
 					else:
-						try:
-							await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please make sure to follow the format:\
-								\n-tournament-create (Tournament Name) [# of Hero bans per side]")
-						except:
-							await message.channel.send(message.author.name + ", something went wrong when creating the tournament. Please make sure to follow the format:\
+						await message.channel.send(message_author + ", something went wrong when creating the tournament. Please make sure to follow the format:\
 								\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 				else:
-					try:
-						await message.channel.send(message.author.nickname + ", something went wrong when creating the tournament. Please make sure to follow the format:\
-							\n-tournament-create (Tournament Name) [# of Hero bans per side]")
-					except:
-						await message.channel.send(message.author.name + ", you are missing a name and/or hero bans. Please make sure to follow the format:\
+					await message.channel.send(message_author + ", you are missing a name and/or hero bans. Please make sure to follow the format:\
 							\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 			else:
 				print(message.author.roles)
