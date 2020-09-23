@@ -75,10 +75,6 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		database_was_regenerated = await checkForRegeneration(message)
-		if(database_was_regenerated):
-			return
-
 		message_author = ""
 		
 		try:
@@ -86,6 +82,10 @@ async def on_message(message):
 		except:
 			message_author = message.author.name
 
+
+		database_was_regenerated = await checkForRegeneration(message)
+		if(database_was_regenerated):
+			return
 		#This is for registering your username, IGN, and Timezone into cardbot
 		#Ideal Input Structure:
 		#-register (ign) [timezone abbreviation]
@@ -151,7 +151,7 @@ async def on_message(message):
 		elif message.content.startswith('-tournament-create'):
 			if "pvzhu dev" in [role.name.lower() for role in message.author.roles] or "pokemod" in [role.name.lower() for role in message.author.roles]:
 				await message.channel.send(message_author + ", please hold. We are attempting to make a new tournament just the way you like it.")
-				
+
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)[0]
