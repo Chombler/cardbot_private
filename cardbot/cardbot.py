@@ -75,13 +75,12 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-		message_author = ""
 		
+		message_author = ""
 		try:
 			message_author = message.author.nickname
 		except:
 			message_author = message.author.name
-
 
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
