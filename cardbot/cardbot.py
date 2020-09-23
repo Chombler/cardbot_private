@@ -137,7 +137,7 @@ async def on_message(message):
 						hero_sum = 0
 						hero_bans = regex.findall('\{(.+?)\}', message.content)
 						for heroid in hero_bans:
-							hero_sum += math.floor(1 + 12 / getBestHeroMatchId(heroid))
+							hero_sum += 1 + math.floor(12 / getBestHeroMatchId(heroid))
 						print(hero_sum)
 						if(hero_sum == number_of_hero_bans * 3):
 							print("You got the hero bans right!")
