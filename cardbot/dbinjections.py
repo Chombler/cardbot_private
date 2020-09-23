@@ -90,7 +90,7 @@ def registerParticipant(discordName, timezoneid):
 
 		postgres_insert_query = '''
 		INSERT INTO participant(discord_username, timezone_id)
-		VALUES (%s,%s,%s)
+		VALUES (%s,%s)
 		'''
 
 		cursor.execute(postgres_insert_query, (discordName, timezoneid))
