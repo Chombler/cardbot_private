@@ -135,10 +135,10 @@ async def on_message(message):
 
 					if(tournament_exists and number_of_hero_bans > 0):
 						hero_sum = 0
-						hero_bans = regex.findall('\[(.+?)\]', message.content)
+						hero_bans = regex.findall('\[(.+?)\]', message.content).split()
 						print(hero_bans)
 						for heroid in hero_bans:
-							hero_sum += 1 + math.floor(12 / getBestHeroMatchId(heroid)).split()
+							hero_sum += 1 + math.floor(12 / getBestHeroMatchId(heroid))
 						print(hero_sum)
 						if(hero_sum == number_of_hero_bans * 3):
 							print("You got the hero bans right!")
