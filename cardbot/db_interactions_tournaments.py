@@ -265,10 +265,10 @@ def joinTournament(participant_id, tournament_id):
 		postgres_select_query = '''
 		SELECT id
 		FROM participant_to_tournament
-		WHERE participant_id = %s
+		WHERE participantid = %s
 		'''
 
-		cursor.execute(postgres_select_query, (participant_id, tournament_id))
+		cursor.execute(postgres_select_query, (participant_id,))
 
 		returnid = cursor.fetchall()[0][0]
 
