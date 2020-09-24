@@ -172,13 +172,12 @@ async def on_message(message):
 						if(requires_bans):
 							for heroid in hero_ids:
 								joinBan(part_to_tourney_id, heroid)
+						if(requires_ign):
+							joinIGN(part_to_tourney_id, ign)
 						await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
 
 					else:
 						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
-						return
-
-
 				else:
 					await message.channel.send("Your join command is missing () brackets.")
 			else:
