@@ -144,7 +144,7 @@ def getTimezoneId(timezone_abbreviation):
 			print("PostgreSQL connection is closed")
 			return(return_timezone_id)
 
-def createTournament(tournament_name, number_of_bans, creator_name):
+def createTournament(tournament_name, number_of_bans, require_ign, creator_name):
 	success = True
 	try:
 		print("Trying")
@@ -153,11 +153,11 @@ def createTournament(tournament_name, number_of_bans, creator_name):
 		cursor = connection.cursor()
 
 		postgres_insert_query = '''
-		INSERT INTO tournament(name, number_of_bans, creator)
+		INSERT INTO tournament(name, number_of_bans, require_ign, creator)
 		VALUES (%s,%s,%s)
 		'''
 
-		cursor.execute(postgres_insert_query, (tournament_name, number_of_bans, creator_name))
+		cursor.execute(postgres_insert_query, (tournament_name, number_of_bans, require_ign, creator_name))
 		connection.commit()
 		print("Tournament '%s' created" % (tournament_name))
 
