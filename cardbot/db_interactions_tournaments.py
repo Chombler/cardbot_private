@@ -241,12 +241,10 @@ def hasJoined(participant_id, tournament_id):
 		print ("Error logging request in verifyTournament,", error)
 	finally:
 		#closing database connection
-		id_and_bans.insert(0, already_joined)
 		if(connection):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-			return(id_and_bans)
 
 def joinTournament(participant_id, tournament_id):
 	returnid = 0
