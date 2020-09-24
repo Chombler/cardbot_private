@@ -211,6 +211,44 @@ def verifyTournament(tournament_name):
 			print("PostgreSQL connection is closed")
 			return(id_and_bans)
 
+def hasJoined(participant_id, tournament_id):
+	already_joined = True
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_table_query = '''
+		SELECT id
+		FROM participant_to_tournament
+		WHERE participant_id = %s
+		AND tournament_id = %s
+		'''
+
+		cursor.execute(select_table_query, (participant_id, tournament_id))
+		results = cursor.fetchall()
+
+		print(results)
+
+		if(len(results) > 0):
+			print("Participant is already in the tournament")
+		else:
+			already_joined = False
+
+
+	except (Exception, psycopg2.Error) as error :
+		already_joined = False
+		print ("Error logging request in verifyTournament,", error)
+	finally:
+		#closing database connection
+		id_and_bans.insert(0, already_joined)
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(id_and_bans)
+
 def joinTournament(participant_id, tournament_id):
 	try:
 		print("Trying")

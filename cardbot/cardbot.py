@@ -126,15 +126,25 @@ async def on_message(message):
 				if '(' and ')' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 
+					participant_id = isRegistered(message.author.name)[1]
+
 					print('Tournament Name: %s' % (tournament_name))
 
 					tournament_info = verifyTournament(tournament_name)
 					tournament_exists = tournament_info[0]
 					tournament_id = tournament_info[1]
 					number_of_hero_bans = tournament_info[2]
-					participant_id = isRegistered(message.author.name[1])
 
-					if(tournament_exists and number_of_hero_bans > 0):
+					if(tournament_exists):
+						print("That tournament exists!")
+						joinTournament(participant_id, tournament_id)
+						await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
+
+					else:
+						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
+						return
+
+					if(number_of_hero_bans > 0):
 						hero_sum = 0
 						hero_bans = regex.findall('\[(.+?)\]', message.content)[0].split()
 						print(hero_bans)
@@ -147,13 +157,6 @@ async def on_message(message):
 						else:
 							print("Uh oh. You got the hero bans wrong!")
 
-					elif(tournament_exists):
-						print("That tournament exists!")
-						joinTournament(participant_id, tournament_id)
-						await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
-
-					else:
-						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
 				else:
 					await message.channel.send("Your join command is missing () brackets.")
 			else:
@@ -167,10 +170,15 @@ async def on_message(message):
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)[0]
-					successful_creation = createTournament(tournament_name, number_of_hero_bans, message.author.name)
+					require_ign = True if '<require>' in message.content else False
+
+					successful_creation = createTournament(tournament_name, number_of_hero_bans, require_ign, message.author.name)
 
 					if(successful_creation):
-						await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side." % (message_author, tournament_name, number_of_hero_bans))
+						if(require_ign):
+							await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side that requires an ign." % (message_author, tournament_name, number_of_hero_bans))
+						else:
+							await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side that does not require an ign." % (message_author, tournament_name, number_of_hero_bans))
 					else:
 						await message.channel.send(message_author + ", something went wrong when creating the tournament. Please make sure to follow the format:\
 								\n-tournament-create (Tournament Name) [# of Hero bans per side]")
@@ -179,7 +187,7 @@ async def on_message(message):
 							\n-tournament-create (Tournament Name) [# of Hero bans per side]")
 			else:
 				print(message.author.roles)
-				await message.channel.send("You don't have the permissions to make a tournament.")
+				await message.channel.send("You don't have the permission to make a tournament.")
 		
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
