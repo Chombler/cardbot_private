@@ -120,10 +120,13 @@ async def on_message(message):
 				await message.channel.send("You are not currently registered.")
 		
 		#Ideal Input Structure:
-		#-join (Tournament Name) [Hero bans]
+		#-join (Tournament Name) [Hero bans] "ign"
 		elif message.content.startswith('-join'):
 			if isRegistered(message.author.name)[0]:	
 				if '(' and ')' in message.content:
+					requires_ign = False
+					requires_bans = True
+
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 
 					participant_id = isRegistered(message.author.name)[1]
@@ -134,28 +137,47 @@ async def on_message(message):
 					tournament_exists = tournament_info[0]
 					tournament_id = tournament_info[1]
 					number_of_hero_bans = tournament_info[2]
+					tournament_needs_ign = tournament_info[3]
 
+					ign = ""
+					if(tournament_needs_ign):
+						requires_ign = True
+						ign = regex.findall('\"(.+?)\"', message.content)[0]
+						if(len(ign) > 0):
+							pass
+						else:
+							await message.channel.send("This tournament requires an ign. Please try again.")
+							return
+
+					hero_ids = []
+					if(number_of_hero_bans > 0):
+						requires_bans = True
+						hero_sum = []
+						hero_bans = regex.findall('\[(.+?)\]', message.content)[0].split()
+						print(hero_bans)
+						for hero_pick in hero_bans:
+							hero_ids.append(getBestHeroMatchId(hero_pick))
+							hero_sum.append(1 + math.floor(getBestHeroMatchId(hero_pick) / 12))
+						print(hero_sum)
+						if(sum(hero_sum) == number_of_hero_bans * 3):
+							pass
+						else:
+							await message.channel.send("This tournament requires Hero bans. Either you forgot to add them or you've made a mistake in your picks. Please try again.")
+							return
+
+					part_to_tourney_id = 0
 					if(tournament_exists):
 						print("That tournament exists!")
-						joinTournament(participant_id, tournament_id)
+						part_to_tourney_id = joinTournament(participant_id, tournament_id)
+						if(requires_bans):
+							for heroid in hero_ids:
+								joinBan(part_to_tourney_id, heroid)
 						await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
 
 					else:
 						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
 						return
 
-					if(number_of_hero_bans > 0):
-						hero_sum = 0
-						hero_bans = regex.findall('\[(.+?)\]', message.content)[0].split()
-						print(hero_bans)
-						for heroid in hero_bans:
-							hero_sum += 1 + math.floor(getBestHeroMatchId(heroid) / 12)
-						print(hero_sum)
-						if(hero_sum == number_of_hero_bans * 3):
-							joinTournament(participant_id, tournament_id)
-							await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
-						else:
-							print("Uh oh. You got the hero bans wrong!")
 
 				else:
 					await message.channel.send("Your join command is missing () brackets.")
@@ -163,7 +185,7 @@ async def on_message(message):
 				await message.channel.send("Please register with the bot using the command \"-register [Timezone Abbreviation]\" before joining a tournament.")
 
 		#Ideal Input Structure:
-		#-tournament-create (Tournament Name) [# of Hero bans per side]
+		#-tournament-create (Tournament Name) [# of Hero bans per side] OPTIONAL: <require>
 		elif message.content.startswith('-tournament-create'):
 			if "pvzhu dev" in [role.name.lower() for role in message.author.roles] or "pokemod" in [role.name.lower() for role in message.author.roles]:
 

@@ -182,7 +182,7 @@ def verifyTournament(tournament_name):
 		cursor = connection.cursor()
 
 		select_table_query = '''
-		SELECT id, number_of_bans
+		SELECT id, number_of_bans, require_ign
 		FROM tournament
 		WHERE SIMILARITY(LOWER(name), LOWER(%s)) > 0.5
 		LIMIT 1'''
@@ -193,11 +193,10 @@ def verifyTournament(tournament_name):
 		print(results)
 
 		if(len(results) > 0):
-			id_and_bans = [results[0][0], results[0][1]]
+			id_and_bans = [results[0][0], results[0][1], results[0][2]]
 			print("A tournament with id %s exists" % (id_and_bans[0]))
 		else:
 			success = False
-
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
@@ -250,6 +249,7 @@ def hasJoined(participant_id, tournament_id):
 			return(id_and_bans)
 
 def joinTournament(participant_id, tournament_id):
+	returnid = 0
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -262,6 +262,71 @@ def joinTournament(participant_id, tournament_id):
 		'''
 
 		cursor.execute(postgres_insert_query, (participant_id, tournament_id))
+		connection.commit()
+
+		postgres_select_query = '''
+		SELECT id
+		FROM participant_to_tournament
+		WHERE participant_id = %s
+		'''
+
+		cursor.execute(postgres_select_query, (participant_id, tournament_id))
+
+		returnid = cursor.fetchall()[0][0]
+
+		print("Participant added to tournament")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(returnid)
+
+def joinBan(part_to_tournament_id, hero_id):
+	returnid = 0
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_insert_query = '''
+		INSERT INTO tournament_participant_to_bans(tournament_to_participant_id, hero_id)
+		VALUES (%s,%s)
+		'''
+
+		cursor.execute(postgres_insert_query, (part_to_tournament_id, hero_id))
+		connection.commit()
+
+		print("Participant added to tournament")
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error logging request in request,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+
+def joinIGN(part_to_tournament_id, ign):
+	returnid = 0
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_insert_query = '''
+		INSERT INTO tournament_participant_to_ign(tournament_to_participant_id, ign)
+		VALUES (%s,%s)
+		'''
+
+		cursor.execute(postgres_insert_query, (part_to_tournament_id, ign))
 		connection.commit()
 
 		print("Participant added to tournament")

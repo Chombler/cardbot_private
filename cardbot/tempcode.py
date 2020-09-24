@@ -1,5 +1,5 @@
 
-from tables.tournament import timezone, participant, tournament, participant_to_tournament, tournament_participant_to_bans
+from tables.tournament import timezone, participant, tournament, participant_to_tournament, tournament_participant_to_bans, tournament_participant_to_ign
 from constructorRows import timezone_rows
 
 def handyman(complete_call):
@@ -12,6 +12,8 @@ def handyman(complete_call):
 	tournament.createTable()
 	tournament_participant_to_bans.dropTable()
 	tournament_participant_to_bans.createTable()
+	tournament_participant_to_ign.dropTable()
+	tournament_participant_to_ign.createTable()
 
 	return("Handyman is finished")
 
