@@ -139,6 +139,8 @@ async def on_message(message):
 					number_of_hero_bans = tournament_info[2]
 					tournament_needs_ign = tournament_info[3]
 
+					if(hasJoined(participant_id, tournament_id)):
+						await message.channel.send("%s, you are already registered for this tournament." % (message_author))
 					ign = ""
 					if(tournament_needs_ign):
 						requires_ign = True
