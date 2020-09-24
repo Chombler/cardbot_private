@@ -221,8 +221,8 @@ def hasJoined(participant_id, tournament_id):
 		select_table_query = '''
 		SELECT id
 		FROM participant_to_tournament
-		WHERE participant_id = %s
-		AND tournament_id = %s
+		WHERE participantid = %s
+		AND tournamentid = %s
 		'''
 
 		cursor.execute(select_table_query, (participant_id, tournament_id))
