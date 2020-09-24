@@ -154,7 +154,7 @@ def createTournament(tournament_name, number_of_bans, require_ign, creator_name)
 
 		postgres_insert_query = '''
 		INSERT INTO tournament(name, number_of_bans, require_ign, creator)
-		VALUES (%s,%s,%s)
+		VALUES (%s,%s,%s,%s)
 		'''
 
 		cursor.execute(postgres_insert_query, (tournament_name, number_of_bans, require_ign, creator_name))
