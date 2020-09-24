@@ -193,12 +193,12 @@ async def on_message(message):
 				if '(' and ')' and '[' and ']' in message.content:
 					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)[0]
-					require_ign = True if '<require>' in message.content else False
+					require_ign = 'true' if '<require>' in message.content else 'false'
 
 					successful_creation = createTournament(tournament_name, number_of_hero_bans, require_ign, message.author.name)
 
 					if(successful_creation):
-						if(require_ign):
+						if(require_ign == 'true'):
 							await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side that requires an ign." % (message_author, tournament_name, number_of_hero_bans))
 						else:
 							await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side that does not require an ign." % (message_author, tournament_name, number_of_hero_bans))
