@@ -255,7 +255,7 @@ def joinTournament(participant_id, tournament_id):
 		cursor = connection.cursor()
 
 		postgres_insert_query = '''
-		INSERT INTO participant_to_tournament(participant_id, tournament_id)
+		INSERT INTO participant_to_tournament(participantid, tournamentid)
 		VALUES (%s,%s)
 		'''
 
