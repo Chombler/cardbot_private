@@ -245,6 +245,7 @@ def hasJoined(participant_id, tournament_id):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
+			return(already_joined)
 
 def joinTournament(participant_id, tournament_id):
 	returnid = 0
