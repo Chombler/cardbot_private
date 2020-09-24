@@ -14,7 +14,7 @@ import math
 
 
 from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
-from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament
+from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
@@ -138,6 +138,7 @@ async def on_message(message):
 					tournament_id = tournament_info[1]
 					number_of_hero_bans = tournament_info[2]
 					tournament_needs_ign = tournament_info[3]
+					print('Tournament needs ign : %s' % (tournament_needs_ign))
 
 					if(hasJoined(participant_id, tournament_id)):
 						await message.channel.send("%s, you are already registered for this tournament." % (message_author))
