@@ -43,7 +43,7 @@ def registerParticipant(discordName, timezoneid):
 		timezone_info = cursor.fetchall()[0]
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error registering participant with cardbot,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -77,7 +77,7 @@ def isRegistered(discordName):
 
 	except (Exception, psycopg2.Error) as error :
 		is_registered_and_id = [False, results[0][0]]
-		print ("Error logging request in request,", error)
+		print ("Error chacking if participant is registered,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -104,7 +104,7 @@ def deRegister(discordName):
 		print("Participant removed from \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error deregistering participant,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -135,7 +135,7 @@ def getTimezoneId(timezone_abbreviation):
 
 	except (Exception, psycopg2.Error) as error :
 		return_timezone_id = 0
-		print ("Error logging request in request,", error)
+		print ("Error obtaining timezone id,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -163,7 +163,7 @@ def createTournament(tournament_name, number_of_bans, require_ign, creator_name)
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
-		print ("Error logging request in request,", error)
+		print ("Error creating tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -200,7 +200,7 @@ def verifyTournament(tournament_name):
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
-		print ("Error logging request in verifyTournament,", error)
+		print ("Error verifiying tournament,", error)
 	finally:
 		#closing database connection
 		id_and_bans.insert(0, success)
@@ -238,7 +238,7 @@ def hasJoined(participant_id, tournament_id):
 
 	except (Exception, psycopg2.Error) as error :
 		already_joined = False
-		print ("Error logging request in verifyTournament,", error)
+		print ("Error checking if participant has joined tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -275,7 +275,7 @@ def joinTournament(participant_id, tournament_id):
 		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error joining tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -303,7 +303,7 @@ def joinBan(part_to_tournament_id, hero_id):
 		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error adding ban,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -330,7 +330,7 @@ def joinIGN(part_to_tournament_id, ign):
 		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error adding ign,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -356,7 +356,7 @@ def startTournament(tournament_name, discordName):
 		print("Participant removed from \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error starting tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):

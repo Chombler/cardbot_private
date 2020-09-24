@@ -14,7 +14,8 @@ def createTable():
 								name varchar(99),
 								number_of_bans int,
 								require_ign boolean,
-								creator varchar(99)
+								creator varchar(99),
+								has_started boolean DEFAULT 'f'
 								);'''
 		
 		cursor.execute(create_table_query)
@@ -69,7 +70,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """INSERT INTO tournament(name, number_of_bans, creator) VALUES %s"""
+		postgres_insert_query = """INSERT INTO tournament(name, number_of_bans, creator, has_started) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
@@ -91,7 +92,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO tournament(name, number_of_bans, creator) VALUES " + args_str)
+		cursor.execute("INSERT INTO tournament(name, number_of_bans, creator, has_started) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"tournament\"")
