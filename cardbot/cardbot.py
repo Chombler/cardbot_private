@@ -46,9 +46,9 @@ tournament_help_message = "Tournament Commands:\
 \n*Use* ***-register*** *to register your name with the bot so that you can sign up for tournaments. Registration must follow the format:*\
 \n-register [timezone abbreviation].\n\
 \n*Once you've registered, you can use* ***-join*** *to join a tournament that hasn't started yet. Joining must follow the format:*\
-\n-join (Tournament Name) {List of Hero bans seperated by a space}.\n\
+\n-join (Tournament Name) [List of Hero bans seperated by a space] \"IGN\".\n\
 \n*If you have the role Tournament Creators, you can use the command* ***-create-tournament*** *to create a tournament of your own. Tournament Creation must follow the format:*\
-\n-tournament-create (Tournament Name) [# of Hero bans per side].\n\
+\n-tournament-create (Tournament Name) [# of Hero bans per side] OPTIONAL:<require>(this requires participants to provide an ign).\n\
 \n*If you've registered as a participant with the bot and would like to remove yourself, use* ***-deregister*** *to remove your name from the registry and from any tournaments you are currently involved in.*\
 \nUse **-t-examples** to see example calls of all of these commands."
 
@@ -58,7 +58,7 @@ example_tournament_commands = "Example Tournament Commands:\
 \n**Joining a Tournament:**\
 \n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\n\
 \n**Creating a Tournament:**\
-\n-tournament-create (The Greatest Tournament of All Time!) [2].\n\
+\n-tournament-create (The Greatest Tournament of All Time!) [2] <require>.\n\
 \n**Deregistering:**\
 \n-deregister\n\
 \nUse **-t-help** to get a list of tournament commands."
@@ -142,6 +142,8 @@ async def on_message(message):
 
 					if(hasJoined(participant_id, tournament_id)):
 						await message.channel.send("%s, you are already registered for this tournament." % (message_author))
+						return
+
 					ign = ""
 					if(tournament_needs_ign):
 						requires_ign = True
