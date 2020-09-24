@@ -9,14 +9,14 @@ def createTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		create_table_query = '''CREATE TABLE tournament_participant_to_bans
+		create_table_query = '''CREATE TABLE tournament_participant_to_ign
 								(id SERIAL PRIMARY KEY,
 								tournament_to_participant_id int,
 								ign varchar(64));'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
-		print("Table \"tournament_participant_to_bans\" Addition Successful!")
+		print("Table \"tournament_participant_to_ign\" Addition Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -39,11 +39,11 @@ def dropTable():
 		print("connected")
 		cursor = connection.cursor()
 
-		delete_table_query = '''DROP TABLE tournament_participant_to_bans'''
+		delete_table_query = '''DROP TABLE tournament_participant_to_ign'''
 
 		cursor.execute(delete_table_query)
 		connection.commit()
-		print("Table \"tournament_participant_to_bans\" Deletion Successful!")
+		print("Table \"tournament_participant_to_ign\" Deletion Successful!")
 
 		# Print PostgreSQL version
 		cursor.execute("SELECT version();")
@@ -66,11 +66,11 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO tournament_participant_to_bans(tournament_to_participant_id, ign) VALUES %s"""
+		postgres_insert_query = """ INSERT INTO tournament_participant_to_ign(tournament_to_participant_id, ign) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
-		print("Row added to table \"tournament_participant_to_bans\"")
+		print("Row added to table \"tournament_participant_to_ign\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -88,10 +88,10 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO tournament_participant_to_bans(tournament_to_participant_id, ign) VALUES " + args_str)
+		cursor.execute("INSERT INTO tournament_participant_to_ign(tournament_to_participant_id, ign) VALUES " + args_str)
 
 		connection.commit()
-		print("Multiple rows added to \"tournament_participant_to_bans\"")
+		print("Multiple rows added to \"tournament_participant_to_ign\"")
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -107,10 +107,10 @@ def deleteFromTable(recordId):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_delete_query = """ Delete from tournament_participant_to_bans where id = %s"""
+		postgres_delete_query = """ Delete from tournament_participant_to_ign where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		connection.commit()
-		print("Row deleted from \"tournament_participant_to_bans\"")
+		print("Row deleted from \"tournament_participant_to_ign\"")
 		
 	except (Exception, psycopg2.Error) as error :
 		print ("Error checking table in PostgreSQL", error)
@@ -126,10 +126,10 @@ def pullFromTable(column, identifier):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_pull_query = """ SELECT * from tournament_participant_to_bans where id = %s"""
+		postgres_pull_query = """ SELECT * from tournament_participant_to_ign where id = %s"""
 		cursor.execute(postgres_delete_query, (recordId, ))
 		results = cursor.fetchall()
-		print("Results from \"tournament_participant_to_bans\" where id = %s" % (recordId))
+		print("Results from \"tournament_participant_to_ign\" where id = %s" % (recordId))
 		for row in results:
 			for col in row:
 				print(col, end='')
