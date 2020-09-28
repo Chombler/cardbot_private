@@ -368,7 +368,7 @@ def getParticipants(tournament_id):
 				   timezone.abbreviation
 			FROM participant
 			LEFT JOIN timezone on participant.timezone_id = timezone.id
-			WHERE id = %s
+			WHERE participant.id = %s
 			'''
 
 			cursor.execute(select_table_query, (participant_id,))
