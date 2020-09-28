@@ -339,7 +339,7 @@ def joinIGN(part_to_tournament_id, ign):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def verifyTournament(tournament_id):
+def getParticipants(tournament_id):
 	return_info = []
 	participant_ids = []
 	try:
