@@ -221,13 +221,16 @@ async def on_message(message):
 				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
 
 				returnString = "__ID__ | __NAME__ | __TIMEZONE__"
-
-				tournament_info = verifyTournament(tournament_name)
-				tournament_exists = tournament_info[0]
-				tournament_id = tournament_info[1]
-				number_of_hero_bans = tournament_info[2]
-				tournament_needs_ign = tournament_info[3]
-				tournament_creator = tournament_info[4]
+				try:
+					tournament_info = verifyTournament(tournament_name)
+					tournament_exists = tournament_info[0]
+					tournament_id = tournament_info[1]
+					number_of_hero_bans = tournament_info[2]
+					tournament_needs_ign = tournament_info[3]
+					tournament_creator = tournament_info[4]
+				except:
+					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
+					return
 
 				if(message.author.name == tournament_creator):
 					for participant in getParticipants(tournament_id):
