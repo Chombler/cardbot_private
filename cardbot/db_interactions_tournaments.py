@@ -182,7 +182,7 @@ def verifyTournament(tournament_name):
 		cursor = connection.cursor()
 
 		select_table_query = '''
-		SELECT id, number_of_bans, require_ign
+		SELECT id, number_of_bans, require_ign, creator
 		FROM tournament
 		WHERE SIMILARITY(LOWER(name), LOWER(%s)) > 0.5
 		LIMIT 1'''
@@ -193,7 +193,7 @@ def verifyTournament(tournament_name):
 		print(results)
 
 		if(len(results) > 0):
-			id_and_bans = [results[0][0], results[0][1], results[0][2]]
+			id_and_bans = [results[0][0], results[0][1], results[0][2], results[0][3]]
 			print("A tournament with id %s exists" % (id_and_bans[0]))
 		else:
 			success = False
@@ -338,6 +338,49 @@ def joinIGN(part_to_tournament_id, ign):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
+
+def verifyTournament(tournament_id):
+	return_info = []
+	participant_ids = []
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_table_query = '''
+		SELECT participantid
+		FROM participant_to_tournament
+		WHERE tournamentid = %s
+		'''
+
+		cursor.execute(select_table_query, (tournament_id,))
+		results = cursor.fetchall()
+		print(results)
+		for row in results:
+			for col in row:
+				participant_ids.append(col)
+
+		for participant_id in participant_ids:
+			select_table_query = '''
+			SELECT *
+			FROM participant
+			WHERE id = %s
+			'''
+
+			cursor.execute(select_table_query, (participant_id,))
+			return_info.append(cursor.fetchall()[0])
+		print(return_info)
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error verifiying tournament,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(return_info)
 
 def startTournament(tournament_name, discordName):
 	try:

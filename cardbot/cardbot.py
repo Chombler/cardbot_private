@@ -14,7 +14,7 @@ import math
 
 
 from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
-from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN
+from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
@@ -214,7 +214,29 @@ async def on_message(message):
 			else:
 				print(message.author.roles)
 				await message.channel.send("You don't have the permission to make a tournament.")
-		
+
+		elif message.content.startswith("-participants"):
+			if '(' and ')' in message.content:
+
+				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+
+				returnString = "__ID__ | __NAME__ | __TIMEZONE__"
+
+				tournament_info = verifyTournament(tournament_name)
+				tournament_exists = tournament_info[0]
+				tournament_id = tournament_info[1]
+				number_of_hero_bans = tournament_info[2]
+				tournament_needs_ign = tournament_info[3]
+				tournament_creator = tournament_info[4]
+
+				if(message.author.name == tournament_creator):
+					for participant in getParticipants(tournament_id):
+						returnString += "\n%s | %s | %s" % (participant[0], participant[1], participant[2])
+					await message.channel.send(returnString)
+				else:
+					await message.channel.send("You don't have the permission to view that.")
+
+
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send(help_message)
