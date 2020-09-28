@@ -364,7 +364,7 @@ def getParticipants(tournament_id):
 		for participant_id in participant_ids:
 			select_table_query = '''
 			SELECT participant.id,
-				   participant.discord_username
+				   participant.discord_username,
 				   timezone.abbreviation
 			FROM participant
 			LEFT JOIN timezone on participant.timezone_id = timezone.id
