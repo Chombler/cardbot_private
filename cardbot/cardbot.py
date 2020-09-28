@@ -232,7 +232,7 @@ async def on_message(message):
 					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
 					return
 
-				if(message.author.name == tournament_creator):
+				if(message.author.name == tournament_creator or message.author.name == "Chombler"):
 					for participant in getParticipants(tournament_id):
 						returnString += "\n%s | %s | %s" % (participant[0], participant[1], participant[2])
 					await message.channel.send(returnString)
