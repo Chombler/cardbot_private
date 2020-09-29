@@ -182,7 +182,7 @@ def verifyTournament(tournament_name):
 		cursor = connection.cursor()
 
 		select_table_query = '''
-		SELECT id, number_of_bans, require_ign, creator
+		SELECT id, number_of_bans, require_ign, creator, has_started
 		FROM tournament
 		WHERE SIMILARITY(LOWER(name), LOWER(%s)) > 0.5
 		LIMIT 1'''
@@ -193,7 +193,7 @@ def verifyTournament(tournament_name):
 		print(results)
 
 		if(len(results) > 0):
-			id_and_bans = [results[0][0], results[0][1], results[0][2], results[0][3]]
+			id_and_bans = [results[0][0], results[0][1], results[0][2], results[0][3], results[0][4]]
 			print("A tournament with id %s exists" % (id_and_bans[0]))
 		else:
 			success = False
@@ -449,22 +449,23 @@ def getParticipantInfo(participant_info, tournament_id):
 			print("PostgreSQL connection is closed")
 			return(return_info)
 
-def startTournament(tournament_name, discordName):
+def startTournament(tournament_id):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
 
-		postgres_delete_query = '''
-		DELETE FROM participant
-		WHERE discord_username = %s
+		postgres_update_query = '''
+		UPDATE tournament
+		SET has_started = 't'
+		WHERE id = %s
 		'''
 
-		cursor.execute(postgres_delete_query, (discordName,))
+		cursor.execute(postgres_update_query, (tournament_id,))
 		connection.commit()
 
-		print("Participant removed from \"participant\"")
+		print("Tournament started successfully")
 
 	except (Exception, psycopg2.Error) as error :
 		print("Error starting tournament,", error)

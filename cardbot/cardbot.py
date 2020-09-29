@@ -14,7 +14,7 @@ import math
 
 
 from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
-from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants, createMatchup, getParticipantInfo
+from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants, createMatchup, getParticipantInfo, startTournament
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
@@ -138,10 +138,16 @@ async def on_message(message):
 					tournament_id = tournament_info[1]
 					number_of_hero_bans = tournament_info[2]
 					tournament_needs_ign = tournament_info[3]
+					tournament_creator = tournament_info[4]
+					has_started = tournament_info[5]
 					print('Tournament needs ign : %s' % (tournament_needs_ign))
 
 					if(hasJoined(participant_id, tournament_id)):
 						await message.channel.send("%s, you are already registered for this tournament." % (message_author))
+						return
+
+					if(has_started):
+						await message.channel.send("%s, sign ups for this tournament have already closed." % (message_author))
 						return
 
 					ign = ""
@@ -215,6 +221,27 @@ async def on_message(message):
 				print(message.author.roles)
 				await message.channel.send("You don't have the permission to make a tournament.")
 
+
+		elif message.content.startswith('-start'):
+			if '(' and ')' in message.content:
+				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+				try:
+					tournament_info = verifyTournament(tournament_name)
+					tournament_exists = tournament_info[0]
+					tournament_id = tournament_info[1]
+					number_of_hero_bans = tournament_info[2]
+					tournament_needs_ign = tournament_info[3]
+					tournament_creator = tournament_info[4]
+					has_started = tournament_info[5]
+				except:
+					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
+					return
+				if(message.author.name == tournament_creator or message.author.name == "Chombler"):
+					startTournament(tournament_id)
+					await message.channel.send("\"%s\" has been started" % (tournament_name))
+				else:
+					await message.channel.send("You don't have the permission to start that tournament.")
+
 		elif message.content.startswith("-participants"):
 			if '(' and ')' in message.content:
 
@@ -275,7 +302,7 @@ async def on_message(message):
 								participant_set.append(temp)
 						try:
 							if(success):
-								returnString += "\n" + createMatchup(participant_set[0][0], participant_set[1][0], tournament_id)
+								returnString += "\n" + createMatchup(participant_set[0][1], participant_set[1][1], tournament_id)
 						except:
 							pass
 					await message.channel.send(returnString)
