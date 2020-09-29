@@ -14,7 +14,7 @@ def createTable():
 								first_participant_id int,
 								second_participant_id int,
 								tournament_id int,
-								winner_id int DEFAULT NULL,
+								winner_id int DEFAULT NULL
 								);'''
 		
 		cursor.execute(create_table_query)
