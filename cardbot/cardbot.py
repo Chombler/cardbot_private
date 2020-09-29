@@ -275,7 +275,7 @@ async def on_message(message):
 								participant_set.append(temp)
 						try:
 							if(success):
-								returnString += "\n" + createMatchup(participant_set[0][0], participant_set[0][1], tournament_id)
+								returnString += "\n" + createMatchup(participant_set[0][0], participant_set[1][0], tournament_id)
 						except:
 							pass
 					await message.channel.send(returnString)
