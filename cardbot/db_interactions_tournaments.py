@@ -424,7 +424,6 @@ def getParticipantInfo(participant_info, tournament_id):
 		SELECT participant.id,
 			   participant.discord_username,
 			   timezone.abbreviation,
-			   tournament.id,
 			   participant_to_tournament.in_game,
 			   participant_to_tournament.num_of_wins,
 			   participant_to_tournament.num_of_losses,

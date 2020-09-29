@@ -265,10 +265,10 @@ async def on_message(message):
 						for participant_info in split_pairing:
 							temp = getParticipantInfo(participant_info, tournament_id)
 
-							if(temp[7]):
+							if(temp[6]):
 								returnString += "\n%s has already been eliminated from the tournament" % (temp[1])
 								success = False
-							elif(temp[4]):
+							elif(temp[3]):
 								returnString += "\n%s is already in a game" % (temp[1])
 								success = False
 							else:
