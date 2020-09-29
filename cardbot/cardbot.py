@@ -14,7 +14,7 @@ import math
 
 
 from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
-from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants
+from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants, createMatchup, getParticipantInfo
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
@@ -239,6 +239,48 @@ async def on_message(message):
 				else:
 					await message.channel.send("You don't have the permission to view that.")
 
+		elif message.content.startswith("-seed"):
+			if '(' and ')' and '[' and ']' in message.content:
+
+				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+				participant_pairings = regex.findall('\[(.+?)\]', message.content)
+
+				returnString = "The following matchups were seeded:"
+				try:
+					tournament_info = verifyTournament(tournament_name)
+					tournament_exists = tournament_info[0]
+					tournament_id = tournament_info[1]
+					number_of_hero_bans = tournament_info[2]
+					tournament_needs_ign = tournament_info[3]
+					tournament_creator = tournament_info[4]
+				except:
+					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
+					return
+
+				if(message.author.name == tournament_creator or message.author.name == "Chombler"):
+					for pairing in participant_pairings:
+						split_pairing = pairing.split(",")
+						participant_set = []
+						success = True
+						for participant_info in split_pairing:
+							temp = getParticipantInfo(participant_info)
+
+							if(temp[7]):
+								returnString += "\n%s has already been eliminated from the tournament" % (temp[1])
+								success = False
+							elif(temp[4]):
+								returnString += "\n%s is already in a game" % (temp[1])
+								success = False
+							else:
+								participant_set.append(temp)
+						try:
+							if(success):
+								returnString += "\n" + createMatchup(participant_set[0][0], participant_set[0][1], tournament_id)
+						except:
+							pass
+					await message.channel.send(returnString)
+				else:
+					await message.channel.send("You don't have the permission to seed that tournament.")
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)

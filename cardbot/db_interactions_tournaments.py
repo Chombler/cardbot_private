@@ -43,7 +43,7 @@ def registerParticipant(discordName, timezoneid):
 		timezone_info = cursor.fetchall()[0]
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error registering participant with cardbot,", error)
+		print("Error registering participant with cardbot,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -77,7 +77,7 @@ def isRegistered(discordName):
 
 	except (Exception, psycopg2.Error) as error :
 		is_registered_and_id = [False, results[0][0]]
-		print ("Error chacking if participant is registered,", error)
+		print("Error chacking if participant is registered,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -104,7 +104,7 @@ def deRegister(discordName):
 		print("Participant removed from \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error deregistering participant,", error)
+		print("Error deregistering participant,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -135,7 +135,7 @@ def getTimezoneId(timezone_abbreviation):
 
 	except (Exception, psycopg2.Error) as error :
 		return_timezone_id = 0
-		print ("Error obtaining timezone id,", error)
+		print("Error obtaining timezone id,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -163,7 +163,7 @@ def createTournament(tournament_name, number_of_bans, require_ign, creator_name)
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
-		print ("Error creating tournament,", error)
+		print("Error creating tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -200,7 +200,7 @@ def verifyTournament(tournament_name):
 
 	except (Exception, psycopg2.Error) as error :
 		success = False
-		print ("Error verifiying tournament,", error)
+		print("Error verifiying tournament,", error)
 	finally:
 		#closing database connection
 		id_and_bans.insert(0, success)
@@ -238,7 +238,7 @@ def hasJoined(participant_id, tournament_id):
 
 	except (Exception, psycopg2.Error) as error :
 		already_joined = False
-		print ("Error checking if participant has joined tournament,", error)
+		print("Error checking if participant has joined tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -276,7 +276,7 @@ def joinTournament(participant_id, tournament_id):
 		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error joining tournament,", error)
+		print("Error joining tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -304,7 +304,7 @@ def joinBan(part_to_tournament_id, hero_id):
 		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding ban,", error)
+		print("Error adding ban,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -331,7 +331,7 @@ def joinIGN(part_to_tournament_id, ign):
 		print("Participant added to tournament")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error adding ign,", error)
+		print("Error adding ign,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -376,7 +376,72 @@ def getParticipants(tournament_id):
 		print(return_info)
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error verifiying tournament,", error)
+		print("Error verifiying tournament,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(return_info)
+
+def createMatchup(first_part_id, second_part_id, tournament_id):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_insert_query = '''
+		INSERT INTO matchup(first_participant_id, second_participant_id, tournament_id)
+		VALUES (%s,%s,%s)
+		'''
+
+		cursor.execute(postgres_insert_query, (first_part_id, second_part_id, tournament_id))
+		connection.commit()
+		print("Matchup created between participant ids %s and %s" % (first_part_id, second_part_id))
+
+	except (Exception, psycopg2.Error) as error :
+		print("Error creating matchup,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return("%s will play %s" % (first_part_id, second_part_id))
+
+def getParticipantInfo(participant_info, tournament_id):
+	return_info = []
+	participant_ids = []
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_table_query = '''
+		SELECT participant.id,
+			   participant.discord_username,
+			   timezone.abbreviation,
+			   tournament.id,
+			   participant_to_tournament.in_game,
+			   participant_to_tournament.num_of_wins,
+			   participant_to_tournament.num_of_losses,
+			   participant_to_tournament.eliminated
+		FROM participant
+		LEFT JOIN timezone on participant.timezone_id = timezone.id
+		LEFT JOIN participant_to_tournament on participant.id = participant_to_tournament.participantid
+		WHERE participant.id = %s
+		AND participant_to_tournament.tournamentid = %s
+		'''
+
+		cursor.execute(select_table_query, (participant_info, tournament_id))
+		return_info = cursor.fetchall()[0]
+		print("Participant info is %s" % (return_info))
+
+	except (Exception, psycopg2.Error) as error :
+		print("Error verifiying tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -403,7 +468,7 @@ def startTournament(tournament_name, discordName):
 		print("Participant removed from \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error starting tournament,", error)
+		print("Error starting tournament,", error)
 	finally:
 		#closing database connection
 		if(connection):
@@ -429,7 +494,7 @@ def reportResult(tournament_name, discordName):
 		print("Participant removed from \"participant\"")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print("Error logging request in request,", error)
 	finally:
 		#closing database connection
 		if(connection):
