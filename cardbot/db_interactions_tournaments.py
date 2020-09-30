@@ -420,7 +420,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 		print("connected")
 		cursor = connection.cursor()
 
-		if(type(participant_name_or_id) is int):
+		if(isinstance(participant_name_or_id, int)):
 			print("Participant info is an integer")
 			select_table_query = '''
 			SELECT participant.id,
