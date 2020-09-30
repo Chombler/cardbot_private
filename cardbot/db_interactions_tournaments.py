@@ -441,7 +441,6 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 			print(cursor.fetchall())
 			return_info = cursor.fetchall()[0]
 			print("Participant info is %s" % (return_info))
-
 		except:
 			print("Participant info is a string")
 			select_table_query = '''

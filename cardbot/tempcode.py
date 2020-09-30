@@ -4,7 +4,7 @@ from constructorRows import timezone_rows
 from db_interactions_tournaments import getParticipantInfo
 
 def handyman(complete_call):
-	print(getParticipantInfo("Chombler"))
-	print(getParticipantInfo(2))
+	print(getParticipantInfo("Chombler", 1))
+	print(getParticipantInfo(2, 1))
 
 	return("Handyman is finished")
