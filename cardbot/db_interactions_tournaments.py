@@ -376,7 +376,7 @@ def getParticipants(tournament_id):
 		print(return_info)
 
 	except (Exception, psycopg2.Error) as error :
-		print("Error verifiying tournament,", error)
+		print("Error getting participant info,", error)
 	finally:
 		#closing database connection
 		if(connection):
