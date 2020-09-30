@@ -420,7 +420,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 		print("connected")
 		cursor = connection.cursor()
 
-		if(isinstance(participant_name_or_id, int)):
+		try:
 			print("Participant info is an integer")
 			select_table_query = '''
 			SELECT participant.id,
@@ -437,11 +437,11 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 			AND participant_to_tournament.tournamentid = %s
 			'''
 
-			cursor.execute(select_table_query, (participant_name_or_id, tournament_id))
+			cursor.execute(select_table_query, (int(participant_name_or_id), tournament_id))
 			return_info = cursor.fetchall()[0]
 			print("Participant info is %s" % (return_info))
 
-		else:
+		except:
 			print("Participant info is a string")
 			select_table_query = '''
 			SELECT participant.id,
