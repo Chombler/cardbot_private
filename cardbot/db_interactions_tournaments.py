@@ -385,7 +385,7 @@ def getParticipants(tournament_id):
 			print("PostgreSQL connection is closed")
 			return(return_info)
 
-def createMatchup(first_part_id, second_part_id, tournament_id):
+def createMatchup(first_participant_info, second_participant_info, tournament_id):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -397,9 +397,9 @@ def createMatchup(first_part_id, second_part_id, tournament_id):
 		VALUES (%s,%s,%s)
 		'''
 
-		cursor.execute(postgres_insert_query, (first_part_id, second_part_id, tournament_id))
+		cursor.execute(postgres_insert_query, (first_participant_info[0], second_participant_info[0], tournament_id))
 		connection.commit()
-		print("Matchup created between participant ids %s and %s" % (first_part_id, second_part_id))
+		print("Matchup created between participant ids %s and %s" % (first_participant_info[0], second_participant_info[0]))
 
 	except (Exception, psycopg2.Error) as error :
 		print("Error creating matchup,", error)
@@ -409,9 +409,9 @@ def createMatchup(first_part_id, second_part_id, tournament_id):
 			cursor.close()
 			connection.close()
 			print("PostgreSQL connection is closed")
-			return("%s will play %s" % (first_part_id, second_part_id))
+			return("%s will play %s" % (first_participant_info[1], second_participant_info[1]))
 
-def getParticipantInfo(participant_info, tournament_id):
+def getParticipantInfo(participant_name_or_id, tournament_id):
 	return_info = []
 	participant_ids = []
 	try:
@@ -420,24 +420,45 @@ def getParticipantInfo(participant_info, tournament_id):
 		print("connected")
 		cursor = connection.cursor()
 
-		select_table_query = '''
-		SELECT participant.id,
-			   participant.discord_username,
-			   timezone.abbreviation,
-			   participant_to_tournament.in_game,
-			   participant_to_tournament.num_of_wins,
-			   participant_to_tournament.num_of_losses,
-			   participant_to_tournament.eliminated
-		FROM participant
-		LEFT JOIN timezone on participant.timezone_id = timezone.id
-		LEFT JOIN participant_to_tournament on participant.id = participant_to_tournament.participantid
-		WHERE participant.id = %s
-		AND participant_to_tournament.tournamentid = %s
-		'''
+		if(type(participant_name_or_id) is int):
+			select_table_query = '''
+			SELECT participant.id,
+				   participant.discord_username,
+				   timezone.abbreviation,
+				   participant_to_tournament.in_game,
+				   participant_to_tournament.num_of_wins,
+				   participant_to_tournament.num_of_losses,
+				   participant_to_tournament.eliminated
+			FROM participant
+			LEFT JOIN timezone on participant.timezone_id = timezone.id
+			LEFT JOIN participant_to_tournament on participant.id = participant_to_tournament.participantid
+			WHERE participant.id = %s
+			AND participant_to_tournament.tournamentid = %s
+			'''
 
-		cursor.execute(select_table_query, (participant_info, tournament_id))
-		return_info = cursor.fetchall()[0]
-		print("Participant info is %s" % (return_info))
+			cursor.execute(select_table_query, (participant_name_or_id, tournament_id))
+			return_info = cursor.fetchall()[0]
+			print("Participant info is %s" % (return_info))
+
+		else:
+			select_table_query = '''
+			SELECT participant.id,
+				   participant.discord_username,
+				   timezone.abbreviation,
+				   participant_to_tournament.in_game,
+				   participant_to_tournament.num_of_wins,
+				   participant_to_tournament.num_of_losses,
+				   participant_to_tournament.eliminated
+			FROM participant
+			LEFT JOIN timezone on participant.timezone_id = timezone.id
+			LEFT JOIN participant_to_tournament on participant.id = participant_to_tournament.participantid
+			WHERE participant.discord_username = %s
+			AND participant_to_tournament.tournamentid = %s
+			'''
+
+			cursor.execute(select_table_query, (participant_name_or_id, tournament_id))
+			return_info = cursor.fetchall()[0]
+			print("Participant info is %s" % (return_info))
 
 	except (Exception, psycopg2.Error) as error :
 		print("Error verifiying tournament,", error)
@@ -476,7 +497,7 @@ def startTournament(tournament_id):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def reportResult(tournament_name, discordName):
+def reportWin(discord_name, tournament_id):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)

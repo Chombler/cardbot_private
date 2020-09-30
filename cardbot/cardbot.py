@@ -242,6 +242,24 @@ async def on_message(message):
 				else:
 					await message.channel.send("You don't have the permission to start that tournament.")
 
+
+		elif(message.content.startswith("-report-win")):
+			if '(' and ')' in message.content:
+
+				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+				try:
+					tournament_info = verifyTournament(tournament_name)
+					tournament_exists = tournament_info[0]
+					tournament_id = tournament_info[1]
+					number_of_hero_bans = tournament_info[2]
+					tournament_needs_ign = tournament_info[3]
+					tournament_creator = tournament_info[4]
+				except:
+					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
+					return
+
+
+
 		elif message.content.startswith("-participants"):
 			if '(' and ')' in message.content:
 
@@ -289,20 +307,20 @@ async def on_message(message):
 						split_pairing = pairing.split(",")
 						participant_set = []
 						success = True
-						for participant_info in split_pairing:
-							temp = getParticipantInfo(participant_info, tournament_id)
+						for participant_name_or_id in split_pairing:
+							temp = getParticipantInfo(participant_name_or_id, tournament_id)
 
 							if(temp[6]):
-								returnString += "\n%s has already been eliminated from the tournament" % (temp[1])
+								returnString += "\n%s has already been eliminated from the tournament." % (temp[1])
 								success = False
 							elif(temp[3]):
-								returnString += "\n%s is already in a game" % (temp[1])
+								returnString += "\n%s is already in a game." % (temp[1])
 								success = False
 							else:
 								participant_set.append(temp)
 						try:
 							if(success):
-								returnString += "\n" + createMatchup(participant_set[0][1], participant_set[1][1], tournament_id)
+								returnString += "\n" + createMatchup(participant_set[0], participant_set[1], tournament_id)
 						except:
 							pass
 					await message.channel.send(returnString)

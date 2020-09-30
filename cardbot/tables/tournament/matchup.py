@@ -14,7 +14,8 @@ def createTable():
 								first_participant_id int,
 								second_participant_id int,
 								tournament_id int,
-								winner_id int DEFAULT NULL
+								winner_id int DEFAULT NULL,
+								confirmed boolean DEFAULT 'f'
 								);'''
 		
 		cursor.execute(create_table_query)
@@ -69,7 +70,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """INSERT INTO matchup(first_participant_id, second_participant_id, winner_id) VALUES %s"""
+		postgres_insert_query = """INSERT INTO matchup(first_participant_id, second_participant_id, winner_id, confirmed) VALUES %s"""
 		cursor.execute(postgres_insert_query, (record,))
 
 		connection.commit()
@@ -91,7 +92,7 @@ def addManyToTable(recordTuple):
 
 		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 		print(args_str)
-		cursor.execute("INSERT INTO matchup(first_participant_id, second_participant_id, winner_id) VALUES " + args_str)
+		cursor.execute("INSERT INTO matchup(first_participant_id, second_participant_id, winner_id, confirmed) VALUES " + args_str)
 
 		connection.commit()
 		print("Multiple rows added to \"matchup\"")
