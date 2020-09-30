@@ -440,7 +440,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 
 			cursor.execute(select_table_query, (int(participant_name_or_id), tournament_id))
 			print(cursor.fetchall())
-			return_info = cursor.fetchall()[0]
+			return_info.append(cursor.fetchall()[0])
 		except:
 			print("Participant info is a string")
 			select_table_query = '''
@@ -460,7 +460,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 
 			cursor.execute(select_table_query, (participant_name_or_id, tournament_id))
 			print(cursor.fetchall())
-			return_info = cursor.fetchall()[0]
+			return_info.append(cursor.fetchall()[0])
 
 	except (Exception, psycopg2.Error) as error :
 		print("Error getting participant info,", error)
