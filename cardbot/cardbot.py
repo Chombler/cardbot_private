@@ -308,7 +308,7 @@ async def on_message(message):
 						participant_set = []
 						success = True
 						for participant_name_or_id in split_pairing:
-							print("The participant name or id is ", participant_name_or_id)
+							print("The participant name or id is \'%s\'" % (participant_name_or_id))
 							temp = getParticipantInfo(participant_name_or_id, tournament_id)
 
 							if(temp[6]):
