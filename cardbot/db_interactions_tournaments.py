@@ -421,6 +421,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 		cursor = connection.cursor()
 
 		try:
+			int(participant_name_or_id)
 			print("Participant info is an integer")
 			select_table_query = '''
 			SELECT participant.id,
