@@ -421,6 +421,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 		cursor = connection.cursor()
 
 		if(type(participant_name_or_id) is int):
+			print("Participant info is an integer")
 			select_table_query = '''
 			SELECT participant.id,
 				   participant.discord_username,
@@ -441,6 +442,7 @@ def getParticipantInfo(participant_name_or_id, tournament_id):
 			print("Participant info is %s" % (return_info))
 
 		else:
+			print("Participant info is a string")
 			select_table_query = '''
 			SELECT participant.id,
 				   participant.discord_username,
