@@ -506,25 +506,28 @@ def startTournament(tournament_id):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def reportWin(discord_name, tournament_id):
+def reportWin(participant_id, tournament_id):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
 
-		postgres_delete_query = '''
-		DELETE FROM participant
-		WHERE discord_username = %s
+		postgres_update_query = '''
+		UPDATE matchup
+		SET winner_id = %s
+		WHERE tournament_id = %s
+		AND confirmed = 'f'
+		AND (first_participant_id = %s OR second_participant_id = %s)
 		'''
 
-		cursor.execute(postgres_delete_query, (discordName,))
+		cursor.execute(postgres_update_query, (participant_id, tournament_id, participant_id, participant_id))
 		connection.commit()
 
-		print("Participant removed from \"participant\"")
+		print("Win reported")
 
 	except (Exception, psycopg2.Error) as error :
-		print("Error logging request in request,", error)
+		print("Error reporting win,", error)
 	finally:
 		#closing database connection
 		if(connection):

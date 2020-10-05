@@ -332,4 +332,60 @@ def pullFuzzyHeroRecord(recordName):
 			print("PostgreSQL connection is closed")
 		return(returnString)
 
+def registerStrength(discord_name, strength):
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_insert_query = '''
+		INSERT INTO strengths(discord_name, strength)
+		VALUES (%s,%s)
+		'''
+
+		cursor.execute(postgres_insert_query, (discord_name, strength))
+		connection.commit()
+		print("Strength %s registered for %s" % (strength, discord_name))
+
+	except (Exception, psycopg2.Error) as error :
+		print("Error creating matchup,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return("Strength %s registered for %s" % (strength, discord_name))
+
+def displayBrand(discord_name):
+	returnString = ""
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		postgres_insert_query = '''
+		SELECT strength
+		FROM strengths
+		WHERE discord_name = %s
+		'''
+
+		cursor.execute(postgres_insert_query, (discord_name,))
+		results = cursor.fetchall()
+		for row in results:
+			for col in row:
+				returnString += col + ", "
+
+
+	except (Exception, psycopg2.Error) as error :
+		print("Error creating matchup,", error)
+	finally:
+		#closing database connection
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(returnString)
 

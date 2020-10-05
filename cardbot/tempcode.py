@@ -8,3 +8,11 @@ def handyman(complete_call):
 	print(getParticipantInfo(2, 1))
 
 	return("Handyman is finished")
+
+"""
+CREATE TABLE strengths
+(id SERIAL PRIMARY KEY,
+discord_name varchar(32),
+strength varchar(128)
+);
+"""

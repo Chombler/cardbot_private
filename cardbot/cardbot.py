@@ -13,7 +13,7 @@ import psycopg2
 import math
 
 
-from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
+from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId, registerStrength, displayBrand
 from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants, createMatchup, getParticipantInfo, startTournament
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
@@ -85,6 +85,15 @@ async def on_message(message):
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
 			return
+
+		elif message.content.startswith('-strength'):
+			if '(' and ')' in message.content:
+				strength = regex.findall('\((.+?)\)', message.content)[0]
+				await message.channel.send(registerStrength(message.author.name, strength))
+
+		elif message.content.startswith('-brand'):
+			await message.channel.send("%s's personal brand is:\n%s" % (message_author, displayBrand(message.author.name)))
+
 
 		#This is for registering your username and Timezone into cardbot
 		#Ideal Input Structure:
@@ -257,6 +266,33 @@ async def on_message(message):
 				except:
 					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
 					return
+			participant_info = getParticipantInfo(message.author.name, tournament_id)
+			participant_id = participant_info[0]
+			participant_in_game = participant_info[3]
+
+			if(participant_in_game):
+				reportWin(participant_id, tournament_id)
+
+		elif(message.content.startswith("-confirm")):
+			if '(' and ')' in message.content:
+
+				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
+				try:
+					tournament_info = verifyTournament(tournament_name)
+					tournament_exists = tournament_info[0]
+					tournament_id = tournament_info[1]
+					number_of_hero_bans = tournament_info[2]
+					tournament_needs_ign = tournament_info[3]
+					tournament_creator = tournament_info[4]
+				except:
+					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
+					return
+			participant_info = getParticipantInfo(message.author.name, tournament_id)
+			participant_id = participant_info[0]
+			participant_in_game = participant_info[3]
+
+			if(participant_in_game):
+				reportWin(participant_id, tournament_id)
 
 
 
