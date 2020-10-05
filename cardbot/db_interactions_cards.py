@@ -376,7 +376,7 @@ def displayBrand(discord_name):
 		results = cursor.fetchall()
 		for row in results:
 			for col in row:
-				returnString += col + ", "
+				returnString += col + "\n"
 
 
 	except (Exception, psycopg2.Error) as error :
