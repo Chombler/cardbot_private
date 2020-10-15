@@ -479,8 +479,6 @@ async def regularSearch(message):
 			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print("Terms input for search are: %s" % (stringInput))
-		if(len(stringInput) < 1):
-			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 2, False)
 			response = pullHeroRecord(text)
@@ -499,8 +497,6 @@ async def regularSearch(message):
 			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print("Terms input for search are: %s" % (stringInput))
-		if(len(stringInput) < 1):
-			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 1, False)
 			response = pullCardRecord(text)
