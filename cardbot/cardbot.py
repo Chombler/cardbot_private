@@ -383,6 +383,9 @@ async def on_message(message):
 		elif(message.content.startswith('-ultimate')):
 			await message.channel.send("PvZ Heroes Ultimate cards:\nhttps://dulst.com/pvzhu/cards")
 
+		elif(message.content.startswith('-fuzzy')):
+			await fuzzySearch(message)
+
 		else:
 			await regularSearch(message)
 
