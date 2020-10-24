@@ -32,7 +32,6 @@ requestTypeTuple = [
 
 bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
-presidental_debate_hub_id = 755917829689049208
 
 #client.channels.get(`channelID`).send(`Text`)
 
@@ -62,7 +61,6 @@ example_tournament_commands = "Example Tournament Commands:\
 \n**Deregistering:**\
 \n-deregister\n\
 \nUse **-t-help** to get a list of tournament commands."
-
 
 @client.event
 async def on_ready():
