@@ -508,7 +508,7 @@ async def regularSearch(message):
 						await message.channel.send(response)
 						channel_timers[index].start(30)
 					else:
-						await messages.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timePassed()))
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timePassed()))
 				else:
 					await message.channel.send(response)
 			except:
