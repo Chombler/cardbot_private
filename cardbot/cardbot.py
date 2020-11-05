@@ -500,7 +500,7 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id in debug_channels):
+				if(debug_channels.contains(message.channel.id)):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				elif(message.channel.id in slow_mode_channels):
 					index = slow_mode_channels.index(message.channel.id)
@@ -525,9 +525,10 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id in debug_channels):
+				if(debug_channels.contains(message.channel.id)):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 				elif(message.channel.id in slow_mode_channels):
+					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
 					if(channel_timers[index].isFinished()):
 						await message.channel.send(response)

@@ -148,12 +148,6 @@ def pullCardRecord(recordName):
 		cursor.execute(join_table_query, (cardid,))
 		results = cursor.fetchall()
 
-		print("Printing Table")
-		for row in results:
-			for col in row:
-				print(col)
-			print()
-
 		cardInstance = cardObject(results)
 		print(cardInstance.information())
 
@@ -243,10 +237,6 @@ def pullHeroRecord(recordName):
 
 		print(results)
 		print("Printing Table")
-		for row in results:
-			for col in row:
-				print(col)
-			print()
 
 		heroInstance = heroObject(results)
 		print(heroInstance.information())
