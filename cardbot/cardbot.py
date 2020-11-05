@@ -12,6 +12,7 @@ import re as regex
 import psycopg2
 import math
 
+from timer import Countdown
 
 from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId, registerStrength, displayBrand
 from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants, createMatchup, getParticipantInfo, startTournament
@@ -33,7 +34,20 @@ requestTypeTuple = [
 bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
 
-#client.channels.get(`channelID`).send(`Text`)
+
+pvzh_chat_channel_id = 285849268257030145
+card_ideas_channel_id = 290316016234528769
+deck_help_channel_id = 285818949457805313
+
+debug_channels = [bot_spam_channel_id, cardbot_bugs_report_channel_id]
+
+slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id]
+
+pvzh_timer = Timer()
+card_ideas_timer= Timer()
+deck_help_timer = Timer()
+
+channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer]
 
 help_message = "Bot Commands:\
 \nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
@@ -486,8 +500,15 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
+				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+				elif(message.channel.id in slow_mode_channels):
+					index = slow_mode_channels.index(message.channel.id)
+					channel_timers[index].start(30)
+					if(channel_timers[index].isFinished()):
+						await message.channel.send(response)
+					else:
+						await messages.channel.send("Sorry, bot still has %s seconds left to cooldown" % (channel_timers[index].timeLeft()))
 				else:
 					await message.channel.send(response)
 			except:
@@ -504,8 +525,15 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
+				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+				elif(message.channel.id in slow_mode_channels):
+					index = slow_mode_channels.index(message.channel.id)
+					channel_timers[index].start(30)
+					if(channel_timers[index].isFinished()):
+						await message.channel.send(response)
+					else:
+						await messages.channel.send("Sorry, bot still has %s seconds left to cooldown" % (channel_timers[index].timeLeft()))
 				else:
 					await message.channel.send(response)
 			except:
