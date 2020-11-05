@@ -22,7 +22,7 @@ class Countdown:
 		return(math.floor(time.perf_counter() - self.start_time))
 
 	def isFinished(self):
-		if(!self.hasStarted()):
+		if(not self.hasStarted()):
 			return(True)
 		if(time.perf_counter() - self.start_time > self.limit):
 			self.started = False
