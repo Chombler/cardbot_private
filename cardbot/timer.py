@@ -25,7 +25,7 @@ class Countdown:
 	def timeRemaining(self):
 		if(self.start_time is None):
 			return(None)
-		return(math.floor(self.limit - self.timePassed))
+		return(math.floor(self.limit - self.timePassed()))
 
 	def isFinished(self):
 		if(not self.hasStarted()):
