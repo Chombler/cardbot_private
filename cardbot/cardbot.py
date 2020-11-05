@@ -530,6 +530,7 @@ async def regularSearch(message):
 					index = slow_mode_channels.index(message.channel.id)
 					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
 					print("Timer time left: %s" % (channel_timers[index].timeLeft()))
+					print("Is Timer finished: %s" % (channel_timers[index].isFinished()))
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:
