@@ -17,7 +17,7 @@ class Countdown:
 	def hasStarted(self):
 		return(self.started)
 
-	def timeLeft(self):
+	def timePassed(self):
 		if(self.start_time is None):
 			return(None)
 		return(math.floor(time.time() - self.start_time))
@@ -25,7 +25,7 @@ class Countdown:
 	def isFinished(self):
 		if(not self.hasStarted()):
 			return(True)
-		if(time.time() - self.start_time > self.limit):
+		if(self.timePassed() > self.limit):
 			self.started = False
 			return(True)
 		return(False)
