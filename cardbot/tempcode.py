@@ -1,6 +1,9 @@
 import time
 from timer import Countdown
 
+def handyman():
+	pass
+	
 sample = Countdown()
 
 sample.start(5)
