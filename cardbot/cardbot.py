@@ -499,16 +499,21 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
-				elif(message.channel.id in slow_mode_channels):
+				print("Debug Channels: %s" % (debug_channels))
+				print("Slow Mode Channels: %s" % (slow_mode_channels))
+				if(message.channel.id in slow_mode_channels):
+					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
 					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
+					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
+					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
 					if(channel_timers[index].isFinished()):
-						await message.channel.send(response)
 						channel_timers[index].start(30)
 					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timePassed()))
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
+						return
+				if(message.channel.id in debug_channels):
+					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				else:
 					await message.channel.send(response)
 			except:
@@ -534,7 +539,7 @@ async def regularSearch(message):
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timePassed()))
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
 						return
 				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
