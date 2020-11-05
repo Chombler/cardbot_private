@@ -530,11 +530,11 @@ async def regularSearch(message):
 					index = slow_mode_channels.index(message.channel.id)
 					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
 					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
-					print("Is Timer finished: %s" % (channel_timers[index].isFinished()))
+					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:
-						await messages.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timePassed()))
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timePassed()))
 						return
 				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
