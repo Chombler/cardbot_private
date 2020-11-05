@@ -41,13 +41,14 @@ deck_help_channel_id = 285818949457805313
 
 debug_channels = [bot_spam_channel_id, cardbot_bugs_report_channel_id]
 
-slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id]
+slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id, cardbot_bugs_report_channel_id]
 
 pvzh_timer = Countdown()
 card_ideas_timer= Countdown()
 deck_help_timer = Countdown()
+debug_timer = Countdown()
 
-channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer]
+channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer, debug_timer]
 
 help_message = "Bot Commands:\
 \nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
@@ -502,6 +503,7 @@ async def regularSearch(message):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				elif(message.channel.id in slow_mode_channels):
 					index = slow_mode_channels.index(message.channel.id)
+					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
 					if(channel_timers[index].isFinished()):
 						await message.channel.send(response)
 						channel_timers[index].start(30)
@@ -522,17 +524,19 @@ async def regularSearch(message):
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
 				print("Debug Channels: %s" % (debug_channels))
-				print("Sloe Mode Channels: %s" % (slow_mode_channels))
-				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
-				elif(message.channel.id in slow_mode_channels):
+				print("Slow Mode Channels: %s" % (slow_mode_channels))
+				if(message.channel.id in slow_mode_channels):
 					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
+					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
+					print("Timer time left: %s" % (channel_timers[index].timeLeft()))
 					if(channel_timers[index].isFinished()):
-						await message.channel.send(response)
 						channel_timers[index].start(30)
 					else:
 						await messages.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeLeft()))
+						return
+				if(message.channel.id in debug_channels):
+					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 				else:
 					await message.channel.send(response)
 			except:
