@@ -5,7 +5,6 @@ class Countdown:
 	def __init__(self):
 		self.start_time = None
 		self.limit = 0
-		self.current_time = None
 		self.started = False
 
 	def start(self, time_limit):
@@ -19,6 +18,8 @@ class Countdown:
 		return(self.started)
 
 	def timeLeft(self):
+		if(self.start_time is None):
+			return(None)
 		return(math.floor(time.time() - self.start_time))
 
 	def isFinished(self):

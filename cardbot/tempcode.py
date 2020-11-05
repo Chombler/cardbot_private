@@ -1,13 +1,15 @@
+import time
+from timer import Countdown
 
-from tables.tournament import timezone, participant, tournament, participant_to_tournament, tournament_participant_to_bans, tournament_participant_to_ign, matchup
-from constructorRows import timezone_rows
-from db_interactions_tournaments import getParticipantInfo
+sample = Countdown()
 
-def handyman(complete_call):
-	print(getParticipantInfo("Chombler", 1))
-	print(getParticipantInfo(2, 1))
-
-	return("Handyman is finished")
+sample.start(5)
+print(sample.hasStarted())
+time.sleep(1)
+print(sample.timeLeft())
+print(sample.isFinished())
+time.sleep(5)
+print(sample.isFinished())
 
 """
 CREATE TABLE strengths
