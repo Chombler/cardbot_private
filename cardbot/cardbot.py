@@ -490,8 +490,6 @@ async def checkForRegeneration(message):
 
 async def regularSearch(message):
 	if '{{' and '}}' in message.content:
-		if(message.author.name == "Gking10"):
-			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
@@ -500,7 +498,7 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(debug_channels.contains(message.channel.id)):
+				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				elif(message.channel.id in slow_mode_channels):
 					index = slow_mode_channels.index(message.channel.id)
@@ -515,8 +513,6 @@ async def regularSearch(message):
 				await message.channel.send(response)
 
 	if '[[' and ']]' in message.content:
-		if(message.author.name == "Gking10"):
-			await message.channel.send("<:weirdibh:688921196674154517>")
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
@@ -525,7 +521,9 @@ async def regularSearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(debug_channels.contains(message.channel.id)):
+				print("Debug Channels: %s" % (debug_channels))
+				print("Sloe Mode Channels: %s" % (slow_mode_channels))
+				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 				elif(message.channel.id in slow_mode_channels):
 					print("This is a slow mode channel")
