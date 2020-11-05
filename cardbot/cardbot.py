@@ -41,14 +41,13 @@ deck_help_channel_id = 285818949457805313
 
 debug_channels = [bot_spam_channel_id, cardbot_bugs_report_channel_id]
 
-slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id, cardbot_bugs_report_channel_id]
+slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id]
 
 pvzh_timer = Countdown()
 card_ideas_timer= Countdown()
 deck_help_timer = Countdown()
-debug_timer = Countdown()
 
-channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer, debug_timer]
+channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer]
 
 help_message = "Bot Commands:\
 \nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
