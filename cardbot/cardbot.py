@@ -43,9 +43,9 @@ debug_channels = [bot_spam_channel_id, cardbot_bugs_report_channel_id]
 
 slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id]
 
-pvzh_timer = Timer()
-card_ideas_timer= Timer()
-deck_help_timer = Timer()
+pvzh_timer = Countdown()
+card_ideas_timer= Countdown()
+deck_help_timer = Countdown()
 
 channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer]
 
@@ -504,11 +504,11 @@ async def regularSearch(message):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				elif(message.channel.id in slow_mode_channels):
 					index = slow_mode_channels.index(message.channel.id)
-					channel_timers[index].start(30)
 					if(channel_timers[index].isFinished()):
 						await message.channel.send(response)
+						channel_timers[index].start(30)
 					else:
-						await messages.channel.send("Sorry, bot still has %s seconds left to cooldown" % (channel_timers[index].timeLeft()))
+						await messages.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeLeft()))
 				else:
 					await message.channel.send(response)
 			except:
@@ -529,11 +529,11 @@ async def regularSearch(message):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
 				elif(message.channel.id in slow_mode_channels):
 					index = slow_mode_channels.index(message.channel.id)
-					channel_timers[index].start(30)
 					if(channel_timers[index].isFinished()):
 						await message.channel.send(response)
+						channel_timers[index].start(30)
 					else:
-						await messages.channel.send("Sorry, bot still has %s seconds left to cooldown" % (channel_timers[index].timeLeft()))
+						await messages.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeLeft()))
 				else:
 					await message.channel.send(response)
 			except:
