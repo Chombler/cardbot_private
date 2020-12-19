@@ -55,27 +55,6 @@ help_message = "Bot Commands:\
 \nUse **-fuzzy** at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
 \nUse **-t-help** to get a list of tournament commands."
 
-tournament_help_message = "Tournament Commands:\
-\n*Use* ***-register*** *to register your name with the bot so that you can sign up for tournaments. Registration must follow the format:*\
-\n-register [timezone abbreviation].\n\
-\n*Once you've registered, you can use* ***-join*** *to join a tournament that hasn't started yet. Joining must follow the format:*\
-\n-join (Tournament Name) [List of Hero bans seperated by a space] \"IGN\".\n\
-\n*If you have the role Tournament Creators, you can use the command* ***-create-tournament*** *to create a tournament of your own. Tournament Creation must follow the format:*\
-\n-tournament-create (Tournament Name) [# of Hero bans per side] OPTIONAL:<require>(this requires participants to provide an ign).\n\
-\n*If you've registered as a participant with the bot and would like to remove yourself, use* ***-deregister*** *to remove your name from the registry and from any tournaments you are currently involved in.*\
-\nUse **-t-examples** to see example calls of all of these commands."
-
-example_tournament_commands = "Example Tournament Commands:\
-\n**Registration:**\
-\n-register [EST].\n\
-\n**Joining a Tournament:**\
-\n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\n\
-\n**Creating a Tournament:**\
-\n-tournament-create (The Greatest Tournament of All Time!) [2] <require>.\n\
-\n**Deregistering:**\
-\n-deregister\n\
-\nUse **-t-help** to get a list of tournament commands."
-
 @client.event
 async def on_ready():
 	print('We have logged in as {0.user}'.format(client))
@@ -97,6 +76,191 @@ async def on_message(message):
 		database_was_regenerated = await checkForRegeneration(message)
 		if(database_was_regenerated):
 			return
+
+		elif(message.content.startswith('-elo')):
+			await message.channel.send("This feature isn't built yet")
+
+		elif(message.content.startswith('-help')):
+			logRequest(message.author.name, message.content, 3, None)
+			await message.channel.send(help_message)
+
+		elif(message.content.startswith('-fuzzy')):
+			await fuzzySearch(message)
+
+		else:
+			await regularSearch(message)
+
+@client.event
+async def on_reaction_add(reaction, user):
+	if user.name == "Chombler":
+		print("Message Reacted to")
+
+async def fuzzySearch(message):
+	if '{{' and '}}' in message.content:
+		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+		print(stringInput)
+		if(len(stringInput) < 1):
+			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
+		for text in stringInput:
+			if(text == '\u2028'):
+				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
+				return
+			logRequest(message.author.name, message.content, 2, True)
+			response = pullFuzzyHeroRecord(text)
+			try:
+				print("Channel name: %s" % (message.channel.name))
+				print("Channel id: %s" % (message.channel.id))
+				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
+					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+				else:
+					await message.channel.send(response)
+			except:
+				await message.channel.send(response)
+
+	if '[[' and ']]' in message.content:
+		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+		print(stringInput)
+		if(len(stringInput) < 1):
+			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
+		for text in stringInput:
+			if(text == '\u2028'):
+				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
+				return
+			logRequest(message.author.name, message.content, 1, True)
+			response = pullFuzzyCardRecord(text)
+			try:
+				print("Channel name: %s" % (message.channel.name))
+				print("Channel id: %s" % (message.channel.id))
+				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
+					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+				else:
+					await message.channel.send(response)
+			except:
+				await message.channel.send(response)
+
+async def checkForRegeneration(message):
+	if(message.author.name == "Chombler"):
+		if message.content.startswith("$truehandyman"):
+			await message.channel.send("Chombler " + handyman(True))
+			return True
+		elif message.content.startswith("$handyman"):
+			await message.channel.send("Chombler " + handyman(False))
+			return True
+
+		if message.content.startswith('$[[Regenerate Database]]'):
+			await message.channel.send("Chombler " + construct_card_tables())
+			return True
+
+		elif message.content.startswith("$[[Regenerate Nickname]]"):
+			construct_nickname()
+			await message.channel.send("Chombler, you have regenerated nickname.")
+			return True
+
+		elif message.content.startswith("$[[Regenerate Hero]]"):
+			construct_hero_tables()
+			await message.channel.send("Chombler, you have regenerated hero.")
+			return True
+
+		elif message.content.startswith("$[[Regenerate Request]]"):
+			construct_request()
+			await message.channel.send("Chombler, you have regenerated request.")
+			return True
+
+		elif message.content.startswith("$[[Regenerate Request Type]]"):
+			construct_request_type()
+			await message.channel.send("Chombler, you have regenerated request_type.")
+			return True
+
+		elif message.content.startswith("$[[Regenerate Tournament]]"):
+			construct_tournament()
+			await message.channel.send("Chombler, you have regenerated tournament.")
+			return True
+	return False
+
+
+async def regularSearch(message):
+	if '{{' and '}}' in message.content:
+		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+		print("Terms input for search are: %s" % (stringInput))
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 2, False)
+			response = pullHeroRecord(text)
+			try:
+				print("Channel name: %s" % (message.channel.name))
+				print("Channel id: %s" % (message.channel.id))
+				print("Debug Channels: %s" % (debug_channels))
+				print("Slow Mode Channels: %s" % (slow_mode_channels))
+				if(message.channel.id in slow_mode_channels):
+					print("This is a slow mode channel")
+					index = slow_mode_channels.index(message.channel.id)
+					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
+					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
+					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
+					if(channel_timers[index].isFinished()):
+						channel_timers[index].start(30)
+					else:
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
+						return
+				if(message.channel.id in debug_channels):
+					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+				else:
+					await message.channel.send(response)
+			except:
+				await message.channel.send(response)
+
+	if '[[' and ']]' in message.content:
+		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+		print("Terms input for search are: %s" % (stringInput))
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 1, False)
+			response = pullCardRecord(text)
+			try:
+				print("Channel name: %s" % (message.channel.name))
+				print("Channel id: %s" % (message.channel.id))
+				print("Debug Channels: %s" % (debug_channels))
+				print("Slow Mode Channels: %s" % (slow_mode_channels))
+				if(message.channel.id in slow_mode_channels):
+					print("This is a slow mode channel")
+					index = slow_mode_channels.index(message.channel.id)
+					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
+					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
+					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
+					if(channel_timers[index].isFinished()):
+						channel_timers[index].start(30)
+					else:
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
+						return
+				if(message.channel.id in debug_channels):
+					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+				else:
+					await message.channel.send(response)
+			except:
+				await message.channel.send(response)
+
+client.run(token)
+
+"""
+tournament_help_message = "Tournament Commands:\
+\n*Use* ***-register*** *to register your name with the bot so that you can sign up for tournaments. Registration must follow the format:*\
+\n-register [timezone abbreviation].\n\
+\n*Once you've registered, you can use* ***-join*** *to join a tournament that hasn't started yet. Joining must follow the format:*\
+\n-join (Tournament Name) [List of Hero bans seperated by a space] \"IGN\".\n\
+\n*If you have the role Tournament Creators, you can use the command* ***-create-tournament*** *to create a tournament of your own. Tournament Creation must follow the format:*\
+\n-tournament-create (Tournament Name) [# of Hero bans per side] OPTIONAL:<require>(this requires participants to provide an ign).\n\
+\n*If you've registered as a participant with the bot and would like to remove yourself, use* ***-deregister*** *to remove your name from the registry and from any tournaments you are currently involved in.*\
+\nUse **-t-examples** to see example calls of all of these commands."
+
+example_tournament_commands = "Example Tournament Commands:\
+\n**Registration:**\
+\n-register [EST].\n\
+\n**Joining a Tournament:**\
+\n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\n\
+\n**Creating a Tournament:**\
+\n-tournament-create (The Greatest Tournament of All Time!) [2] <require>.\n\
+\n**Deregistering:**\
+\n-deregister\n\
+\nUse **-t-help** to get a list of tournament commands."
+
 
 		elif message.content.startswith('-strength'):
 			if '(' and ')' in message.content:
@@ -375,181 +539,4 @@ async def on_message(message):
 					await message.channel.send(returnString)
 				else:
 					await message.channel.send("You don't have the permission to seed that tournament.")
-
-		elif(message.content.startswith('-help')):
-			logRequest(message.author.name, message.content, 3, None)
-			await message.channel.send(help_message)
-
-		elif(message.content.startswith('-t-help')):
-			logRequest(message.author.name, message.content, 3, None)
-			await message.channel.send(tournament_help_message)
-
-		elif(message.content.startswith('-t-examples')):
-			logRequest(message.author.name, message.content, 3, None)
-			await message.channel.send(example_tournament_commands)
-
-		elif(message.content.startswith('-echo')):
-			logRequest(message.author.name, message.content, 4, None)
-			await message.channel.send(message.content[5:] + " indeed")
-
-		elif(message.content.startswith('-ultimate')):
-			await message.channel.send("PvZ Heroes Ultimate cards:\nhttps://dulst.com/pvzhu/cards")
-
-		elif(message.content.startswith('-fuzzy')):
-			await fuzzySearch(message)
-
-		else:
-			await regularSearch(message)
-
-async def fuzzySearch(message):
-	if '{{' and '}}' in message.content:
-		if(message.author.name == "Gking10"):
-			await message.channel.send("<:weirdibh:688921196674154517>")
-		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-		print(stringInput)
-		if(len(stringInput) < 1):
-			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
-		for text in stringInput:
-			if(text == '\u2028'):
-				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
-				return
-			logRequest(message.author.name, message.content, 2, True)
-			response = pullFuzzyHeroRecord(text)
-			try:
-				print("Channel name: %s" % (message.channel.name))
-				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
-				else:
-					await message.channel.send(response)
-			except:
-				await message.channel.send(response)
-
-	if '[[' and ']]' in message.content:
-		if(message.author.name == "Gking10"):
-			await message.channel.send("<:weirdibh:688921196674154517>")
-		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-		print(stringInput)
-		if(len(stringInput) < 1):
-			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
-		for text in stringInput:
-			if(text == '\u2028'):
-				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
-				return
-			logRequest(message.author.name, message.content, 1, True)
-			response = pullFuzzyCardRecord(text)
-			try:
-				print("Channel name: %s" % (message.channel.name))
-				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
-				else:
-					await message.channel.send(response)
-			except:
-				await message.channel.send(response)
-
-async def checkForRegeneration(message):
-	if(message.author.name == "Chombler"):
-		if message.content.startswith("$truehandyman"):
-			await message.channel.send("Chombler " + handyman(True))
-			return True
-		elif message.content.startswith("$handyman"):
-			await message.channel.send("Chombler " + handyman(False))
-			return True
-
-		if message.content.startswith('$[[Regenerate Database]]'):
-			await message.channel.send("Chombler " + construct_card_tables())
-			return True
-
-		elif message.content.startswith("$[[Regenerate Nickname]]"):
-			construct_nickname()
-			await message.channel.send("Chombler, you have regenerated nickname.")
-			return True
-
-		elif message.content.startswith("$[[Regenerate Hero]]"):
-			construct_hero_tables()
-			await message.channel.send("Chombler, you have regenerated hero.")
-			return True
-
-		elif message.content.startswith("$[[Regenerate Request]]"):
-			construct_request()
-			await message.channel.send("Chombler, you have regenerated request.")
-			return True
-
-		elif message.content.startswith("$[[Regenerate Request Type]]"):
-			construct_request_type()
-			await message.channel.send("Chombler, you have regenerated request_type.")
-			return True
-
-		elif message.content.startswith("$[[Regenerate Tournament]]"):
-			construct_tournament()
-			await message.channel.send("Chombler, you have regenerated tournament.")
-			return True
-	return False
-
-
-async def regularSearch(message):
-	if '{{' and '}}' in message.content:
-		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-		print("Terms input for search are: %s" % (stringInput))
-		for text in stringInput:
-			logRequest(message.author.name, message.content, 2, False)
-			response = pullHeroRecord(text)
-			try:
-				print("Channel name: %s" % (message.channel.name))
-				print("Channel id: %s" % (message.channel.id))
-				print("Debug Channels: %s" % (debug_channels))
-				print("Slow Mode Channels: %s" % (slow_mode_channels))
-				if(message.channel.id in slow_mode_channels):
-					print("This is a slow mode channel")
-					index = slow_mode_channels.index(message.channel.id)
-					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
-					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
-					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
-					if(channel_timers[index].isFinished()):
-						channel_timers[index].start(30)
-					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
-						return
-				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
-				else:
-					await message.channel.send(response)
-			except:
-				await message.channel.send(response)
-
-	if '[[' and ']]' in message.content:
-		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-		print("Terms input for search are: %s" % (stringInput))
-		for text in stringInput:
-			logRequest(message.author.name, message.content, 1, False)
-			response = pullCardRecord(text)
-			try:
-				print("Channel name: %s" % (message.channel.name))
-				print("Channel id: %s" % (message.channel.id))
-				print("Debug Channels: %s" % (debug_channels))
-				print("Slow Mode Channels: %s" % (slow_mode_channels))
-				if(message.channel.id in slow_mode_channels):
-					print("This is a slow mode channel")
-					index = slow_mode_channels.index(message.channel.id)
-					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
-					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
-					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
-					if(channel_timers[index].isFinished()):
-						channel_timers[index].start(30)
-					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
-						return
-				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
-				else:
-					await message.channel.send(response)
-			except:
-				await message.channel.send(response)
-
-
-
-
-client.run(token)
-
-
+"""
