@@ -86,7 +86,7 @@ async def on_message(message):
 			await message.channel.send(elo_help_message)
 
 		elif(message.content.startswith('-elo')):
-			print(messsage.mentions)
+			print(message.mentions)
 			await message.channel.send("This feature isn't built yet")
 
 		elif(message.content.startswith('-help')):
