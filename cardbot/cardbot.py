@@ -53,7 +53,12 @@ help_message = "Bot Commands:\
 \nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
 \nUse **\{\{Hero Name\}\}** to return a specific Hero's information. More than one Hero can be requested at one time.\
 \nUse **-fuzzy** at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
-\nUse **-t-help** to get a list of tournament commands."
+\nUse -elo-help to get a list of elo commands"
+
+elo_help_message = "Bot Commands:\
+\nUse **-elo W\\@winner L\\@loser** to report the outcome of a match.\
+\nWhen you do this, the bot will reply with a message asking the loser to confirm the report.\
+The loser must react to the message using ✅ in order to confirm the results."
 
 @client.event
 async def on_ready():
@@ -80,6 +85,9 @@ async def on_message(message):
 		elif(message.content.startswith('-elo')):
 			await message.channel.send("This feature isn't built yet")
 
+		elif(message.content.startswith('-elo-help')):
+			await message.channel.send(elo_help_message)
+
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
 			await message.channel.send(help_message)
@@ -92,8 +100,7 @@ async def on_message(message):
 
 @client.event
 async def on_reaction_add(reaction, user):
-	if user.name == "Chombler":
-		print("Message Reacted to")
+
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
