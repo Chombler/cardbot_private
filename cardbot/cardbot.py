@@ -82,11 +82,11 @@ async def on_message(message):
 		if(database_was_regenerated):
 			return
 
-		elif(message.content.startswith('-elo')):
-			await message.channel.send("This feature isn't built yet")
-
 		elif(message.content.startswith('-elo-help')):
 			await message.channel.send(elo_help_message)
+
+		elif(message.content.startswith('-elo')):
+			await message.channel.send("This feature isn't built yet")
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
@@ -101,7 +101,7 @@ async def on_message(message):
 @client.event
 async def on_reaction_add(reaction, user):
 	print(reaction)
-	print(reaction == '✅')
+	print(reaction == ✅)
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
