@@ -100,8 +100,8 @@ async def on_message(message):
 
 @client.event
 async def on_reaction_add(reaction, user):
-	print(reaction)
-	print(reaction == ✅)
+	print(reaction.emoji)
+	print(reaction.emoji == '✅')
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
