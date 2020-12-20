@@ -53,7 +53,7 @@ help_message = "Bot Commands:\
 \nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
 \nUse **\{\{Hero Name\}\}** to return a specific Hero's information. More than one Hero can be requested at one time.\
 \nUse **-fuzzy** at the start of a card or Hero call to return a list of closest matches instead of a specific result.\
-\nUse -elo-help to get a list of elo commands"
+\nUse -help-elo to get a list of elo commands"
 
 elo_help_message = "Bot Commands:\
 \nUse **-elo W\\@winner L\\@loser** to report the outcome of a match.\
@@ -82,10 +82,11 @@ async def on_message(message):
 		if(database_was_regenerated):
 			return
 
-		elif(message.content.startswith('-elo-help')):
+		elif(message.content.startswith('-help-elo')):
 			await message.channel.send(elo_help_message)
 
 		elif(message.content.startswith('-elo')):
+			print(messsage.mentions)
 			await message.channel.send("This feature isn't built yet")
 
 		elif(message.content.startswith('-help')):
