@@ -97,8 +97,8 @@ def calculateResults(winner, loser):
 	winner_expected = 1 / (1 + pow(10, (start_loser_elo - start_winner_elo) / 400))
 	loser_expected = 1 / (1 + pow(10, (start_winner_elo - start_loser_elo) / 400))
 
-	final_winner_elo = start_winner_elo + 30 * (1 - winner_expected)
-	final_loser_elo = start_loser_elo + 30 * (0 - loser_expected)
+	final_winner_elo = round(start_winner_elo + 30 * (1 - winner_expected))
+	final_loser_elo = round(start_loser_elo + 30 * (0 - loser_expected))
 
 	return([start_winner_elo, final_winner_elo, start_loser_elo, final_loser_elo])
 
@@ -106,4 +106,5 @@ def applyResults(winner, loser):
 	results = calculateResults(winner, loser)
 	updateElo(winner, results[1])
 	updateElo(loser, results[3])
+	return(results)
 
