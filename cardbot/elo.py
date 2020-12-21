@@ -92,14 +92,14 @@ def updateElo(name, score):
 
 def getLeaderboard():
 	try:
-		return_string = ""
+		return_string = "__ELO__ | __Name__"
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
 		cursor = connection.cursor()
 
 		select_query = '''
-		SELECT name, score
+		SELECT score, name
 		FROM elo
 		ORDER BY score DESC
 		LIMIT 10'''
@@ -109,14 +109,10 @@ def getLeaderboard():
 		results = cursor.fetchall()
 		print(results)
 		name_length = 0
-		for row in range(len(results)):
-			name_length = len(results[row][0]) if name_length < len(results[row][0]) else name_length
-
-		return_string = "__Rank__ |%*s__Name__%*s| __ELO__" % (round(name_length / 2), " ", round(name_length / 2), " ")
 
 		for row in range(len(results)):
-			return_string += "\n %-8s %-*s %s" % (row + 1, name_length, results[row][0], results[row][1])
-			
+			return_string += "\n%-5s %s" % (results[row][0], results[row][1])
+
 	except (Exception, psycopg2.Error) as error :
 		print ("Error retreiving leaderboard from elo,", error)
 	finally:
