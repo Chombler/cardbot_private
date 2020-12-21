@@ -17,11 +17,12 @@ def getElo(name):
 
 		cursor.execute(select_query, (name,))
 
-		print(cursor.fetchall())
-		print(len(cursor.fetchall()))
+		results = cursor.fetchall()
+		print(results)
+		print(len(results))
 
-		if(len(cursor.fetchall()) > 0):
-			elo = cursor.fetchall()[0][0]
+		if(len(results) > 0):
+			elo = results[0][0]
 		else:
 			createRow(name)
 			elo = 1000
