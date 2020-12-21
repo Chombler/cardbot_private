@@ -85,23 +85,27 @@ def updateElo(name, score):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+def calculateResults(winner, loser):
+	start_winner_elo = getElo(winner)
+	start_loser_elo = getElo(loser)
+
+	print(start_winner_elo)
+	print(start_loser_elo)
+
+	winner_expected = 1 / (1 + pow(10, (start_loser_elo - start_winner_elo) / 400))
+	loser_expected = 1 / (1 + pow(10, (start_winner_elo - start_loser_elo) / 400))
+
+	final_winner_elo = start_winner_elo + 30 * (1 - winner_expected)
+	final_loser_elo = start_loser_elo + 30 * (0 - loser_expected)
+
+	print(final_winner_elo)
+	print(final_loser_elo)
+
+	return([start_winner_elo, final_winner_elo, start_loser_elo, final_loser_elo])
+
 def applyResults(winner, loser):
-	winner_elo = getElo(winner)
-	loser_elo = getElo(loser)
-
-	print(winner_elo)
-	print(loser_elo)
-
-	winner_expected = 1 / (1 + pow(10, (loser_elo - winner_elo) / 400))
-	loser_expected = 1 / (1 + pow(10, (winner_elo - loser_elo) / 400))
-
-	winner_elo = winner_elo + 30 * (1 - winner_expected)
-	loser_elo = loser_elo + 30 * (0 - loser_expected)
-
-	print(winner_elo)
-	print(loser_elo)
-
-	updateElo(winner, winner_elo)
-	updateElo(loser, loser_elo)
+	results = calculateResults(winner, loser)
+	updateElo(winner, results[1])
+	updateElo(loser, results[3])
 
 

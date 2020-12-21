@@ -21,6 +21,8 @@ from construct_tables import construct_card_tables, construct_hero_tables, const
 from credentials import token
 from tempcode import handyman
 
+from elo import calculateResults
+
 client = discord.Client()
 
 """
@@ -85,8 +87,14 @@ async def on_message(message):
 			await message.channel.send(elo_help_message)
 
 		elif(message.content.startswith('-elo')):
-			print([mention.name for mention in message.mentions])
-			await message.channel.send("This feature isn't built yet")
+			names_mentioned = [mention.name for mention in message.mentions]
+			print(names_mentioned)
+			if(len(names_mentioned) == 2):
+				results = calculateResults(names_mentioned[0], names_mentioned[1])
+				await message.channel.send("-unconfirmed\
+											\nWinner: %s (%s -> %s)\
+											\nLoser:  %s (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]))
+			await message.channel.send("You need exactly two people in order to report a match")
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
