@@ -14,10 +14,8 @@ def getElo(name):
 		SELECT score
 		FROM elo
 		WHERE name = %s'''
-		
-		print('%s' % name)
 
-		cursor.execute(select_query, (name))
+		cursor.execute(select_query, (name,))
 
 		print(cursor.fetchall()[0][0])
 
@@ -51,7 +49,7 @@ def createRow(name):
 		VALUES (%s, 1000)
 		'''
 
-		cursor.execute(insert_query, (name))
+		cursor.execute(insert_query, (name,))
 		connection.commit()
 		print("New Player added to elo")
 
