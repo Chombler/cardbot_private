@@ -4,6 +4,7 @@ from credentials import token, db_credentials
 
 def getElo(name):
 	try:
+		elo = 0
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
 		print("connected")
@@ -42,7 +43,7 @@ def createRow(name):
 		cursor = connection.cursor()
 
 		insert_query = '''
-		INSERT INTO elo
+		INSERT INTO elo(name, score)
 		VALUES (%s, 1000)
 		'''
 
