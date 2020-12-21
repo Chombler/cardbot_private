@@ -104,9 +104,10 @@ def getLeaderboard():
 		ORDER BY score
 		LIMIT 10'''
 
-		cursor.execute(select_query, (name,))
+		cursor.execute(select_query)
 
 		results = cursor.fetchall()
+		print(results)
 		for row in len(results):
 			return_string += "\n%5s %6s %s" % (row + 1, results[row][0], results[row][1])
 
