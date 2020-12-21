@@ -21,7 +21,7 @@ from construct_tables import construct_card_tables, construct_hero_tables, const
 from credentials import token
 from tempcode import handyman
 
-from elo import calculateResults, applyResults
+from elo import calculateResults, applyResults, getElo, getLeaderboard
 
 client = discord.Client()
 
@@ -58,9 +58,10 @@ help_message = "Bot Commands:\
 \nUse -help-elo to get a list of elo commands"
 
 elo_help_message = "Bot Commands:\
-\nUse **-elo \\@winner \\@loser** to report the outcome of a match.\
+\nUse **-elo \\@winner \\@loser** to report the outcome of a set.\
 \nWhen you do this, the bot will reply with a message asking the loser to confirm the report.\
-The loser must react to the message using ✅ in order to confirm the results."
+The loser must react to the message using ✅ in order to confirm the results.\
+\nUse **-elo-score** to view your current elo score."
 
 @client.event
 async def on_ready():
@@ -86,6 +87,12 @@ async def on_message(message):
 		elif(message.content.startswith('-help-elo')):
 			await message.channel.send(elo_help_message)
 
+		elif(message.content.startswith('-elo-score')):
+			await message.channel.send("Your Elo Score is %s" % getElo(message.author.name), delete_after = 60)
+
+		elif(message.content.startswith('-elo-leaderboard')):
+			await message.channel.send(getLeaderboard(), delete_after = 60)
+
 		elif(message.content.startswith('-elo')):
 			names_mentioned = [mention.name for mention in message.mentions]
 			print(names_mentioned)
@@ -94,7 +101,7 @@ async def on_message(message):
 				await message.channel.send(content = "-unconfirmed\
 											\nWinner: [%s] (%s -> %s)\
 											\nLoser:  [%s] (%s -> %s)\
-											\nThe Loser must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]),
+											\n%s must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3], names_mentioned[1]),
 											delete_after = 60)
 			else:
 				await message.channel.send("You need exactly two people in order to report a match")
@@ -116,7 +123,8 @@ async def on_reaction_add(reaction, user):
 		results = applyResults(names_mentioned[0], names_mentioned[1])
 		await reaction.message.edit(content = "-confirmed\
 			\nWinner: [%s] (%s -> %s)\
-			\nLoser:  [%s] (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]))
+			\nLoser:  [%s] (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]),
+			delete_after = 600)
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
@@ -206,9 +214,6 @@ async def regularSearch(message):
 				if(message.channel.id in slow_mode_channels):
 					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
-					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
-					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
-					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:
@@ -231,9 +236,6 @@ async def regularSearch(message):
 				if(message.channel.id in slow_mode_channels):
 					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
-					print("Has Timer Started: %s" % (channel_timers[index].hasStarted()))
-					print("Timer time passed: %s" % (channel_timers[index].timePassed()))
-					print("Timer is finished: %s" % (channel_timers[index].isFinished()))
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:

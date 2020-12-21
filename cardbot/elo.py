@@ -90,6 +90,36 @@ def updateElo(name, score):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+def getLeaderboard():
+	try:
+		return_string = "__Rank | Name | ELO__"
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_query = '''
+		SELECT name, score
+		FROM elo
+		ORDER BY score
+		LIMIT 10'''
+
+		cursor.execute(select_query, (name,))
+
+		results = cursor.fetchall()
+		for row in len(results):
+			return_string += "\n%5s %6s %s" % (row + 1, results[row][0], results[row][1])
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error retreiving leaderboard from elo,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(return_string)
+
 def calculateResults(winner, loser):
 	start_winner_elo = getElo(winner)
 	start_loser_elo = getElo(loser)
