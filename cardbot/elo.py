@@ -108,7 +108,7 @@ def getLeaderboard():
 
 		results = cursor.fetchall()
 		print(results)
-		for row in len(results):
+		for row in range(len(results)):
 			return_string += "\n%5s %6s %s" % (row + 1, results[row][0], results[row][1])
 
 	except (Exception, psycopg2.Error) as error :
