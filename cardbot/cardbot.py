@@ -114,7 +114,7 @@ async def on_reaction_add(reaction, user):
 	names_mentioned = regex.findall('\[(.+?)\]', reaction.message.content)
 	if(reaction.message.content.startswith('-unconfirmed') and reaction.emoji == '✅' and user.name == names_mentioned[1]):
 		results = applyResults(names_mentioned[0], names_mentioned[1])
-		await reaction.message.edit("-confirmed\
+		await reaction.message.edit(content = "-confirmed\
 			\nWinner: [%s] (%s -> %s)\
 			\nLoser:  [%s] (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]))
 
