@@ -14,6 +14,8 @@ def getElo(name):
 		SELECT score
 		FROM elo
 		WHERE name = %s'''
+		
+		print('%s' % name)
 
 		cursor.execute(select_query, (name))
 
@@ -28,7 +30,7 @@ def getElo(name):
 		print("Elo obtained")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error retreiving score from elo,", error)
 	finally:
 		#closing database connection.
 		if(connection):
