@@ -17,6 +17,8 @@ def getElo(name):
 
 		cursor.execute(select_query, (name))
 
+		print(cursor.fetchall()[0][0])
+
 		elo = cursor.fetchall()[0][0]
 
 		if(elo == None):
