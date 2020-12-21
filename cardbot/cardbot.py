@@ -21,7 +21,7 @@ from construct_tables import construct_card_tables, construct_hero_tables, const
 from credentials import token
 from tempcode import handyman
 
-from elo import calculateResults
+from elo import calculateResults, applyResults
 
 client = discord.Client()
 
@@ -92,9 +92,9 @@ async def on_message(message):
 			if(len(names_mentioned) == 2):
 				results = calculateResults(names_mentioned[0], names_mentioned[1])
 				await message.channel.send(content = "-unconfirmed\
-											\nWinner: %s (%s -> %s)\
-											\nLoser:  %s (%s -> %s)\
-											\nThe Loser must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]),
+											\nWinner: @%s (%s -> %s)\
+											\nLoser:  @%s (%s -> %s)\
+											\nThe Loser must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3], names_mentioned[1]),
 											delete_after = 60)
 			else:
 				await message.channel.send("You need exactly two people in order to report a match")
@@ -111,8 +111,9 @@ async def on_message(message):
 
 @client.event
 async def on_reaction_add(reaction, user):
-	print(reaction.emoji)
-	print(reaction.emoji == '✅')
+	names_mentioned = [mention.name for mention in message.mentions]
+	if(reaction.message.startswith('-unconfirmed') and reaction.emoji == '✅' and user.name == names_mentioned[1]):
+		applyResults(names_mentioned[0], names_mentioned[1])
 
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
@@ -121,9 +122,6 @@ async def fuzzySearch(message):
 		if(len(stringInput) < 1):
 			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
-			if(text == '\u2028'):
-				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
-				return
 			logRequest(message.author.name, message.content, 2, True)
 			response = pullFuzzyHeroRecord(text)
 			try:
@@ -142,9 +140,6 @@ async def fuzzySearch(message):
 		if(len(stringInput) < 1):
 			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
-			if(text == '\u2028'):
-				await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
-				return
 			logRequest(message.author.name, message.content, 1, True)
 			response = pullFuzzyCardRecord(text)
 			try:
@@ -205,10 +200,6 @@ async def regularSearch(message):
 			logRequest(message.author.name, message.content, 2, False)
 			response = pullHeroRecord(text)
 			try:
-				print("Channel name: %s" % (message.channel.name))
-				print("Channel id: %s" % (message.channel.id))
-				print("Debug Channels: %s" % (debug_channels))
-				print("Slow Mode Channels: %s" % (slow_mode_channels))
 				if(message.channel.id in slow_mode_channels):
 					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
@@ -234,10 +225,6 @@ async def regularSearch(message):
 			logRequest(message.author.name, message.content, 1, False)
 			response = pullCardRecord(text)
 			try:
-				print("Channel name: %s" % (message.channel.name))
-				print("Channel id: %s" % (message.channel.id))
-				print("Debug Channels: %s" % (debug_channels))
-				print("Slow Mode Channels: %s" % (slow_mode_channels))
 				if(message.channel.id in slow_mode_channels):
 					print("This is a slow mode channel")
 					index = slow_mode_channels.index(message.channel.id)
@@ -247,7 +234,7 @@ async def regularSearch(message):
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()), delete_after = channel_timers[index].timeRemaining())
 						return
 				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
