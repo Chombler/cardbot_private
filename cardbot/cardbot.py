@@ -71,7 +71,6 @@ async def on_message(message):
 	if(message.author.bot or message.content.startswith('-ignore')):
 		pass
 	else:
-
 		message_author = ""
 		try:
 			message_author = message.author.nickname
@@ -86,7 +85,7 @@ async def on_message(message):
 			await message.channel.send(elo_help_message)
 
 		elif(message.content.startswith('-elo')):
-			print(message.mentions)
+			print([mention.name for mention in message.mentions])
 			await message.channel.send("This feature isn't built yet")
 
 		elif(message.content.startswith('-help')):
