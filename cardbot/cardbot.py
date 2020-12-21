@@ -58,7 +58,7 @@ help_message = "Bot Commands:\
 \nUse -help-elo to get a list of elo commands"
 
 elo_help_message = "Bot Commands:\
-\nUse **-elo W\\@winner L\\@loser** to report the outcome of a match.\
+\nUse **-elo \\@winner \\@loser** to report the outcome of a match.\
 \nWhen you do this, the bot will reply with a message asking the loser to confirm the report.\
 The loser must react to the message using ✅ in order to confirm the results."
 
