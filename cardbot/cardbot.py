@@ -94,7 +94,7 @@ async def on_message(message):
 			await message.channel.send(getLeaderboard(), delete_after = 60)
 
 		elif(message.content.startswith('-elo')):
-			if "verified" in [role.name.lower() for role in message.author.roles]:
+			if 322500874486153216 in [role.id for role in message.author.roles]:
 				names_mentioned = [mention.name for mention in message.mentions]
 				print(names_mentioned)
 				if(len(names_mentioned) == 2):
