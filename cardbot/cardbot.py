@@ -94,17 +94,20 @@ async def on_message(message):
 			await message.channel.send(getLeaderboard(), delete_after = 60)
 
 		elif(message.content.startswith('-elo')):
-			names_mentioned = [mention.name for mention in message.mentions]
-			print(names_mentioned)
-			if(len(names_mentioned) == 2):
-				results = calculateResults(names_mentioned[0], names_mentioned[1])
-				await message.channel.send(content = "-unconfirmed\
-											\nWinner: [%s] (%s -> %s)\
-											\nLoser:  [%s] (%s -> %s)\
-											\n%s must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3], names_mentioned[1]),
-											delete_after = 60)
+			if "verified" in [role.name.lower() for role in message.author.roles]:
+				names_mentioned = [mention.name for mention in message.mentions]
+				print(names_mentioned)
+				if(len(names_mentioned) == 2):
+					results = calculateResults(names_mentioned[0], names_mentioned[1])
+					await message.channel.send(content = "-unconfirmed\
+												\nWinner: [%s] (%s -> %s)\
+												\nLoser:  [%s] (%s -> %s)\
+												\n%s must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3], names_mentioned[1]),
+												delete_after = 60)
+				else:
+					await message.channel.send("You need exactly two people in order to report a match")
 			else:
-				await message.channel.send("You need exactly two people in order to report a match")
+				await message.channel.send("You must be verified in order to report matches")
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
