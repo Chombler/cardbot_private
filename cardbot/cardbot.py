@@ -91,7 +91,7 @@ async def on_message(message):
 			await message.channel.send("Your Elo Score is %s" % getElo(message.author.name), delete_after = 60)
 
 		elif(message.content.startswith('-elo-leaderboard')):
-			await message.channel.send(getLeaderboard(), delete_after = 60)
+			await message.channel.send(getLeaderboard())
 
 		elif(message.content.startswith('-elo')):
 			if 322500874486153216 in [role.id for role in message.author.roles]:
