@@ -1,6 +1,6 @@
 from tables import elo
 
-def handyman():
+def handyman(complete):
 	elo.createTable()
 
 """

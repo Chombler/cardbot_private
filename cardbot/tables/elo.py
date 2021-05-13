@@ -12,7 +12,7 @@ def createTable():
 		create_table_query = '''CREATE TABLE elo
 								(id SERIAL PRIMARY KEY,
 								name varchar(64),
-								score int);'''
+								score bigint);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
