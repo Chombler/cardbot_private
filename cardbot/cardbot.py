@@ -36,6 +36,7 @@ requestTypeTuple = [
 bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
 chombler_id = 445781406111760415
+bot_id = 720763633604231209
 
 pvzh_chat_channel_id = 285849268257030145
 card_ideas_channel_id = 290316016234528769
@@ -101,9 +102,9 @@ async def on_message(message):
 				if(len(names_mentioned) == 2):
 					results = calculateResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 					await message.channel.send(content = "-unconfirmed\
-												\nWinner: [%s] ||%s|| (%s -> %s)\
-												\nLoser:  [%s] ||%s|| (%s -> %s)\
-												\n%s must react with ✅ to confirm these results" % (names_mentioned[0], ids_mentioned[0], results[0], results[1], names_mentioned[1], ids_mentioned[1], results[2], results[3], names_mentioned[1]),
+												\nWinner: [%s] ||%d|| (%d -> %d)\
+												\nLoser:  [%s] ||%d|| (%d -> %d)\
+												\nBoth participants must react with ✅ to confirm these results" % (names_mentioned[0], ids_mentioned[0], results[0], results[1], names_mentioned[1], ids_mentioned[1], results[2], results[3]),
 												delete_after = 60)
 				else:
 					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
@@ -124,7 +125,10 @@ async def on_message(message):
 async def on_reaction_add(reaction, user):
 	names_mentioned = regex.findall('\[(.+?)\]', reaction.message.content)
 	ids_mentioned = regex.findall('\|\|(.+?)\|\|', reaction.message.content)
-	if(reaction.message.content.startswith('-unconfirmed') and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
+	is_unconfirmed_message = reaction.message.content.startswith('-unconfirmed')
+	is_cardbot_author = reaction.message.author.id = bot_id
+
+	if(is_unconfirmed_message and is_cardbot_author and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
 		results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 		await reaction.message.edit(content = "-confirmed\
 			\nWinner: [%s] (%s -> %s)\
