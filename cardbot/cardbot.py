@@ -126,7 +126,7 @@ async def on_reaction_add(reaction, user):
 	names_mentioned = regex.findall('\[(.+?)\]', reaction.message.content)
 	ids_mentioned = regex.findall('\|\|(.+?)\|\|', reaction.message.content)
 	is_unconfirmed_message = reaction.message.content.startswith('-unconfirmed')
-	is_cardbot_author = reaction.message.author.id = bot_id
+	is_cardbot_author = reaction.message.author.id == bot_id
 
 	if(is_unconfirmed_message and is_cardbot_author and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
 		results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
