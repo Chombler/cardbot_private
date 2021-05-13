@@ -26,7 +26,7 @@ def getElo(name, discord_id):
 			if(results[0][1] != name):
 				updateElo()
 		else:
-			createRow(discord_id, name)
+			createRow(name, discord_id)
 			elo = 1000
 
 		print("Elo obtained")
