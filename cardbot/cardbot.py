@@ -99,12 +99,16 @@ async def on_message(message):
 				names_mentioned = [mention.name for mention in message.mentions]
 				ids_mentioned = [mention.id for mention in message.mentions]
 				print("Names mentioned: %s\nIDs mentioned: %s" % (names_mentioned, ids_mentioned))
+				other_name = [name for name in names_mentioned if name != message.author.name]
+				other_id = [disc_id for disc_id in ids_mentioned if disc_id != message.author.id]
 				if(len(names_mentioned) == 2):
 					results = calculateResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 					await message.channel.send(content = f"-unconfirmed\
 												\nWinner: [{names_mentioned[0]}] ||{ids_mentioned[0]}|| ({results[0]} -> {results[1]})\
 												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
-												\nBoth participants must react with ✅ to confirm these results",
+												\nReported By: [{message.author.name}] ||{message.author.id}||\
+												\nMust be confirmed by: [{other_name[0]}] ||\|{other_id[0]}\|||\
+												\n{} must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
 					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
