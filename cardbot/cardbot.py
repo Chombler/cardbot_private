@@ -108,7 +108,7 @@ async def on_message(message):
 												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
 												\nReported By: [{message.author.name}] ||{message.author.id}||\
 												\nMust be confirmed by: [{other_name[0]}] ||\|{other_id[0]}\|||\
-												\n{} must react with ✅ to confirm these results",
+												\n{other_name[0]} must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
 					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
@@ -139,12 +139,55 @@ async def on_reaction_add(reaction, user):
 			\nLoser:  [%s] (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]),
 			delete_after = 600)
 
+async def regularSearch(message):
+	if '{{' and '}}' in message.content:
+		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
+		print("Terms input for search are: %s" % (stringInput))
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 2, False)
+			response = pullHeroRecord(text)
+			try:
+				if(message.channel.id in slow_mode_channels):
+					print("This is a slow mode channel")
+					index = slow_mode_channels.index(message.channel.id)
+					if(channel_timers[index].isFinished()):
+						channel_timers[index].start(30)
+					else:
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
+						return
+				if(message.channel.id in debug_channels):
+					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
+				else:
+					await message.channel.send(response)
+			except:
+				await message.channel.send(response)
+
+	if '[[' and ']]' in message.content:
+		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
+		print("Terms input for search are: %s" % (stringInput))
+		for text in stringInput:
+			logRequest(message.author.name, message.content, 1, False)
+			response = pullCardRecord(text)
+			try:
+				if(message.channel.id in slow_mode_channels):
+					print("This is a slow mode channel")
+					index = slow_mode_channels.index(message.channel.id)
+					if(channel_timers[index].isFinished()):
+						channel_timers[index].start(30)
+					else:
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()), delete_after = channel_timers[index].timeRemaining())
+						return
+				if(message.channel.id in debug_channels):
+					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
+				else:
+					await message.channel.send(response)
+			except:
+				await message.channel.send(response)
+
 async def fuzzySearch(message):
 	if '{{' and '}}' in message.content:
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print(stringInput)
-		if(len(stringInput) < 1):
-			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 2, True)
 			response = pullFuzzyHeroRecord(text)
@@ -161,8 +204,6 @@ async def fuzzySearch(message):
 	if '[[' and ']]' in message.content:
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print(stringInput)
-		if(len(stringInput) < 1):
-			await message.channel.send("This bot call is empty, just like the promises of the other presidential candidates.")
 		for text in stringInput:
 			logRequest(message.author.name, message.content, 1, True)
 			response = pullFuzzyCardRecord(text)
@@ -216,51 +257,6 @@ async def checkForRegeneration(message):
 			return True
 	return False
 
-
-async def regularSearch(message):
-	if '{{' and '}}' in message.content:
-		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
-		print("Terms input for search are: %s" % (stringInput))
-		for text in stringInput:
-			logRequest(message.author.name, message.content, 2, False)
-			response = pullHeroRecord(text)
-			try:
-				if(message.channel.id in slow_mode_channels):
-					print("This is a slow mode channel")
-					index = slow_mode_channels.index(message.channel.id)
-					if(channel_timers[index].isFinished()):
-						channel_timers[index].start(30)
-					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
-						return
-				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
-				else:
-					await message.channel.send(response)
-			except:
-				await message.channel.send(response)
-
-	if '[[' and ']]' in message.content:
-		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
-		print("Terms input for search are: %s" % (stringInput))
-		for text in stringInput:
-			logRequest(message.author.name, message.content, 1, False)
-			response = pullCardRecord(text)
-			try:
-				if(message.channel.id in slow_mode_channels):
-					print("This is a slow mode channel")
-					index = slow_mode_channels.index(message.channel.id)
-					if(channel_timers[index].isFinished()):
-						channel_timers[index].start(30)
-					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()), delete_after = channel_timers[index].timeRemaining())
-						return
-				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
-				else:
-					await message.channel.send(response)
-			except:
-				await message.channel.send(response)
 
 client.run(token)
 
