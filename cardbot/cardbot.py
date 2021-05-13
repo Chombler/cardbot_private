@@ -101,10 +101,10 @@ async def on_message(message):
 				print("Names mentioned: %s\nIDs mentioned: %s" % (names_mentioned, ids_mentioned))
 				if(len(names_mentioned) == 2):
 					results = calculateResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
-					await message.channel.send(content = "-unconfirmed\
-												\nWinner: [%s] ||%d|| (%d -> %d)\
-												\nLoser:  [%s] ||%d|| (%d -> %d)\
-												\nBoth participants must react with ✅ to confirm these results" % (names_mentioned[0], ids_mentioned[0], results[0], results[1], names_mentioned[1], ids_mentioned[1], results[2], results[3]),
+					await message.channel.send(content = f"-unconfirmed\
+												\nWinner: [{names_mentioned[0]}] ||{ids_mentioned[0]}|| ({results[0]} -> {results[1]})\
+												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
+												\nBoth participants must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
 					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
