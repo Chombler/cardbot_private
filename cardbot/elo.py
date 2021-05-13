@@ -32,7 +32,7 @@ def getElo(name, discord_id):
 		print("Elo obtained")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error retreiving score from elo,", error)
+		print ("Error retreiving score from ELO,", error)
 	finally:
 		#closing database connection.
 		if(connection):
@@ -58,7 +58,7 @@ def createRow(name, discord_id):
 		print("New Player added to elo")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error creating new row in ELO,", error)
 	finally:
 		#closing database connection.
 		if(connection):
@@ -85,7 +85,7 @@ def updateElo(name, discord_id, score):
 		print("Elo updated")
 
 	except (Exception, psycopg2.Error) as error :
-		print ("Error logging request in request,", error)
+		print ("Error updating ELO,", error)
 	finally:
 		#closing database connection.
 		if(connection):

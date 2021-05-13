@@ -107,7 +107,7 @@ async def on_message(message):
 												\nWinner: [{names_mentioned[0]}] ||{ids_mentioned[0]}|| ({results[0]} -> {results[1]})\
 												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
 												\nReported By: [{message.author.name}] ||{message.author.id}||\
-												\nMust be confirmed by: [{other_name[0]}] ||\|{other_id[0]}\|||\
+												\nMust be confirmed by: [{other_name[0]}] ||-{other_id[0]}-||\
 												\n{other_name[0]} must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
@@ -134,10 +134,10 @@ async def on_reaction_add(reaction, user):
 
 	if(is_unconfirmed_message and is_cardbot_author and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
 		results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
-		await reaction.message.edit(content = "-confirmed\
-			\nWinner: [%s] (%s -> %s)\
-			\nLoser:  [%s] (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]),
-			delete_after = 600)
+		await reaction.message.edit(content = f"-confirmed\
+											\nWinner: [{names_mentioned[0]}] ({results[0]} -> {results[1]})\
+											\nLoser:  [{names_mentioned[1]}] ({results[2]} -> {results[3]})",
+											delete_after = 600)
 
 async def regularSearch(message):
 	if '{{' and '}}' in message.content:
