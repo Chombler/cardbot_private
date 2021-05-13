@@ -12,7 +12,8 @@ def createTable():
 		create_table_query = '''CREATE TABLE elo
 								(id SERIAL PRIMARY KEY,
 								name varchar(64),
-								score bigint);'''
+								discord_id bigint,
+								score int);'''
 
 		cursor.execute(create_table_query)
 		connection.commit()
@@ -66,7 +67,7 @@ def addToTable(record):
 		connection = psycopg2.connect(db_credentials)
 		cursor = connection.cursor()
 
-		postgres_insert_query = """ INSERT INTO elo(name, score) VALUES"""
+		postgres_insert_query = """ INSERT INTO elo(name, discord_id score) VALUES"""
 		cursor.execute(postgres_insert_query + record)
 
 		connection.commit()
