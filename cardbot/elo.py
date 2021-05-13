@@ -127,7 +127,7 @@ def getLeaderboard():
 			return(return_string)
 
 def calculateResults(winner, winner_id, loser, loser_id):
-	start_winner_elo = getElo(winner, winner_expected)
+	start_winner_elo = getElo(winner, winner_id)
 	start_loser_elo = getElo(loser, loser_id)
 
 	winner_expected = 1 / (1 + pow(10, (start_loser_elo - start_winner_elo) / 400))
