@@ -106,8 +106,8 @@ async def on_message(message):
 					await message.channel.send(content = f"-unconfirmed\
 												\nWinner: [{names_mentioned[0]}] ||{ids_mentioned[0]}|| ({results[0]} -> {results[1]})\
 												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
-												\nReported By: [{message.author.name}] ||{message.author.id}||\
-												\nMust be confirmed by: [{other_name[0]}] ||-{other_id[0]}-||\
+												\nReported By: {message.author.name}\
+												\nMust be confirmed by: \\@{other_name[0]}\
 												\n{other_name[0]} must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
@@ -129,10 +129,10 @@ async def on_message(message):
 async def on_reaction_add(reaction, user):
 	names_mentioned = regex.findall('\[(.+?)\]', reaction.message.content)
 	ids_mentioned = regex.findall('\|\|(.+?)\|\|', reaction.message.content)
-	is_unconfirmed_message = reaction.message.content.startswith('-unconfirmed')
-	is_cardbot_author = reaction.message.author.id == bot_id
+	message_is_unconfirmed = reaction.message.content.startswith('-unconfirmed')
+	message_author_is_cardbot = reaction.message.author.id == bot_id
 
-	if(is_unconfirmed_message and is_cardbot_author and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
+	if(message_is_unconfirmed and message_author_is_cardbot and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
 		results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 		await reaction.message.edit(content = f"-confirmed\
 											\nWinner: [{names_mentioned[0]}] ({results[0]} -> {results[1]})\
