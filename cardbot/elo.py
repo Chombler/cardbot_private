@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
 
-def getElo(name):
+def getElo(name, discord_id):
 	try:
 		elo = 0
 		print("Trying")
@@ -11,11 +11,11 @@ def getElo(name):
 		cursor = connection.cursor()
 
 		select_query = '''
-		SELECT score
+		SELECT score, name
 		FROM elo
-		WHERE name = %s'''
+		WHERE discord_id = %s'''
 
-		cursor.execute(select_query, (name,))
+		cursor.execute(select_query, (discord_id,))
 
 		results = cursor.fetchall()
 		print(results)
@@ -23,8 +23,10 @@ def getElo(name):
 
 		if(len(results) > 0):
 			elo = results[0][0]
+			if(results[0][1] != name):
+				updateElo()
 		else:
-			createRow(name)
+			createRow(discord_id, name)
 			elo = 1000
 
 		print("Elo obtained")
@@ -39,7 +41,7 @@ def getElo(name):
 			print("PostgreSQL connection is closed")
 			return(elo)
 
-def createRow(name):
+def createRow(name, discord_id):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -47,11 +49,11 @@ def createRow(name):
 		cursor = connection.cursor()
 
 		insert_query = '''
-		INSERT INTO elo(name, score)
-		VALUES (%s, 1000)
+		INSERT INTO elo(name, score, discord_id)
+		VALUES (%s, 1000, %s)
 		'''
 
-		cursor.execute(insert_query, (name,))
+		cursor.execute(insert_query, (name, discord_id))
 		connection.commit()
 		print("New Player added to elo")
 
@@ -64,7 +66,7 @@ def createRow(name):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def updateElo(name, score):
+def updateElo(name, discord_id, score):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -73,11 +75,12 @@ def updateElo(name, score):
 
 		update_query = '''
 		UPDATE elo
-		SET score = %s
-		WHERE name = %s
+		SET score = %s, 
+			name = %s
+		WHERE discord_id = %s
 		'''
 
-		cursor.execute(update_query, (score, name))
+		cursor.execute(update_query, (score, discord_id))
 		connection.commit()
 		print("Elo updated")
 
@@ -123,9 +126,9 @@ def getLeaderboard():
 			print("PostgreSQL connection is closed")
 			return(return_string)
 
-def calculateResults(winner, loser):
-	start_winner_elo = getElo(winner)
-	start_loser_elo = getElo(loser)
+def calculateResults(winner, winner_id, loser, loser_id):
+	start_winner_elo = getElo(winner, winner_expected)
+	start_loser_elo = getElo(loser, loser_id)
 
 	winner_expected = 1 / (1 + pow(10, (start_loser_elo - start_winner_elo) / 400))
 	loser_expected = 1 / (1 + pow(10, (start_winner_elo - start_loser_elo) / 400))
@@ -135,9 +138,9 @@ def calculateResults(winner, loser):
 
 	return([start_winner_elo, final_winner_elo, start_loser_elo, final_loser_elo])
 
-def applyResults(winner, loser):
+def applyResults(winner, winner_id, loser, loser_id):
 	results = calculateResults(winner, loser)
-	updateElo(winner, results[1])
-	updateElo(loser, results[3])
+	updateElo(winner, winner_id, results[1])
+	updateElo(loser, loser_id, results[3])
 	return(results)
 

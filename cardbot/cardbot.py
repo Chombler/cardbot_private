@@ -35,7 +35,7 @@ requestTypeTuple = [
 
 bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
-
+chombler_id = 445781406111760415
 
 pvzh_chat_channel_id = 285849268257030145
 card_ideas_channel_id = 290316016234528769
@@ -94,15 +94,16 @@ async def on_message(message):
 			await message.channel.send(getLeaderboard())
 
 		elif(message.content.startswith('-elo')):
-			if 322500874486153216 in [role.id for role in message.author.roles]:
+			if 322500874486153216 in [role.id for role in message.author.roles] or message.author.id == chombler_id:
 				names_mentioned = [mention.name for mention in message.mentions]
-				print(names_mentioned)
+				ids_mentioned = [mention.id for mention in message.mentions]
+				print("Names mentioned: %s\nIDs mentioned: %s" % (names_mentioned, ids_mentioned))
 				if(len(names_mentioned) == 2):
-					results = calculateResults(names_mentioned[0], names_mentioned[1])
+					results = calculateResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 					await message.channel.send(content = "-unconfirmed\
-												\nWinner: [%s] (%s -> %s)\
-												\nLoser:  [%s] (%s -> %s)\
-												\n%s must react with ✅ to confirm these results" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3], names_mentioned[1]),
+												\nWinner: [%s] ||%s|| (%s -> %s)\
+												\nLoser:  [%s] ||%s|| (%s -> %s)\
+												\n%s must react with ✅ to confirm these results" % (names_mentioned[0], ids_mentioned[0], results[0], results[1], names_mentioned[1], ids_mentioned[1], results[2], results[3], names_mentioned[1]),
 												delete_after = 60)
 				else:
 					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
@@ -122,8 +123,9 @@ async def on_message(message):
 @client.event
 async def on_reaction_add(reaction, user):
 	names_mentioned = regex.findall('\[(.+?)\]', reaction.message.content)
-	if(reaction.message.content.startswith('-unconfirmed') and reaction.emoji == '✅' and user.name == names_mentioned[1]):
-		results = applyResults(names_mentioned[0], names_mentioned[1])
+	ids_mentioned = regex.findall('\|\|(.+?)\|\|', reaction.message.content)
+	if(reaction.message.content.startswith('-unconfirmed') and reaction.emoji == '✅' and user.id == ids_mentioned[1]):
+		results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 		await reaction.message.edit(content = "-confirmed\
 			\nWinner: [%s] (%s -> %s)\
 			\nLoser:  [%s] (%s -> %s)" % (names_mentioned[0], results[0], results[1], names_mentioned[1], results[2], results[3]),
@@ -171,6 +173,7 @@ async def checkForRegeneration(message):
 		if message.content.startswith("$truehandyman"):
 			await message.channel.send("Chombler " + handyman(True))
 			return True
+
 		elif message.content.startswith("$handyman"):
 			await message.channel.send("Chombler " + handyman(False))
 			return True
@@ -253,304 +256,3 @@ async def regularSearch(message):
 
 client.run(token)
 
-"""
-tournament_help_message = "Tournament Commands:\
-\n*Use* ***-register*** *to register your name with the bot so that you can sign up for tournaments. Registration must follow the format:*\
-\n-register [timezone abbreviation].\n\
-\n*Once you've registered, you can use* ***-join*** *to join a tournament that hasn't started yet. Joining must follow the format:*\
-\n-join (Tournament Name) [List of Hero bans seperated by a space] \"IGN\".\n\
-\n*If you have the role Tournament Creators, you can use the command* ***-create-tournament*** *to create a tournament of your own. Tournament Creation must follow the format:*\
-\n-tournament-create (Tournament Name) [# of Hero bans per side] OPTIONAL:<require>(this requires participants to provide an ign).\n\
-\n*If you've registered as a participant with the bot and would like to remove yourself, use* ***-deregister*** *to remove your name from the registry and from any tournaments you are currently involved in.*\
-\nUse **-t-examples** to see example calls of all of these commands."
-
-example_tournament_commands = "Example Tournament Commands:\
-\n**Registration:**\
-\n-register [EST].\n\
-\n**Joining a Tournament:**\
-\n-join (The Greatest Tournament of All Time!) [RO EB Z-Mech Wall-Knight]\n\
-\n**Creating a Tournament:**\
-\n-tournament-create (The Greatest Tournament of All Time!) [2] <require>.\n\
-\n**Deregistering:**\
-\n-deregister\n\
-\nUse **-t-help** to get a list of tournament commands."
-
-
-		elif message.content.startswith('-strength'):
-			if '(' and ')' in message.content:
-				strength = regex.findall('\((.+?)\)', message.content)[0]
-				await message.channel.send(registerStrength(message.author.name, strength))
-
-		elif message.content.startswith('-brand'):
-			await message.channel.send("%s's personal brand is:\n%s" % (message_author, displayBrand(message.author.name)))
-
-
-		#This is for registering your username and Timezone into cardbot
-		#Ideal Input Structure:
-		#-register (ign) [timezone abbreviation]
-		elif message.content.startswith('-register'):
-			if '[' and ']' in message.content:
-				timezone = regex.findall('\[(.+?)\]', message.content)[0]
-
-				if(isRegistered(message.author.name)):
-					await message.channel.send("You are already registered.")
-					return
-
-				print('Timezone: %s' % (timezone))
-
-				timezoneId = getTimezoneId(timezone)
-
-				print('Timezone Id: %s' % (timezoneId))
-
-				if(timezoneId > 0):
-					confirmation_response = registerParticipant(message.author.name, timezoneId)
-					await message.channel.send(confirmation_response)
-				else:
-					await message.channel.send("The timezone you provided wasn't recognized. Please try again.")
-
-			else:
-				await message.channel.send("Your registration command is missing [] brackets to indicate timezone.")
-
-		elif message.content.startswith('-deregister'):
-			if isRegistered(message.author.name)[0]:
-				deRegister(message.author.name)
-				await message.channel.send("You have been deregistered.")
-			else:
-				await message.channel.send("You are not currently registered.")
-		
-		#Ideal Input Structure:
-		#-join (Tournament Name) [Hero bans] "ign"
-		elif message.content.startswith('-join'):
-			if isRegistered(message.author.name)[0]:	
-				if '(' and ')' in message.content:
-					requires_ign = False
-					requires_bans = True
-
-					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-
-					participant_id = isRegistered(message.author.name)[1]
-
-					print('Tournament Name: %s' % (tournament_name))
-
-					tournament_info = verifyTournament(tournament_name)
-					tournament_exists = tournament_info[0]
-					tournament_id = tournament_info[1]
-					number_of_hero_bans = tournament_info[2]
-					tournament_needs_ign = tournament_info[3]
-					tournament_creator = tournament_info[4]
-					has_started = tournament_info[5]
-					print('Tournament needs ign : %s' % (tournament_needs_ign))
-
-					if(hasJoined(participant_id, tournament_id)):
-						await message.channel.send("%s, you are already registered for this tournament." % (message_author))
-						return
-
-					if(has_started):
-						await message.channel.send("%s, sign ups for this tournament have already closed." % (message_author))
-						return
-
-					ign = ""
-					if(tournament_needs_ign):
-						requires_ign = True
-						ign = regex.findall('\"(.+?)\"', message.content)[0]
-						if(len(ign) > 0):
-							pass
-						else:
-							await message.channel.send("This tournament requires an ign. Please try again.")
-							return
-
-					hero_ids = []
-					if(number_of_hero_bans > 0):
-						requires_bans = True
-						hero_sum = []
-						hero_bans = regex.findall('\[(.+?)\]', message.content)[0].split()
-						print(hero_bans)
-						for hero_pick in hero_bans:
-							hero_ids.append(getBestHeroMatchId(hero_pick))
-							hero_sum.append(1 + math.floor(getBestHeroMatchId(hero_pick) / 12))
-						print(hero_sum)
-						if(sum(hero_sum) == number_of_hero_bans * 3):
-							pass
-						else:
-							await message.channel.send("This tournament requires Hero bans. Either you forgot to add them or you've made a mistake in your picks. Please try again.")
-							return
-
-					part_to_tourney_id = 0
-					if(tournament_exists):
-						print("That tournament exists!")
-						part_to_tourney_id = joinTournament(participant_id, tournament_id)
-						if(requires_bans):
-							for heroid in hero_ids:
-								joinBan(part_to_tourney_id, heroid)
-						if(requires_ign):
-							joinIGN(part_to_tourney_id, ign)
-						await message.channel.send('%s has joined the tournament %s.' % (message_author, tournament_name))
-
-					else:
-						await message.channel.send("The tournament name you provided doesn't match any of the tournaments currently running.")
-				else:
-					await message.channel.send("Your join command is missing () brackets.")
-			else:
-				await message.channel.send("Please register with the bot using the command \"-register [Timezone Abbreviation]\" before joining a tournament.")
-
-		#Ideal Input Structure:
-		#-tournament-create (Tournament Name) [# of Hero bans per side] OPTIONAL: <require>
-		elif message.content.startswith('-tournament-create'):
-			if "pvzhu dev" in [role.name.lower() for role in message.author.roles] or "pokemod" in [role.name.lower() for role in message.author.roles]:
-
-				if '(' and ')' and '[' and ']' in message.content:
-					tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-					number_of_hero_bans = regex.findall('\[(.+?)\]', message.content)[0]
-					require_ign = True if '<require>' in message.content else False
-
-					successful_creation = createTournament(tournament_name, number_of_hero_bans, require_ign, message.author.name)
-
-					if(successful_creation):
-						if(require_ign):
-							await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side that requires an ign." % (message_author, tournament_name, number_of_hero_bans))
-						else:
-							await message.channel.send("%s, you created a new tournament called %s with %s Hero bans per side that does not require an ign." % (message_author, tournament_name, number_of_hero_bans))
-					else:
-						await message.channel.send(message_author + ", something went wrong when creating the tournament. Please make sure to follow the format:\
-								\n-tournament-create (Tournament Name) [# of Hero bans per side]")
-				else:
-					await message.channel.send(message_author + ", you are missing a tournament name and/or hero bans. Please make sure to follow the format:\
-							\n-tournament-create (Tournament Name) [# of Hero bans per side]")
-			else:
-				print(message.author.roles)
-				await message.channel.send("You don't have the permission to make a tournament.")
-
-
-		elif message.content.startswith('-start'):
-			if '(' and ')' in message.content:
-				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-				try:
-					tournament_info = verifyTournament(tournament_name)
-					tournament_exists = tournament_info[0]
-					tournament_id = tournament_info[1]
-					number_of_hero_bans = tournament_info[2]
-					tournament_needs_ign = tournament_info[3]
-					tournament_creator = tournament_info[4]
-					has_started = tournament_info[5]
-				except:
-					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
-					return
-				if(message.author.name == tournament_creator or message.author.name == "Chombler"):
-					startTournament(tournament_id)
-					await message.channel.send("\"%s\" has been started" % (tournament_name))
-				else:
-					await message.channel.send("You don't have the permission to start that tournament.")
-
-
-		elif(message.content.startswith("-report-win")):
-			if '(' and ')' in message.content:
-
-				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-				try:
-					tournament_info = verifyTournament(tournament_name)
-					tournament_exists = tournament_info[0]
-					tournament_id = tournament_info[1]
-					number_of_hero_bans = tournament_info[2]
-					tournament_needs_ign = tournament_info[3]
-					tournament_creator = tournament_info[4]
-				except:
-					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
-					return
-			participant_info = getParticipantInfo(message.author.name, tournament_id)
-			participant_id = participant_info[0]
-			participant_in_game = participant_info[3]
-
-			if(participant_in_game):
-				reportWin(participant_id, tournament_id)
-
-		elif(message.content.startswith("-confirm")):
-			if '(' and ')' in message.content:
-
-				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-				try:
-					tournament_info = verifyTournament(tournament_name)
-					tournament_exists = tournament_info[0]
-					tournament_id = tournament_info[1]
-					number_of_hero_bans = tournament_info[2]
-					tournament_needs_ign = tournament_info[3]
-					tournament_creator = tournament_info[4]
-				except:
-					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
-					return
-			participant_info = getParticipantInfo(message.author.name, tournament_id)
-			participant_id = participant_info[0]
-			participant_in_game = participant_info[3]
-
-			if(participant_in_game):
-				reportWin(participant_id, tournament_id)
-
-
-
-		elif message.content.startswith("-participants"):
-			if '(' and ')' in message.content:
-
-				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-
-				returnString = "__ID__ | __NAME__ | __TIMEZONE__"
-				try:
-					tournament_info = verifyTournament(tournament_name)
-					tournament_exists = tournament_info[0]
-					tournament_id = tournament_info[1]
-					number_of_hero_bans = tournament_info[2]
-					tournament_needs_ign = tournament_info[3]
-					tournament_creator = tournament_info[4]
-				except:
-					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
-					return
-
-				if(message.author.name == tournament_creator or message.author.name == "Chombler"):
-					for participant in getParticipants(tournament_id):
-						returnString += "\n%s | %s | %s" % (participant[0], participant[1], participant[2])
-					await message.channel.send(returnString)
-				else:
-					await message.channel.send("You don't have the permission to view that.")
-
-		elif message.content.startswith("-seed"):
-			if '(' and ')' and '[' and ']' in message.content:
-
-				tournament_name = regex.findall('\((.+?)\)', message.content)[0]
-				participant_pairings = regex.findall('\[(.+?)\]', message.content)
-
-				returnString = "The following matchups were seeded:"
-				try:
-					tournament_info = verifyTournament(tournament_name)
-					tournament_exists = tournament_info[0]
-					tournament_id = tournament_info[1]
-					number_of_hero_bans = tournament_info[2]
-					tournament_needs_ign = tournament_info[3]
-					tournament_creator = tournament_info[4]
-				except:
-					await message.channel.send("It doesn't appear there is a tournament with that name. Please try again.")
-					return
-
-				if(message.author.name == tournament_creator or message.author.name == "Chombler"):
-					for pairing in participant_pairings:
-						split_pairing = pairing.split(",")
-						participant_set = []
-						success = True
-						for participant_name_or_id in split_pairing:
-							print("The participant name or id is \'%s\'" % (participant_name_or_id))
-							temp = getParticipantInfo(participant_name_or_id, tournament_id)
-
-							if(temp[6]):
-								returnString += "\n%s has already been eliminated from the tournament." % (temp[1])
-								success = False
-							elif(temp[3]):
-								returnString += "\n%s is already in a game." % (temp[1])
-								success = False
-							else:
-								participant_set.append(temp)
-						try:
-							if(success):
-								returnString += "\n" + createMatchup(participant_set[0], participant_set[1], tournament_id)
-						except:
-							pass
-					await message.channel.send(returnString)
-				else:
-					await message.channel.send("You don't have the permission to seed that tournament.")
-"""
