@@ -107,7 +107,7 @@ async def on_message(message):
 												\nWinner: [{names_mentioned[0]}] ||{ids_mentioned[0]}|| ({results[0]} -> {results[1]})\
 												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
 												\nReported By: {message.author.name}\
-												\nMust be confirmed by: \\@{other_name[0]}\
+												\nMust be confirmed by: <@{other_id[0]}>\
 												\n{other_name[0]} must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
