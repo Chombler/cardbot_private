@@ -220,15 +220,15 @@ async def fuzzySearch(message):
 async def checkForRegeneration(message):
 	if(message.author.name == "Chombler"):
 		if message.content.startswith("$truehandyman"):
-			await message.channel.send("Chombler ", handyman(True))
+			await message.channel.send("Chombler " + handyman(True))
 			return True
 
 		elif message.content.startswith("$handyman"):
-			await message.channel.send("Chombler ", handyman(False))
+			await message.channel.send("Chombler " + handyman(False))
 			return True
 
 		if message.content.startswith('$[[Regenerate Database]]'):
-			await message.channel.send("Chombler ", construct_card_tables())
+			await message.channel.send("Chombler " + construct_card_tables())
 			return True
 
 		elif message.content.startswith("$[[Regenerate Nickname]]"):
