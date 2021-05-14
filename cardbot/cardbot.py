@@ -156,7 +156,7 @@ async def regularSearch(message):
 						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()))
 						return
 				if(message.channel.id in debug_channels):
-					await message.channel.send(response + "\n" + f"||Record generated in response to command: \{\{{text}\}\}||")
+					await message.channel.send(response + "\n" + f"||Record generated in response to command: {{{{{text}}}}}")
 				else:
 					await message.channel.send(response)
 			except:
