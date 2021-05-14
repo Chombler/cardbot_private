@@ -37,6 +37,7 @@ bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
 chombler_id = 445781406111760415
 bot_id = 720763633604231209
+verified_id = 322500874486153216
 
 pvzh_chat_channel_id = 285849268257030145
 card_ideas_channel_id = 290316016234528769
@@ -95,7 +96,7 @@ async def on_message(message):
 			await message.channel.send(getLeaderboard())
 
 		elif(message.content.startswith('-elo')):
-			if 322500874486153216 in [role.id for role in message.author.roles] or message.author.id == chombler_id:
+			if verified_id in [role.id for role in message.author.roles] or message.author.id == chombler_id:
 				names_mentioned = [mention.name for mention in message.mentions]
 				ids_mentioned = [mention.id for mention in message.mentions]
 				print("Names mentioned: %s\nIDs mentioned: %s" % (names_mentioned, ids_mentioned))
@@ -107,8 +108,7 @@ async def on_message(message):
 												\nWinner: [{names_mentioned[0]}] ||{ids_mentioned[0]}|| ({results[0]} -> {results[1]})\
 												\nLoser:  [{names_mentioned[1]}] ||{ids_mentioned[1]}|| ({results[2]} -> {results[3]})\
 												\nReported By: {message.author.name}\
-												\nMust be confirmed by: <@{other_id[0]}>\
-												\n{other_name[0]} must react with ✅ to confirm these results",
+												\n<@{other_id[0]}> must react with ✅ to confirm these results",
 												delete_after = 60)
 				else:
 					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
