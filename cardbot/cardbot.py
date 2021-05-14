@@ -105,8 +105,8 @@ async def on_message(message):
 				if(len(names_mentioned) == 2):
 					results = calculateResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
 					await message.channel.send(content = f"-unconfirmed\
-												\nWinner: [{names_mentioned[0]}] ({results[0]} -> {results[1]})\
-												\nLoser:  [{names_mentioned[1]}] ({results[2]} -> {results[3]})\
+												\nWinner: [{names_mentioned[0]}] ||@{ids_mentioned[0]}||({results[0]} -> {results[1]})\
+												\nLoser:  [{names_mentioned[1]}] ||@{ids_mentioned[1]}||({results[2]} -> {results[3]})\
 												\nReported By: <@{message.author.name}>\
 												\n<@{other_id[0]}> must react with ✅ to confirm these results",
 												delete_after = 120)
@@ -127,9 +127,9 @@ async def on_message(message):
 
 @client.event
 async def on_reaction_add(reaction, user):
-	names_mentioned = [mention.name for mention in reaction.message.mentions]
-	ids_mentioned = [mention.id for mention in reaction.message.mentions]
-	confirmer_id = ids_mentioned[1]
+	ids_mentioned = regex.findall('\|\|\@(.+?)\|\|', reaction.message.content)
+	print(ids_mentioned)
+	confirmer_id = [mention.id for mention in reaction.message.mentions][0]
 	message_is_unconfirmed = reaction.message.content.startswith('-unconfirmed')
 	message_author_is_cardbot = reaction.message.author.id == bot_id
 
