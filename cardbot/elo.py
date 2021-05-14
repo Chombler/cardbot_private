@@ -23,8 +23,8 @@ def getElo(name, discord_id):
 
 		if(len(results) > 0):
 			elo = results[0][0]
-			if(results[0][1] != name):
-				updateElo()
+			if(results[0][0] != name):
+				updateElo(name, discord_id, elo)
 		else:
 			createRow(name, discord_id)
 			elo = 1000
@@ -49,8 +49,8 @@ def createRow(name, discord_id):
 		cursor = connection.cursor()
 
 		insert_query = '''
-		INSERT INTO elo(name, score, discord_id)
-		VALUES (%s, 1000, %s)
+		INSERT INTO elo(name, discord_id, score)
+		VALUES (%s, %s, score)
 		'''
 
 		cursor.execute(insert_query, (name, discord_id))
