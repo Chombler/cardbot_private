@@ -128,7 +128,7 @@ async def on_message(message):
 @client.event
 async def on_reaction_add(reaction, user):
 	confirmer_id = [mention.id for mention in reaction.message.mentions]
-	print(confirmer_id)
+	print(confirmer_id[0])
 	message_is_unconfirmed = reaction.message.content.startswith('-unconfirmed')
 	message_author_is_cardbot = reaction.message.author.id == bot_id
 	winner_name = regex.findall('Winner\: \[(.+?)\]', reaction.message.content)[0]
