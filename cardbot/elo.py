@@ -141,7 +141,7 @@ def resetElo():
 
 		cursor.execute(select_query)
 
-		results = cursor.fetchall()
+		results = cursor.fetchall()[0]
 		print(results)
 
 		delete_query = '''DELETE FROM elo'''
