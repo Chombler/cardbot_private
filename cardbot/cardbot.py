@@ -136,7 +136,7 @@ async def on_reaction_add(reaction, user):
 		winner_name = regex.findall('Winner\: \[(.+?)\]', reaction.message.content)[0]
 		loser_name = regex.findall('Loser\:  \[(.+?)\]', reaction.message.content)[0]
 		winner_id = ids_mentioned[0]
-		loser_id = ids_mentioned[0]
+		loser_id = ids_mentioned[1]
 		results = applyResults(winner_name, winner_id, loser_name, loser_id)
 		await reaction.message.edit(content = f"-confirmed\
 											\nWinner: [{winner_name}] ({results[0]} -> {results[1]})\
