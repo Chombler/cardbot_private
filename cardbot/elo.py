@@ -80,7 +80,7 @@ def updateElo(name, discord_id, score):
 		WHERE discord_id = %s
 		'''
 
-		cursor.execute(update_query, (score, discord_id))
+		cursor.execute(update_query, (score, name, discord_id))
 		connection.commit()
 		print("Elo updated")
 
