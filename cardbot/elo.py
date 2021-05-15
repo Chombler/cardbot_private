@@ -50,7 +50,7 @@ def createRow(name, discord_id):
 
 		insert_query = '''
 		INSERT INTO elo(name, discord_id, score)
-		VALUES (%s, %s, score)
+		VALUES (%s, %s, 1000)
 		'''
 
 		cursor.execute(insert_query, (name, discord_id))
