@@ -147,6 +147,7 @@ def resetElo():
 		delete_query = '''DELETE FROM elo'''
 
 		cursor.execute(delete_query)
+		connection.commit()
 
 	except (Exception, psycopg2.Error) as error :
 		print ("Error resetting ELO,", error)
