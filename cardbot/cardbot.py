@@ -128,19 +128,16 @@ async def on_message(message):
 @client.event
 async def on_reaction_add(reaction, user):
 	confirmer_id = [mention.id for mention in reaction.message.mentions]
-	print(confirmer_id[0])
 	message_is_unconfirmed = reaction.message.content.startswith('-unconfirmed')
 	message_author_is_cardbot = reaction.message.author.id == bot_id
-	winner_name = regex.findall('Winner\: \[(.+?)\]', reaction.message.content)[0]
-	loser_name = regex.findall('Loser\:  \[(.+?)\]', reaction.message.content)[0]
-	print(winner_name)
-	print(loser_name)
 
-	if(message_is_unconfirmed and message_author_is_cardbot and reaction.emoji == '✅' and (user.id == confirmer_id)):
+	if(message_is_unconfirmed and message_author_is_cardbot and reaction.emoji == '✅' and (user.id == confirmer_id[0] or user.id == chombler_id)):
 		ids_mentioned = regex.findall('\|\|\@(.+?)\|\|', reaction.message.content)
+		winner_name = regex.findall('Winner\: \[(.+?)\]', reaction.message.content)[0]
+		loser_name = regex.findall('Loser\:  \[(.+?)\]', reaction.message.content)[0]
 		winner_id = ids_mentioned[0]
 		loser_id = ids_mentioned[0]
-		results = applyResults(winner_id, loser_id)
+		results = applyResults(winner_name, winner_id, loser_name, loser_id)
 		await reaction.message.edit(content = f"-confirmed\
 											\nWinner: [{winner_name}] ({results[0]} -> {results[1]})\
 											\nLoser:  [{loser_name}] ({results[2]} -> {results[3]})")
