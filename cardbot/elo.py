@@ -134,7 +134,7 @@ def resetElo():
 		cursor = connection.cursor()
 
 		select_query = '''
-		SELECT score, name
+		SELECT score, discord_id
 		FROM elo
 		ORDER BY score DESC
 		LIMIT 1'''

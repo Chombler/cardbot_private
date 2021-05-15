@@ -97,7 +97,7 @@ async def on_message(message):
 
 		elif(message.content.startswith('-elo-reset') and message.author.id == chombler_id):
 			winner = resetElo()
-			await message.channel.send(f"ELO has been reset. This season's winner is {winner[1]} with a score of {winner[0]}")
+			await message.channel.send(f"ELO has been reset. This season's winner is <@{winner[1]}> with a score of {winner[0]}")
 
 		elif(message.content.startswith('-elo-force') and message.author.id == chombler_id):
 			names_mentioned = [mention.name for mention in message.mentions]
