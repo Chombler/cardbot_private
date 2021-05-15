@@ -21,7 +21,7 @@ from construct_tables import construct_card_tables, construct_hero_tables, const
 from credentials import token
 from tempcode import handyman
 
-from elo import calculateResults, applyResults, getElo, getLeaderboard
+from elo import calculateResults, applyResults, getElo, getLeaderboard, resetElo
 
 client = discord.Client()
 
@@ -90,10 +90,14 @@ async def on_message(message):
 			await message.channel.send(elo_help_message)
 
 		elif(message.content.startswith('-elo-score')):
-			await message.channel.send("Your Elo Score is %s" % getElo(message.author.name), delete_after = 60)
+			await message.channel.send("Your Elo Score is %s" % getElo(message.author.name, message.author.id), delete_after = 60)
 
 		elif(message.content.startswith('-elo-leaderboard')):
 			await message.channel.send(getLeaderboard())
+
+		elif(message.content.startswith('-elo-reset') and message.author.id == chombler_id):
+			winner = resetElo()
+			await message.channel.send(f"ELO has been reset. This season's winner is {winner[1]} with a score of {winner[0]}")
 
 		elif(message.content.startswith('-elo')):
 			if verified_id in [role.id for role in message.author.roles] or message.author.id == chombler_id:

@@ -126,6 +126,38 @@ def getLeaderboard():
 			print("PostgreSQL connection is closed")
 			return(return_string)
 
+def resetELO():
+	try:
+		print("Trying")
+		connection = psycopg2.connect(db_credentials)
+		print("connected")
+		cursor = connection.cursor()
+
+		select_query = '''
+		SELECT score, name
+		FROM elo
+		ORDER BY score DESC
+		LIMIT 1'''
+
+		cursor.execute(select_query)
+
+		results = cursor.fetchall()
+		print(results)
+
+		delete_query = '''DELETE FROM elo'''
+
+		cursor.execute(delete_query)
+
+	except (Exception, psycopg2.Error) as error :
+		print ("Error resetting ELO,", error)
+	finally:
+		#closing database connection.
+		if(connection):
+			cursor.close()
+			connection.close()
+			print("PostgreSQL connection is closed")
+			return(results)
+
 def calculateResults(winner, winner_id, loser, loser_id):
 	start_winner_elo = getElo(winner, winner_id)
 	start_loser_elo = getElo(loser, loser_id)
