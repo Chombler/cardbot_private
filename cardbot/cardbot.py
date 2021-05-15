@@ -103,7 +103,7 @@ async def on_message(message):
 			names_mentioned = [mention.name for mention in message.mentions]
 			ids_mentioned = [mention.id for mention in message.mentions]
 			results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
-			await reaction.message.edit(content = f"-confirmed\
+			await message.channel.send(content = f"-confirmed\
 												\nWinner: [{names_mentioned[0]}] ({results[0]} -> {results[1]})\
 												\nLoser:  [{names_mentioned[1]}] ({results[2]} -> {results[3]})")
 
