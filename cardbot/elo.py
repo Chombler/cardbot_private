@@ -126,7 +126,7 @@ def getLeaderboard():
 			print("PostgreSQL connection is closed")
 			return(return_string)
 
-def resetELO():
+def resetElo():
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
