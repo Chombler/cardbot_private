@@ -139,7 +139,7 @@ def calculateResults(winner, winner_id, loser, loser_id):
 	return([start_winner_elo, final_winner_elo, start_loser_elo, final_loser_elo])
 
 def applyResults(winner, winner_id, loser, loser_id):
-	results = calculateResults(winner, loser)
+	results = calculateResults(winner, winner_id, loser, loser_id)
 	updateElo(winner, winner_id, results[1])
 	updateElo(loser, loser_id, results[3])
 	return(results)
