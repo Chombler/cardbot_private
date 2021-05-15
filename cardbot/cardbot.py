@@ -99,6 +99,14 @@ async def on_message(message):
 			winner = resetElo()
 			await message.channel.send(f"ELO has been reset. This season's winner is {winner[1]} with a score of {winner[0]}")
 
+		elif(message.content.startswith('-elo-force') and message.author.id == chombler_id):
+			names_mentioned = [mention.name for mention in message.mentions]
+			ids_mentioned = [mention.id for mention in message.mentions]
+			results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
+			await reaction.message.edit(content = f"-confirmed\
+												\nWinner: [{names_mentioned[0]}] ({results[0]} -> {results[1]})\
+												\nLoser:  [{names_mentioned[1]}] ({results[2]} -> {results[3]})")
+
 		elif(message.content.startswith('-elo')):
 			if verified_id in [role.id for role in message.author.roles] or message.author.id == chombler_id:
 				names_mentioned = [mention.name for mention in message.mentions]
