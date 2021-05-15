@@ -23,7 +23,7 @@ def getElo(name, discord_id):
 
 		if(len(results) > 0):
 			elo = results[0][0]
-			if(results[0][0] != name):
+			if(results[0][1] != name):
 				updateElo(name, discord_id, elo)
 		else:
 			createRow(name, discord_id)
