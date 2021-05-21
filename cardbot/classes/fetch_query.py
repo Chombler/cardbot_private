@@ -1,4 +1,4 @@
-from query.py import query
+from query import query
 import psycopg2
 from psycopg2 import Error
 
