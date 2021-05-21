@@ -1,8 +1,8 @@
-from tables import elo
-from classes import fetch_query
+from .tables/elo import getElo
+from .classes/fetch_query import test
 
 def handyman(complete):
-	print(elo.getElo(445781406111760415))
-	print(fetch_query.test())
+	print(getElo(445781406111760415))
+	print(test())
 	return("")
 
