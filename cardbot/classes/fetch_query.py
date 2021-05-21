@@ -1,8 +1,8 @@
-from .query import Query_class
+from .query import Query
 import psycopg2
 from psycopg2 import Error
 
-class fetch_query(query):
+class fetch_query(Query):
 	def __init__(self, query_string, query_confirmation, query_error):
 		super(query_string, query_confirmation, query_error)
 
