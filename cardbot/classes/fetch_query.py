@@ -3,8 +3,7 @@ import psycopg2
 from psycopg2 import Error
 
 class fetch_query(Query):
-
-	def run(*args):
+	def run(self, *args):
 		try:
 			print("Trying")
 			connection = psycopg2.connect(self.credentials)
