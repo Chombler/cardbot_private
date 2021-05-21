@@ -7,17 +7,17 @@ class fetch_query(Query):
 	def run(*args):
 		try:
 			print("Trying")
-			connection = psycopg2.connect(db_credentials)
+			connection = psycopg2.connect(self.credentials)
 			print("connected")
 			cursor = connection.cursor()
 
 			cursor.execute(self.query, args)
 
 			results = cursor.fetchall()
-			print(query_confirmation)
+			print(self.query_confirmation)
 
 		except (Exception, psycopg2.Error) as error :
-			print (query_error, error)
+			print (self.query_error, error)
 		finally:
 			#closing database connection.
 			if(connection):
