@@ -7,25 +7,26 @@ class fetch_query(query):
 		super(query_string, query_confirmation, query_error)
 
 	def run(*args):
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
+		try:
+			print("Trying")
+			connection = psycopg2.connect(db_credentials)
+			print("connected")
+			cursor = connection.cursor()
 
-		cursor.execute(self.query, args)
+			cursor.execute(self.query, args)
 
-		results = cursor.fetchall()
-		print(query_confirmation)
+			results = cursor.fetchall()
+			print(query_confirmation)
 
-	except (Exception, psycopg2.Error) as error :
-		print (query_error, error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-			return(results)
+		except (Exception, psycopg2.Error) as error :
+			print (query_error, error)
+		finally:
+			#closing database connection.
+			if(connection):
+				cursor.close()
+				connection.close()
+				print("PostgreSQL connection is closed")
+				return(results)
 
 
 def test():
