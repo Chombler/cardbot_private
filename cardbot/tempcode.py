@@ -1,4 +1,4 @@
-from tables.elo import getElo
+from elo import getElo
 from classes.fetch_query import test
 
 def handyman(complete):
