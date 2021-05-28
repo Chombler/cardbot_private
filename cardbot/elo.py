@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 from credentials import token, db_credentials
+from classes.fetch_query import fetch_query
 
 def getElo(name, discord_id):
 	elo_query = fetch_query('''
