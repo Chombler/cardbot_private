@@ -3,6 +3,24 @@ from psycopg2 import Error
 from credentials import token, db_credentials
 
 def getElo(name, discord_id):
+	elo_query = fetch_query('''
+			SELECT score, name
+			FROM elo
+			WHERE discord_id = %s''', "Elo score obtained", "Error retrieving score from elo,")
+
+	results = elo_query.run(discord_id)
+	if(len(results) > 0):
+		elo = results[0][0]
+		if(results[0][1] != name):
+			updateElo(name, discord_id, elo)
+	else:
+		createRow(name, discord_id)
+		elo = 1000
+
+	return elo
+
+"""
+def getElo(name, discord_id):
 	try:
 		elo = 0
 		print("Trying")
@@ -40,6 +58,7 @@ def getElo(name, discord_id):
 			connection.close()
 			print("PostgreSQL connection is closed")
 			return(elo)
+"""
 
 def createRow(name, discord_id):
 	try:
