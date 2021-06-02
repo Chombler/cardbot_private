@@ -116,6 +116,7 @@ def pullCardRecord(recordName):
 	LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
 	WHERE card.id = %s
 	''', "Retreived Card from card", "Error retrieving card information,")
+	
 	results = card_query.run(card_id)
 
 	cardInstance = cardObject(results)
