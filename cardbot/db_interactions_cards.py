@@ -3,6 +3,7 @@ from psycopg2 import Error
 from credentials import token, db_credentials
 from cardobject import cardObject
 from heroobject import heroObject
+from classes.fetch_query import fetch_query
 
 #Function names:
 #createTable()
@@ -42,65 +43,29 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			print("PostgreSQL connection is closed")
 
 def getBestCardMatchId(recordName):
-	success = True
-	try:
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
-
-		select_table_query = '''
-		SELECT name
+	select_table_query = fetch_query('''SELECT id
 		FROM nickname
 		WHERE SIMILARITY(nickname, %s) > 0.25
 		OR LOWER(nickname) LIKE LOWER(%s)
 		ORDER BY SIMILARITY(nickname, %s) DESC,
 		LOWER(nickname) LIKE LOWER(%s) DESC
-		LIMIT 1'''
+		LIMIT 1''', "Retrived Card info", "Error retrieving card information,")
 
-#		OR(1 %s)
-
-		try:
-			recordStart = recordName[0:3] + '%'
-		except:
-			recordStart = recordName[0:] + '%'
+	try:
+		recordStart = recordName[0:3] + '%'
+	except:
+		recordStart = recordName[0:] + '%'
 
 #		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 
-		orString = '%'
-		for word in recordName.split():
-			orString += word + '%'
-		orString += '%'
+	orString = '%'
+	for word in recordName.split():
+		orString += word + '%'
+	orString += '%'
 
-		cursor.execute(select_table_query, (recordName, orString, recordName, recordStart))
+	results = select_table_query.run(recordName, orString, recordName, recordStart)
 
-		results = cursor.fetchall()
-		try:
-			resultname = results[0][0]
-			print("Result Name: " + resultname)
-
-			select_table_query = '''
-			SELECT id
-			FROM card
-			where name = %s'''
-
-			cursor.execute(select_table_query, (resultname,))
-
-			results = cursor.fetchall()
-			cardid = results[0][0]
-			print("Result id: " + str(cardid))
-		except:
-			success = False
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving card information using PostgreSQL,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(cardid if success else None)
+	return(results[0][0] if len(results) > 0 else None)
 
 
 def pullCardRecord(recordName):
