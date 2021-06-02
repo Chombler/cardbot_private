@@ -24,12 +24,3 @@ class fetch_query(Query):
 				connection.close()
 				print("PostgreSQL connection is closed")
 				return(results)
-
-
-def test():
-	elo_query = fetch_query('''
-			SELECT score, name
-			FROM elo
-			WHERE discord_id = %s''', "Elo score obtained", "Error retrieving score from elo,")
-
-	print(elo_query.run(445781406111760415))

@@ -20,46 +20,6 @@ def getElo(name, discord_id):
 
 	return elo
 
-"""
-def getElo(name, discord_id):
-	try:
-		elo = 0
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
-
-		select_query = '''
-		SELECT score, name
-		FROM elo
-		WHERE discord_id = %s'''
-
-		cursor.execute(select_query, (discord_id,))
-
-		results = cursor.fetchall()
-		print(results)
-		print(len(results))
-
-		if(len(results) > 0):
-			elo = results[0][0]
-			if(results[0][1] != name):
-				updateElo(name, discord_id, elo)
-		else:
-			createRow(name, discord_id)
-			elo = 1000
-
-		print("Elo obtained")
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retreiving score from ELO,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-			return(elo)
-"""
 
 def createRow(name, discord_id):
 	try:
@@ -114,37 +74,19 @@ def updateElo(name, discord_id, score):
 			print("PostgreSQL connection is closed")
 
 def getLeaderboard():
-	try:
-		return_string = "__ELO__ | __Name__"
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
-
-		select_query = '''
+	elo_query = fetch_query('''
 		SELECT score, name
 		FROM elo
 		ORDER BY score DESC
-		LIMIT 10'''
+		LIMIT 10''', "ELO leaderboard obtained", "Error retrieving leaderboard from elo")
 
-		cursor.execute(select_query)
+	results = elo_query.run()
+	print(results)
 
-		results = cursor.fetchall()
-		print(results)
-		name_length = 0
+	for row in range(len(results)):
+		return_string += "\n%-5s %s" % (results[row][0], results[row][1])
 
-		for row in range(len(results)):
-			return_string += "\n%-5s %s" % (results[row][0], results[row][1])
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retreiving leaderboard from elo,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-			return(return_string)
+	return return_string
 
 def resetElo():
 	try:
