@@ -72,6 +72,7 @@ def getBestCardMatchId(recordName):
 		SELECT id
 		FROM card
 		where name = %s''', "Retrieved Card id", "Error retrieving card id,")
+
 		results = id_query.run(result_name)[0][0]
 	else:
 		results = None
@@ -80,62 +81,47 @@ def getBestCardMatchId(recordName):
 
 
 def pullCardRecord(recordName):
-	cardid = getBestCardMatchId(recordName)
-	print("Result id: " + str(cardid))
+	card_id = getBestCardMatchId(recordName)
+	print("Result id: " + str(card_id))
 
-	if(cardid is None):
+	if(card_id is None):
 		return("There are no matches. Start your message with -fuzzy for close matches or -help to get a list of commands.")
-	try:
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
 
-		join_table_query = '''
-		SELECT	card.name,
-				game_class.name,
-				tribe.name,
-				card_type.type,
-				card.cost,
-				cost_type.cost_type,
-				card.strength,
-				trait.strengthmodifier,
-				card.health,
-				trait.healthmodifier,
-				trait.name,
-				card.ability,
-				card.flavor,
-				card_set.name,
-				rarity.name
-		FROM card
-		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
-		LEFT JOIN game_class ON card_to_class.classid = game_class.id
-		LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
-		LEFT JOIN trait ON card_to_trait.traitid = trait.id
-		LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
-		LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
-		LEFT JOIN card_type ON card_type.id = card.typeid
-		LEFT JOIN card_set ON card_set.id = card.setid
-		LEFT JOIN rarity ON card.rarityid = rarity.id
-		LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
-		WHERE card.id = %s
-		'''
+	card_query = fetch_query('''
+	SELECT	card.name,
+			game_class.name,
+			tribe.name,
+			card_type.type,
+			card.cost,
+			cost_type.cost_type,
+			card.strength,
+			trait.strengthmodifier,
+			card.health,
+			trait.healthmodifier,
+			trait.name,
+			card.ability,
+			card.flavor,
+			card_set.name,
+			rarity.name
+	FROM card
+	LEFT JOIN card_to_class ON card.id = card_to_class.cardid
+	LEFT JOIN game_class ON card_to_class.classid = game_class.id
+	LEFT JOIN card_to_trait ON card_to_trait.cardid = card.id
+	LEFT JOIN trait ON card_to_trait.traitid = trait.id
+	LEFT JOIN card_to_tribe ON card.id = card_to_tribe.cardid
+	LEFT JOIN tribe ON card_to_tribe.tribeid = tribe.id
+	LEFT JOIN card_type ON card_type.id = card.typeid
+	LEFT JOIN card_set ON card_set.id = card.setid
+	LEFT JOIN rarity ON card.rarityid = rarity.id
+	LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
+	WHERE card.id = %s
+	''', "Retreived Card from card", "Error retrieving card information,")
+	results = card_query.run(card_id)
 
-		cursor.execute(join_table_query, (cardid,))
-		results = cursor.fetchall()
+	cardInstance = cardObject(results)
+	print(cardInstance.information())
 
-		cardInstance = cardObject(results)
-		print(cardInstance.information())
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving card information using PostgreSQL,", error)
-	finally:
-		#closing database connection=
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(cardInstance.information())
+	return(cardInstance.information())
 
 def getBestHeroMatchId(recordName):
 	try:
