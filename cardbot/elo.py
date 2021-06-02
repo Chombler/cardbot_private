@@ -82,6 +82,7 @@ def getLeaderboard():
 
 	results = elo_query.run()
 	print(results)
+	return_string = "__ELO__ | __Name__"
 
 	for row in range(len(results)):
 		return_string += "\n%-5s %s" % (results[row][0], results[row][1])
