@@ -43,7 +43,7 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			print("PostgreSQL connection is closed")
 
 def getBestCardMatchId(recordName):
-	select_table_query = fetch_query('''SELECT id
+	name_query = fetch_query('''SELECT name
 		FROM nickname
 		WHERE SIMILARITY(nickname, %s) > 0.25
 		OR LOWER(nickname) LIKE LOWER(%s)
@@ -63,9 +63,20 @@ def getBestCardMatchId(recordName):
 		orString += word + '%'
 	orString += '%'
 
-	results = select_table_query.run(recordName, orString, recordName, recordStart)
+	name_tuple = name_query.run(recordName, orString, recordName, recordStart)
 
-	return(results[0][0] if len(results) > 0 else None)
+	if len(name_tuple) > 0:
+		result_name = name_tuple[0][0]
+
+		id_query = fetch_query('''
+		SELECT id
+		FROM card
+		where name = %s''', "Retrieved Card id", "Error retrieving card id,")
+		results = id_query.run(result_name)[0][0]
+	else:
+		results = None
+
+	return results
 
 
 def pullCardRecord(recordName):
