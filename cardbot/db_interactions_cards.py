@@ -42,6 +42,7 @@ def logRequest(requestAuthor, requestString, requestType, fuzzyRequest):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
+
 def getBestCardMatchId(recordName):
 	name_query = fetch_query('''SELECT name
 		FROM nickname
@@ -49,14 +50,12 @@ def getBestCardMatchId(recordName):
 		OR LOWER(nickname) LIKE LOWER(%s)
 		ORDER BY SIMILARITY(nickname, %s) DESC,
 		LOWER(nickname) LIKE LOWER(%s) DESC
-		LIMIT 1''', "Retrived Card info", "Error retrieving card information,")
+		LIMIT 1''', "Retrived Card information", "Error retrieving Card information,")
 
 	try:
 		recordStart = recordName[0:3] + '%'
 	except:
 		recordStart = recordName[0:] + '%'
-
-#		args_str = ','.join(cursor.mogrify("(%s)", x).decode("utf-8") for x in recordTuple)
 
 	orString = '%'
 	for word in recordName.split():
@@ -71,7 +70,7 @@ def getBestCardMatchId(recordName):
 		id_query = fetch_query('''
 		SELECT id
 		FROM card
-		where name = %s''', "Retrieved Card id", "Error retrieving card id,")
+		where name = %s''', "Retrieved Card id", "Error retrieving Card id,")
 
 		results = id_query.run(result_name)[0][0]
 	else:
@@ -114,9 +113,8 @@ def pullCardRecord(recordName):
 	LEFT JOIN card_set ON card_set.id = card.setid
 	LEFT JOIN rarity ON card.rarityid = rarity.id
 	LEFT JOIN cost_type ON card.cost_typeid = cost_type.id
-	WHERE card.id = %s
-	''', "Retreived Card from card", "Error retrieving card information,")
-	
+	WHERE card.id = %s''', "Retrieved Card information", "Error retrieving Card information,")
+
 	results = card_query.run(card_id)
 
 	cardInstance = cardObject(results)
@@ -124,60 +122,37 @@ def pullCardRecord(recordName):
 
 	return(cardInstance.information())
 
-def getBestHeroMatchId(recordName):
-	try:
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
 
-		select_table_query = '''
+def getBestHeroMatchId(recordName):
+	name_query = fetch_query('''
 		SELECT id, SIMILARITY(name, %s)
 		FROM hero
 		ORDER BY SIMILARITY(name, %s) DESC
-		LIMIT 1'''
+		LIMIT 1''', "Retrieved Hero name", "Error retrieving Hero name,")
 
-		cursor.execute(select_table_query, (recordName, recordName))
-		nameResults = cursor.fetchall()
-		print(nameResults)
+	name_results = name_query.run(recordName, recordName)
 
-		select_table_query = '''
+	abbreviation_query = fetch_query('''
 		SELECT id, SIMILARITY(abbreviation, %s)
 		FROM hero
 		ORDER BY SIMILARITY(abbreviation, %s) DESC
-		LIMIT 1'''
+		LIMIT 1''', "Retrieved Hero abbreviation", "Error retrieving Hero abbreviation,")
 
-		cursor.execute(select_table_query, (recordName, recordName))
-		abbreviationResults = cursor.fetchall()
-		print(abbreviationResults)
+	abbreviation_results = abbreviation_query.run(recordName, recordName)
 
-		if(nameResults[0][1] > abbreviationResults[0][1]):
-			heroid = nameResults[0][0]
-		else:
-			heroid = abbreviationResults[0][0]
+	if(nameResults[0][1] > abbreviationResults[0][1]):
+		heroid = nameResults[0][0]
+	else:
+		heroid = abbreviationResults[0][0]
 
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving hero information using PostgreSQL,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(heroid)
+	return(heroid)
 
 
 def pullHeroRecord(recordName):
 	heroid = getBestHeroMatchId(recordName)
 	print("Hero id: " + str(heroid))
 
-	try:
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
-
-		join_table_query = '''
+	hero_query = fetch_query('''
 		SELECT	hero.name,
 				hero.abbreviation,
 				hero_class.name AS hero_class,
@@ -192,98 +167,57 @@ def pullHeroRecord(recordName):
 		LEFT JOIN card ON hero_to_card.cardid = card.id
 		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
 		LEFT JOIN game_class ON card_to_class.classid = game_class.id
-		WHERE hero.id = %s
-		'''
+		WHERE hero.id = %s''', "Retrieved Hero information", "Error retrieving Hero information,")
 
-		cursor.execute(join_table_query, (heroid,))
-		results = cursor.fetchall()
+	results = hero_query.run(recordName)
 
-		print(results)
-		print("Printing Table")
+	heroInstance = heroObject(results)
+	print(heroInstance.information())
 
-		heroInstance = heroObject(results)
-		print(heroInstance.information())
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving card information using PostgreSQL,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(heroInstance.information())
+	return(heroInstance.information())
 
 
 def pullFuzzyCardRecord(recordName):
+	returnString = "Here are the closest matches:"
+
+	name_query = fetch_query('''
+	SELECT name
+	FROM nickname
+	ORDER BY SIMILARITY(nickname, %s) DESC,
+	LOWER(nickname) LIKE %s DESC
+	LIMIT 5''', "Retrieved Card names", "Error retrieving Card names,")
+
 	try:
-		returnString = "Here are the closest matches:"
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
+		recordStart = recordName[0:3].lower() + '%'
+	except:
+		recordStart = recordName[0:].lower() + '%'
 
-		select_table_query = '''
-		SELECT name
-		FROM nickname
-		ORDER BY SIMILARITY(nickname, %s) DESC,
-		LOWER(nickname) LIKE %s DESC
-		LIMIT 5'''
+	results = name_query.run(recordName, recordStart)
 
-		try:
-			recordStart = recordName[0:3].lower() + '%'
-		except:
-			recordStart = recordName[0:].lower() + '%'
+	for row in results:
+		for col in row:
+			returnString += "\n" + col
 
-		cursor.execute(select_table_query, (recordName, recordStart))
-		results = cursor.fetchall()
-
-		for row in results:
-			for col in row:
-				returnString += "\n" + col
-
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving card information using PostgreSQL,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(returnString)
+	return(returnString)
 
 
 def pullFuzzyHeroRecord(recordName):
-	try:
-		returnString = "Here are the closest matches:"
-		print("Trying")
-		connection = psycopg2.connect(db_credentials)
-		print("connected")
-		cursor = connection.cursor()
+	returnString = "Here are the closest matches:"
 
-		select_table_query = '''
-		SELECT name, abbreviation
-		FROM hero
-		ORDER BY SIMILARITY(name, %s) DESC,
-		SIMILARITY(abbreviation, %s) DESC
-		LIMIT 5'''
+	name_query = fetch_query('''
+	SELECT name, abbreviation
+	FROM hero
+	ORDER BY SIMILARITY(name, %s) DESC,
+	SIMILARITY(abbreviation, %s) DESC
+	LIMIT 5''', "Retrieved Hero names", "Error retrieving Hero names,")
 
-		cursor.execute(select_table_query, (recordName, recordName))
-		results = cursor.fetchall()
+	results = name_query.run(recordName, recordName)
 
-		for row in results:
-			returnString += "\n" + row[0] + " (" + row[1] + ")"
+	for row in results:
+		returnString += "\n" + row[0] + " (" + row[1] + ")"
 
+	return(returnString)
 
-	except (Exception, psycopg2.Error) as error :
-		print ("Error retrieving card information using PostgreSQL,", error)
-	finally:
-		#closing database connection.
-		if(connection):
-			cursor.close()
-			connection.close()
-			print("PostgreSQL connection is closed")
-		return(returnString)
 
 def registerStrength(discord_name, strength):
 	try:
