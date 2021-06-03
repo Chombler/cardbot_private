@@ -141,16 +141,16 @@ def getBestHeroMatchId(recordName):
 	abbreviation_results = abbreviation_query.run(recordName, recordName)
 
 	if(name_results[0][1] > abbreviation_results[0][1]):
-		heroid = name_results[0][0]
+		hero_id = name_results[0][0]
 	else:
-		heroid = abbreviation_results[0][0]
+		hero_id = abbreviation_results[0][0]
 
-	return(heroid)
+	return(hero_id)
 
 
 def pullHeroRecord(recordName):
-	heroid = getBestHeroMatchId(recordName)
-	print("Hero id: " + str(heroid))
+	hero_id = getBestHeroMatchId(recordName)
+	print("Hero id: " + str(hero_id))
 
 	hero_query = fetch_query('''
 		SELECT	hero.name,
@@ -169,7 +169,7 @@ def pullHeroRecord(recordName):
 		LEFT JOIN game_class ON card_to_class.classid = game_class.id
 		WHERE hero.id = %s''', "Retrieved Hero information", "Error retrieving Hero information,")
 
-	results = hero_query.run(recordName)
+	results = hero_query.run(hero_id)
 
 	heroInstance = heroObject(results)
 	print(heroInstance.information())
