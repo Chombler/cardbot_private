@@ -140,10 +140,10 @@ def getBestHeroMatchId(recordName):
 
 	abbreviation_results = abbreviation_query.run(recordName, recordName)
 
-	if(nameResults[0][1] > abbreviationResults[0][1]):
-		heroid = nameResults[0][0]
+	if(name_results[0][1] > abbreviation_results[0][1]):
+		heroid = name_results[0][0]
 	else:
-		heroid = abbreviationResults[0][0]
+		heroid = abbreviation_results[0][0]
 
 	return(heroid)
 
