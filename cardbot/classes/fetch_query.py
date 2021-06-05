@@ -5,9 +5,9 @@ from psycopg2 import Error
 class fetch_query(Query):
 	def run(self, *args):
 		try:
-			print("Trying")
+			print("Trying...")
 			connection = psycopg2.connect(self.credentials)
-			print("connected")
+			print("Connected\n")
 			cursor = connection.cursor()
 
 			cursor.execute(self.query, args)

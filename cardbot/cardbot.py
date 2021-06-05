@@ -14,8 +14,7 @@ import math
 
 from timer import Countdown
 
-from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId, registerStrength, displayBrand
-from db_interactions_tournaments import createTournament, verifyTournament, registerParticipant, getTimezoneId, isRegistered, deRegister, joinTournament, hasJoined, joinBan, joinIGN, getParticipants, createMatchup, getParticipantInfo, startTournament
+from db_interactions_cards import pullCardRecord, pullHeroRecord, logRequest, pullFuzzyCardRecord, pullFuzzyHeroRecord, getBestHeroMatchId
 
 from construct_tables import construct_card_tables, construct_hero_tables, construct_nickname, construct_request, construct_request_type, construct_tournament
 from credentials import token
@@ -24,14 +23,6 @@ from tempcode import handyman
 from elo import calculateResults, applyResults, getElo, getLeaderboard, resetElo
 
 client = discord.Client()
-
-"""
-requestTypeTuple = [
-('Card Query',),
-('Hero Query',),
-('Help Query',),
-('Fun Query',)]
-"""
 
 bot_spam_channel_id = 343233158483017748
 cardbot_bugs_report_channel_id = 447437688254103552
