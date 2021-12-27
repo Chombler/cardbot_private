@@ -29,6 +29,7 @@ cardbot_bugs_report_channel_id = 447437688254103552
 chombler_id = 445781406111760415
 bot_id = 720763633604231209
 verified_id = 322500874486153216
+mod_id = 285827340964069386
 
 pvzh_chat_channel_id = 285849268257030145
 card_ideas_channel_id = 290316016234528769
@@ -43,6 +44,10 @@ card_ideas_timer= Countdown()
 deck_help_timer = Countdown()
 
 channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer]
+
+IS_FUZZY = True
+IS_NOT_FUZZY = False
+
 
 help_message = "Bot Commands:\
 \nUse **\[\[Card Name\]\]** to return a specific card's information. More than one card can be requested at one time.\
@@ -86,7 +91,7 @@ async def on_message(message):
 		elif(message.content.startswith('-elo-leaderboard')):
 			await message.channel.send(getLeaderboard())
 
-		elif(message.content.startswith('-elo-reset') and message.author.id == chombler_id):
+		elif(message.content.startswith('-elo-reset') and (message.author.id == chombler_id or mod_id in [role.id for role in message.author.roles])):
 			winner = resetElo()
 			await message.channel.send(f"ELO has been reset. This season's winner is <@{winner[1]}> with a score of {winner[0]}")
 
@@ -150,7 +155,7 @@ async def regularSearch(message):
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
-			logRequest(message.author.name, message.content, 2, False)
+			logRequest(message.author.name, message.content, 2, IS_NOT_FUZZY)
 			response = pullHeroRecord(text)
 			try:
 				if(message.channel.id in slow_mode_channels):
@@ -172,7 +177,7 @@ async def regularSearch(message):
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print("Terms input for search are: %s" % (stringInput))
 		for text in stringInput:
-			logRequest(message.author.name, message.content, 1, False)
+			logRequest(message.author.name, message.content, 1, IS_NOT_FUZZY)
 			response = pullCardRecord(text)
 			try:
 				if(message.channel.id in slow_mode_channels):
@@ -195,7 +200,7 @@ async def fuzzySearch(message):
 		stringInput = regex.findall('\{\{(.+?)\}\}', message.content)
 		print(stringInput)
 		for text in stringInput:
-			logRequest(message.author.name, message.content, 2, True)
+			logRequest(message.author.name, message.content, 2, IS_FUZZY)
 			response = pullFuzzyHeroRecord(text)
 			try:
 				print("Channel name: %s" % (message.channel.name))
@@ -211,7 +216,7 @@ async def fuzzySearch(message):
 		stringInput = regex.findall('\[\[(.+?)\]\]', message.content)
 		print(stringInput)
 		for text in stringInput:
-			logRequest(message.author.name, message.content, 1, True)
+			logRequest(message.author.name, message.content, 1, IS_FUZZY)
 			response = pullFuzzyCardRecord(text)
 			try:
 				print("Channel name: %s" % (message.channel.name))
