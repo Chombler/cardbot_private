@@ -22,31 +22,16 @@ from tempcode import handyman
 
 from elo import calculateResults, applyResults, getElo, getLeaderboard, resetElo
 
+from constants import role_id, user_id, debug_channels, slow_mode_channels, IS_FUZZY, IS_NOT_FUZZY
+
+
 client = discord.Client()
-
-bot_spam_channel_id = 343233158483017748
-cardbot_bugs_report_channel_id = 447437688254103552
-chombler_id = 445781406111760415
-bot_id = 720763633604231209
-verified_id = 322500874486153216
-mod_id = 285827340964069386
-
-pvzh_chat_channel_id = 285849268257030145
-card_ideas_channel_id = 290316016234528769
-deck_help_channel_id = 285818949457805313
-
-debug_channels = [bot_spam_channel_id, cardbot_bugs_report_channel_id]
-
-slow_mode_channels = [pvzh_chat_channel_id, card_ideas_channel_id, deck_help_channel_id]
 
 pvzh_timer = Countdown()
 card_ideas_timer= Countdown()
 deck_help_timer = Countdown()
 
 channel_timers = [pvzh_timer, card_ideas_timer, deck_help_timer]
-
-IS_FUZZY = True
-IS_NOT_FUZZY = False
 
 
 help_message = "Bot Commands:\
@@ -91,11 +76,11 @@ async def on_message(message):
 		elif(message.content.startswith('-elo-leaderboard')):
 			await message.channel.send(getLeaderboard())
 
-		elif(message.content.startswith('-elo-reset') and (message.author.id == chombler_id or mod_id in [role.id for role in message.author.roles])):
+		elif(message.content.startswith('-elo-reset') and (message.author.id == user_id["chombler"] or role_id["pvz_mod"] in [role.id for role in message.author.roles])):
 			winner = resetElo()
 			await message.channel.send(f"ELO has been reset. This season's winner is <@{winner[1]}> with a score of {winner[0]}")
 
-		elif(message.content.startswith('-elo-force') and message.author.id == chombler_id):
+		elif(message.content.startswith('-elo-force') and message.author.id == user_id["chombler"]):
 			names_mentioned = [mention.name for mention in message.mentions]
 			ids_mentioned = [mention.id for mention in message.mentions]
 			results = applyResults(names_mentioned[0], ids_mentioned[0], names_mentioned[1], ids_mentioned[1])
@@ -104,7 +89,7 @@ async def on_message(message):
 												\nLoser:  [{names_mentioned[1]}] ({results[2]} -> {results[3]})")
 
 		elif(message.content.startswith('-elo')):
-			if verified_id in [role.id for role in message.author.roles] or message.author.id == chombler_id:
+			if role_id["verified"] in [role.id for role in message.author.roles] or message.author.id == user_id["chombler"]:
 				names_mentioned = [mention.name for mention in message.mentions]
 				ids_mentioned = [mention.id for mention in message.mentions]
 				print("Names mentioned: %s\nIDs mentioned: %s" % (names_mentioned, ids_mentioned))
@@ -119,9 +104,11 @@ async def on_message(message):
 												\n<@{other_id[0]}> must react with ✅ to confirm these results",
 												delete_after = 120)
 				else:
-					await message.channel.send("You need exactly two people in order to report a match", delete_after = 60)
+					await message.channel.send("You need exactly two people in order to report a match",
+												delete_after = 60)
 			else:
-				await message.channel.send("You must be verified in order to report matches", delete_after = 60)
+				await message.channel.send("You must be verified in order to report matches",
+											delete_after = 60)
 
 		elif(message.content.startswith('-help')):
 			logRequest(message.author.name, message.content, 3, None)
@@ -137,9 +124,9 @@ async def on_message(message):
 async def on_reaction_add(reaction, user):
 	confirmer_id = [mention.id for mention in reaction.message.mentions]
 	message_is_unconfirmed = reaction.message.content.startswith('-unconfirmed')
-	message_author_is_cardbot = reaction.message.author.id == bot_id
+	message_author_is_cardbot = reaction.message.author.id == user_id["cardbot"]
 
-	if(message_is_unconfirmed and message_author_is_cardbot and reaction.emoji == '✅' and (user.id == confirmer_id[0] or user.id == chombler_id)):
+	if(message_is_unconfirmed and message_author_is_cardbot and reaction.emoji == '✅' and (user.id == confirmer_id[0] or user.id == user_id["chombler"])):
 		ids_mentioned = regex.findall('\|\|\@(.+?)\|\|', reaction.message.content)
 		winner_name = regex.findall('Winner\: \[(.+?)\]', reaction.message.content)[0]
 		loser_name = regex.findall('Loser\:  \[(.+?)\]', reaction.message.content)[0]
@@ -186,7 +173,8 @@ async def regularSearch(message):
 					if(channel_timers[index].isFinished()):
 						channel_timers[index].start(30)
 					else:
-						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()), delete_after = channel_timers[index].timeRemaining())
+						await message.channel.send("Sorry, cardbot still has %s seconds left on its cooldown" % (channel_timers[index].timeRemaining()),
+													delete_after = channel_timers[index].timeRemaining())
 						return
 				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \[\[" + text + "\]\]||")
@@ -205,7 +193,7 @@ async def fuzzySearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
+				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				else:
 					await message.channel.send(response)
@@ -221,7 +209,7 @@ async def fuzzySearch(message):
 			try:
 				print("Channel name: %s" % (message.channel.name))
 				print("Channel id: %s" % (message.channel.id))
-				if(message.channel.id == bot_spam_channel_id or message.channel.id == cardbot_bugs_report_channel_id):
+				if(message.channel.id in debug_channels):
 					await message.channel.send(response + "\n||Record generated in response to command: \{\{" + text + "\}\}||")
 				else:
 					await message.channel.send(response)
@@ -229,7 +217,7 @@ async def fuzzySearch(message):
 				await message.channel.send(response)
 
 async def checkForRegeneration(message):
-	if(message.author.name == "Chombler"):
+	if(message.author.id == user_id["chombler"]):
 		if message.content.startswith("$truehandyman"):
 			await message.channel.send("Chombler " + handyman(True))
 			return True

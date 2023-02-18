@@ -68,9 +68,11 @@ def getBestCardMatchId(recordName):
 		result_name = name_tuple[0][0]
 
 		id_query = fetch_query('''
-		SELECT id
-		FROM card
-		where name = %s''', "Retrieved Card id", "Error retrieving Card id,")
+					SELECT id
+					FROM card
+					where name = %s''',
+					"Retrieved Card id",
+					"Error retrieving Card id,")
 
 		results = id_query.run(result_name)[0][0]
 	else:
@@ -167,7 +169,9 @@ def pullHeroRecord(recordName):
 		LEFT JOIN card ON hero_to_card.cardid = card.id
 		LEFT JOIN card_to_class ON card.id = card_to_class.cardid
 		LEFT JOIN game_class ON card_to_class.classid = game_class.id
-		WHERE hero.id = %s''', "Retrieved Hero information", "Error retrieving Hero information,")
+		WHERE hero.id = %s''',
+		"Retrieved Hero information",
+		"Error retrieving Hero information,")
 
 	results = hero_query.run(hero_id)
 
@@ -185,7 +189,9 @@ def pullFuzzyCardRecord(recordName):
 	FROM nickname
 	ORDER BY SIMILARITY(nickname, %s) DESC,
 	LOWER(nickname) LIKE %s DESC
-	LIMIT 5''', "Retrieved Card names", "Error retrieving Card names,")
+	LIMIT 5''',
+	"Retrieved Card names",
+	"Error retrieving Card names,")
 
 	try:
 		recordStart = recordName[0:3].lower() + '%'
@@ -209,7 +215,9 @@ def pullFuzzyHeroRecord(recordName):
 	FROM hero
 	ORDER BY SIMILARITY(name, %s) DESC,
 	SIMILARITY(abbreviation, %s) DESC
-	LIMIT 5''', "Retrieved Hero names", "Error retrieving Hero names,")
+	LIMIT 5''',
+	"Retrieved Hero names",
+	"Error retrieving Hero names,")
 
 	results = name_query.run(recordName, recordName)
 

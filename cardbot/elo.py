@@ -3,17 +3,18 @@ from psycopg2 import Error
 from credentials import token, db_credentials
 from classes.fetch_query import fetch_query
 
-def getElo(name, discord_id):
+def getElo(name, discord_id, server_id):
 	elo_query = fetch_query('''
 			SELECT score, name
 			FROM elo
-			WHERE discord_id = %s''', "Elo score obtained", "Error retrieving score from elo,")
+			WHERE discord_id = %s
+			AND server_id = %s''', "Elo score obtained", "Error retrieving score from elo,")
 
-	results = elo_query.run(discord_id)
+	results = elo_query.run(discord_id, server_id)
 	if(len(results) > 0):
 		elo = results[0][0]
 		if(results[0][1] != name):
-			updateElo(name, discord_id, elo)
+			updateElo(name, discord_id, server_id, elo)
 	else:
 		createRow(name, discord_id)
 		elo = 1000
@@ -29,11 +30,11 @@ def createRow(name, discord_id):
 		cursor = connection.cursor()
 
 		insert_query = '''
-		INSERT INTO elo(name, discord_id, score)
-		VALUES (%s, %s, 1000)
+		INSERT INTO elo(name, discord_id, server_id, score)
+		VALUES (%s, %s, %s, 1000)
 		'''
 
-		cursor.execute(insert_query, (name, discord_id))
+		cursor.execute(insert_query, (name, discord_id, server_id))
 		connection.commit()
 		print("New Player added to elo")
 
@@ -46,7 +47,7 @@ def createRow(name, discord_id):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def updateElo(name, discord_id, score):
+def updateElo(name, discord_id, server_id, score):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -58,9 +59,10 @@ def updateElo(name, discord_id, score):
 		SET score = %s, 
 			name = %s
 		WHERE discord_id = %s
+		AND server_id = %s
 		'''
 
-		cursor.execute(update_query, (score, name, discord_id))
+		cursor.execute(update_query, (score, name, discord_id, server_id))
 		connection.commit()
 		print("Elo updated")
 
@@ -73,14 +75,15 @@ def updateElo(name, discord_id, score):
 			connection.close()
 			print("PostgreSQL connection is closed")
 
-def getLeaderboard():
+def getLeaderboard(server_id):
 	elo_query = fetch_query('''
 		SELECT score, name
 		FROM elo
+		WHERE server_id = %s
 		ORDER BY score DESC
 		LIMIT 10''', "ELO leaderboard obtained", "Error retrieving leaderboard from elo")
 
-	results = elo_query.run()
+	results = elo_query.run(server_id)
 	print(results)
 	return_string = "__ELO__ | __Name__"
 
@@ -89,7 +92,7 @@ def getLeaderboard():
 
 	return return_string
 
-def resetElo():
+def resetElo(server_id):
 	try:
 		print("Trying")
 		connection = psycopg2.connect(db_credentials)
@@ -99,17 +102,18 @@ def resetElo():
 		select_query = '''
 		SELECT score, discord_id
 		FROM elo
+		WHERE server_id = %s
 		ORDER BY score DESC
 		LIMIT 1'''
 
-		cursor.execute(select_query)
+		cursor.execute(select_query, (server_id,))
 
 		results = cursor.fetchall()[0]
 		print(results)
 
-		delete_query = '''DELETE FROM elo'''
+		delete_query = '''DELETE FROM elo WHERE server_id = %s'''
 
-		cursor.execute(delete_query)
+		cursor.execute(delete_query, (server_id,))
 		connection.commit()
 
 	except (Exception, psycopg2.Error) as error :
@@ -122,9 +126,9 @@ def resetElo():
 			print("PostgreSQL connection is closed")
 			return(results)
 
-def calculateResults(winner, winner_id, loser, loser_id):
-	start_winner_elo = getElo(winner, winner_id)
-	start_loser_elo = getElo(loser, loser_id)
+def calculateResults(winner, winner_id, loser, loser_id, server_id):
+	start_winner_elo = getElo(winner, winner_id, server_id)
+	start_loser_elo = getElo(loser, loser_id, server_id)
 
 	winner_expected = 1 / (1 + pow(10, (start_loser_elo - start_winner_elo) / 400))
 	loser_expected = 1 / (1 + pow(10, (start_winner_elo - start_loser_elo) / 400))
@@ -134,9 +138,9 @@ def calculateResults(winner, winner_id, loser, loser_id):
 
 	return([start_winner_elo, final_winner_elo, start_loser_elo, final_loser_elo])
 
-def applyResults(winner, winner_id, loser, loser_id):
-	results = calculateResults(winner, winner_id, loser, loser_id)
-	updateElo(winner, winner_id, results[1])
-	updateElo(loser, loser_id, results[3])
+def applyResults(winner, winner_id, loser, loser_id, server_id):
+	results = calculateResults(winner, winner_id, loser, loser_id, server_id)
+	updateElo(winner, winner_id, server_id, results[1])
+	updateElo(loser, loser_id, server_id, results[3])
 	return(results)
 
